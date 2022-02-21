@@ -2,6 +2,7 @@ from flask import Blueprint, render_template, request, flash, jsonify
 from .models import Article, Writer
 from . import db
 from json import loads
+from datetime import datetime
 
 views = Blueprint('views', __name__)
 
@@ -119,8 +120,8 @@ def aboutus():
         sidebar_segments=page_settings['sidebar_segments']
         )
 
-@views.route('/article-maker') #should be hidden
-def articleMaker():
+@views.route('/article-manager', methods=['POST']) #should be hidden
+def articleManager():
     page_settings = {
         'cover_picture': False,
         'current_page': 7,
@@ -130,6 +131,46 @@ def articleMaker():
         '/',
         '#'
     ]
+    
+    if request.method == 'POST':
+        form_name = request.form['form-name']
+        if form_name == 'writer':
+            firstname = request.form.get('firstname')
+            lastname = request.form.get('lastname')
+            picureurl = request.form.get('pictureurl')
+            if len(firstname) <= 0:
+                flash('firstname is too short.', category='error')
+            elif len(lastname) <= 0:
+                flash('lastname is too short.', category='error')
+            else:
+                new_writer = Writer(firstname=firstname, lastname=lastname, picture_link=picureurl)
+                db.session.add(new_writer)
+                db.session.commit()
+                flash('Writer added.', category='success')
+        elif form_name == 'article':
+            writerid = request.form.get('writerid')
+            date = request.form.get('date')
+            title = request.form.get('title')
+            description = request.form.get('description')
+            content = request.form.get('content')
+            ytembed = request.form.get('ytembed')
+            
+            dsplit = date.split('-')
+            writer_check = Writer.query.filter_by(id=writerid).first()
+            if not writer_check:
+                flash('Writer does not exist.', category='error')
+            elif datetime(dsplit[0],dsplit[1],dsplit[2]) > datetime.now():
+                flash('Date cannot be in the future.', category='error')
+            elif len(title) <= 7:
+                flash('Enter a title with more then 7 characters.', category='error')
+            elif len(content) <= 50:
+                flash('Content must be more then 50 characters long.', category='error')
+            else:
+                new_article = Article(writer_id=writerid, date=date, title=title, description=description, content=content, youtube_embed_link=ytembed)
+                db.session.add(new_article)
+                db.session.commit()
+                flash('Article added.', category='success')
+    
     return render_template(
         'article-maker.html', 
         cover_picture=page_settings['cover_picture'], 
