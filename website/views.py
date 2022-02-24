@@ -120,16 +120,16 @@ def aboutus():
         sidebar_segments=page_settings['sidebar_segments']
         )
 
-@views.route('/article-manager', methods=['POST']) #should be hidden
+@views.route('/article-manager', methods=['GET', 'POST']) #should be hidden
 def articleManager():
     page_settings = {
         'cover_picture': False,
         'current_page': 7,
-        'sidebar_segments':1 #maximum 2
+        'sidebar_segments':2 #maximum 2
         }
     sidebar_links = [
         '/',
-        '#'
+        '/article-d-viewer'
     ]
     
     if request.method == 'POST':
@@ -172,9 +172,32 @@ def articleManager():
                 flash('Article added.', category='success')
     
     return render_template(
-        'article-maker.html', 
+        'article-manager.html', 
         cover_picture=page_settings['cover_picture'], 
         current_page_num=page_settings['current_page'], 
         sidebar_links=sidebar_links, 
         sidebar_segments=page_settings['sidebar_segments']
         )
+    
+@views.route('/article-d-viewer', methods=['GET']) #should be hidden
+def articleDatabaseViewer():
+    page_settings = {
+        'cover_picture': False,
+        'current_page': 7,
+        'sidebar_segments':2 #maximum 2
+        }
+    sidebar_links = [
+        '/',
+        '#'
+    ]
+    dbwriters = Writer.query.all()
+    dbarticles = Writer.query.all()
+    
+    return render_template(
+        'article-d-viewer.html', 
+        cover_picture=page_settings['cover_picture'], 
+        current_page_num=page_settings['current_page'], 
+        sidebar_links=sidebar_links, 
+        sidebar_segments=page_settings['sidebar_segments'],
+        writers=dbwriters,
+        articles=dbarticles)
