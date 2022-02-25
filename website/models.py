@@ -16,3 +16,9 @@ class Article(db.Model):
     content = db.Column(db.String(5000), nullable=False)
     youtube_embed_link = db.Column(db.String(200))
     writer_id = db.Column(db.Integer, db.ForeignKey('writer.id'))
+    
+class Subscription(db.Model):
+    __bind_key__ = 'email_subcriptions'
+    id = db.Column(db.Integer, primary_key=True)
+    email = db.Column(db.String(50), nullable=False, unique=True)
+    date_joined = db.Column(db.DateTime(timezone=True), default=func.now())
