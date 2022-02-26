@@ -5,7 +5,7 @@ class Writer(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     firstname = db.Column(db.String(50), nullable=False)
     lastname = db.Column(db.String(50), nullable=False)
-    picture_link = db.Column(db.String(200))
+    picture_link = db.Column(db.Boolean(), default=False)
     articles = db.relationship('Article')
 
 class Article(db.Model):

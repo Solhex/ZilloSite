@@ -17,11 +17,29 @@
 <!-- {% block cover_text %}Welcome to Zillo!{% endblock %} -->
 
 {% block content %}
+<div class="p-2" style="width:100%;">
+    
+  <h2>Subscription Manager</h2>
+
+  <form method="POST">
+    <input type="hidden" name="form-name" value="remove-subscriber">
+    <label for="subscriberid" class="form-label">Subscriber ID*</label>
+    <div class="input-group mb-3">
+      <input type="number" id="subscriberid" name="subscriberid" class="form-control" placeholder="Subscriber ID" aria-label="Subscriber ID">
+    </div>
+    
+    <div class="col-auto">
+      <button type="submit" class="btn btn-danger mb-3">Remove</button>
+    </div>
+  </form>
+
+</div>
+
   <div class="p-2" style="width:100%;">
     
     <h2>Writer Manager</h2>
 
-    <form method="POST">
+    <form method="POST" enctype="multipart/form-data">
       <input type="hidden" name="form-name" value="add-writer">
       <label for="firstname" class="form-label">Writer's fullname*</label>
       <div class="input-group mb-3">
@@ -29,9 +47,9 @@
         <input type="text" id="lastname" name="lastname" class="form-control" placeholder="Lastname" aria-label="Lastname">
       </div>
 
-      <label for="pictureurl" class="form-label">Picure Url</label>
+      <label for="pictureurl" class="form-label">Image Upload (16mb max upload)</label>
       <div class="input-group mb-3">
-        <input type="text" id="pictureurl" name="pictureurl" class="form-control" placeholder="Picure URL" aria-label="Picure URL">
+        <input type="file" id="fileupload" name="fileupload" class="form-control">
       </div>
 
       <div class="col-auto">
@@ -57,11 +75,16 @@
 
     <h2>Article Manager</h2>
 
-    <form method="POST">
+    <form method="POST" enctype="multipart/form-data">
       <input type="hidden" name="form-name" value="add-article">
       <label for="writerid" class="form-label">Writer ID*</label>
       <div class="input-group mb-3">
         <input type="number" id="writerid" name="writerid" class="form-control" placeholder="Writer ID" aria-label="Writer ID">
+      </div>
+
+      <label for="formFile" class="form-label">Article Image Upload* (16mb max upload)</label>
+      <div class="input-group mb-3">
+        <input type="file" id="fileupload" name="fileupload" class="form-control">
       </div>
 
       <label for="date" class="form-label">Date</label>
@@ -90,7 +113,7 @@
       </div>
 
       <div class="col-auto">
-        <button type="submit" class="btn btn-primary mb-3">Add</button>
+        <button type="submit" value="upload" class="btn btn-primary mb-3">Add</button>
       </div>
     </form>
 
