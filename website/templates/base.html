@@ -16,8 +16,8 @@
       crossorigin="anonymous"/> <!-- Loads in the bootstrap css -->
 
 
-      <link href="\static\assets\Zilloicon.ico" rel="shortcut icon"> <!-- Loads in the favicon and displays it -->
-      <link href="\static\css\variables.css" rel="stylesheet" type="text/css"> <!-- Loads in the variables css -->
+      <link href="/static/assets/Zilloicon.ico" rel="shortcut icon"> <!-- Loads in the favicon and displays it -->
+      <link href="/static/css/variables.css" rel="stylesheet" type="text/css"> <!-- Loads in the variables css -->
 
 
       <title>{% block title %}{% endblock %}</title> <!-- sets the title, the block allows for editing for other pages later -->
@@ -60,7 +60,7 @@
       <div class="container-fluid">
         <div class="navbar-header">
           <a class="navbar-brand mx-3" href="/hidden/article-manager">
-            <img src="\static\assets\ZilloLogo.png" alt="Zillo logo" width="110" height="60">
+            <img src="/static/assets/ZilloLogo.webp" alt="Zillo logo" width="110" height="60">
           </a>
         </div>
         <button class="navbar-toggler m-2 mx-3" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
@@ -71,7 +71,7 @@
             <a {% if current_page_num == 1 %}class="nav-link h5 m-2 active" aria-current="page"{% else %}class="nav-link h5 m-2"{% endif %} href="/">Home</a>
             <a {% if current_page_num == 2 %}class="nav-link h5 m-2 active" aria-current="page"{% else %}class="nav-link h5 m-2"{% endif %} href="/articles">Articles</a>
             <a {% if current_page_num == 3 %}class="nav-link h5 m-2 active" aria-current="page"{% else %}class="nav-link h5 m-2"{% endif %} href="/events/events-gridview">Events</a>
-            <a {% if current_page_num == 4 %}class="nav-link h5 m-2 active" aria-current="page"{% else %}class="nav-link h5 m-2"{% endif %} href="/volunteer">Volunteer</a>
+            <a {% if current_page_num == 4 %}class="nav-link h5 m-2 active" aria-current="page"{% else %}class="nav-link h5 m-2"{% endif %} href="/volunteer/volunteer-gridview">Volunteer</a>
             <a {% if current_page_num == 5 %}class="nav-link h5 m-2 active" aria-current="page"{% else %}class="nav-link h5 m-2"{% endif %} href="/support">Support</a>
             <a {% if current_page_num == 6 %}class="nav-link h5 m-2 active" aria-current="page"{% else %}class="nav-link h5 m-2"{% endif %} href="/aboutus">About Us</a>
           </div>
