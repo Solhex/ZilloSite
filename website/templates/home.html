@@ -23,38 +23,61 @@
 {% block cover_text %}Welcome to Zillo!{% endblock %}
 
 {% block content %}
-    <div class="px-2" style="width:100%;">
-        <div class="pb-5">
-            <p class="mx-5 lead fs-4">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
-                sed do eiusmod tempor incididunt ut labore et dolore magna 
-                aliqua. Cursus eget nunc scelerisque viverra mauris in 
-                aliquam sem, ipsum dolor sit amet, consectetur adipiscing elit, 
-                sed do eiusmod tempor incididunt ut labore et dolore magna 
-                aliqua. Cursus eget nunc scelerisque viverra mauris in 
-                aliquam sem. <u><a href="#">Learn more <span>&#8594;</span> </a></u>
-            </p>
+    <div class="px-2 py-2" style="width:100%;">
+        <div class="pb-5 mx-5 lead fs-4">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
+            sed do eiusmod tempor incididunt ut labore et dolore magna 
+            aliqua. Cursus eget nunc scelerisque viverra mauris in 
+            aliquam sem, ipsum dolor sit amet, consectetur adipiscing elit, 
+            sed do eiusmod tempor incididunt ut labore et dolore magna 
+            aliqua. Cursus eget nunc scelerisque viverra mauris in 
+            aliquam sem. <u><a href="#">Learn more <span>&#8594;</span> </a></u>
         </div>
-        <div class="" style="width:100%;">
-            <p class="mx-5 lead fs-4">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
-                sed do eiusmod tempor incididunt ut labore et dolore magna 
-                aliqua. Cursus eget nunc scelerisque viverra mauris in 
-                aliquam sem, ipsum dolor sit amet, consectetur adipiscing elit, 
-                sed do eiusmod tempor incididunt ut labore et dolore magna 
-                aliqua. Cursus eget nunc scelerisque viverra mauris in 
-                aliquam sem.
-            </p>
+        <div class="pb-5 mx-5 lead fs-4">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
+            sed do eiusmod tempor incididunt ut labore et dolore magna 
+            aliqua. Cursus eget nunc scelerisque viverra mauris in 
+            aliquam sem, ipsum dolor sit amet, consectetur adipiscing elit, 
+            sed do eiusmod tempor incididunt ut labore et dolore magna 
+            aliqua. Cursus eget nunc scelerisque viverra mauris in 
+            aliquam sem.
         </div>
     </div>
-    <div class="container" style="width:100%;">
-        <div class="row">
-            <div class="col-lg" style="background-color:cyan;">
-                <h1>fgds</h>
+    <div class="my-5" style="width:100%;">
+
+        <div class="mb-5 fs-1 fw-bold text-center">
+            Read Our Latest Articles!
+        </div>
+        <br>
+        <br>
+
+        {% for article in articles %}
+        <div class="row mb-5 g-3">
+            <div class="col-lg text-center">
+                <img src="\static\assets\article_covers\{{ article.id }}.webp" alt="Pooltable in dim lighting" class="mx-auto rounded" style="width:70%;"/>
             </div>
-            <div class="col-lg" style="background-color:pink;">
-                <h1>fgds</h>
+            <div class="col-lg">
+                <div class="mx-auto" style="width:80%">
+                    <div class="mb-3 fs-3 fw-bold" style="width:100%;">
+                        {{ article.title }}
+                    </div>
+                    <div class="mb-4 lead fs-4">
+                        {% if article.description != ''%}
+                            {{ article.description }}
+                        {% elif article.content | length > 250 %}
+                            {{ article.content[0:249] + '...' }}
+                        {% else %}
+                            {{ article.content }}
+                        {% endif %}
+                    </div>
+                    <div class="lead fs-5">
+                        Published {{ article.date }}
+                    </div>
+                </div>
             </div>
         </div>
+        {% endfor %}
+
+
     </div>
 {% endblock %}
