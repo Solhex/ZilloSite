@@ -4,7 +4,7 @@ from sqlalchemy import desc
 from . import db
 from datetime import datetime
 from re import fullmatch
-from os import path
+from os import path, remove
 from PIL import Image
 
 views = Blueprint('views', __name__)
@@ -358,8 +358,12 @@ def articleManager():
                 article_check = Article.query.filter_by(writer_id=writerid)
                 for article in article_check:
                     db.session.delete(article)
+                    if path.exists(path.join(current_app.config['UPLOAD_FOLDER'], 'article_covers', str(article.id) + '.webp')):
+                        remove(path.join(current_app.config['UPLOAD_FOLDER'], 'article_covers', str(article.id) + '.webp'))
                 db.session.delete(writer_check)
                 db.session.commit()
+                if writer_check.picture_link and path.exists(path.join(current_app.config['UPLOAD_FOLDER'], 'writer_pfps', str(writer_check.id) + '.webp')):
+                    remove(path.join(current_app.config['UPLOAD_FOLDER'], 'writer_pfps', str(writer_check.id) + '.webp'))
                 flash('Writer has been deleted.')
                 return redirect(request.url)
 
@@ -372,6 +376,8 @@ def articleManager():
             else:
                 db.session.delete(article_check)
                 db.session.commit()
+                if path.exists(path.join(current_app.config['UPLOAD_FOLDER'], 'article_covers', str(article_check.id) + '.webp')):
+                    remove(path.join(current_app.config['UPLOAD_FOLDER'], 'article_covers', str(article_check.id) + '.webp'))
                 flash('Article has been deleted.')
                 return redirect(request.url)
 
