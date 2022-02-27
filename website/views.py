@@ -5,6 +5,7 @@ from . import db
 from datetime import datetime
 from re import fullmatch
 from os import path
+from PIL import Image
 
 views = Blueprint('views', __name__)
 
@@ -33,7 +34,7 @@ def newsletterForm():
                     db.session.commit()
                     flash('Thanks for subscribing!', category='success')
                     return redirect(request.url)
-                
+
 @views.route('/errorpages/404', methods=['GET', 'POST'])
 def error_404():
     page_settings = {
@@ -46,7 +47,7 @@ def error_404():
         '#',
         '#'
     ]
-    
+
     newsletterForm()
 
     return render_template(
@@ -57,7 +58,7 @@ def error_404():
         sidebar_links=sidebar_links, 
         sidebar_segments=page_settings['sidebar_segments']
         )
-                
+
 @views.route('/', methods=['GET', 'POST'])
 def home():
     page_settings = {
@@ -70,8 +71,10 @@ def home():
         '#',
         '#'
     ]
-    
+
     newsletterForm()
+    
+    dbarticles = Article.query.order_by(desc(Article.id)).limit(3).all()
 
     return render_template(
         './home.html', 
@@ -79,7 +82,8 @@ def home():
         current_page_num=page_settings['current_page'], 
         footer=page_settings['footer'],
         sidebar_links=sidebar_links, 
-        sidebar_segments=page_settings['sidebar_segments']
+        sidebar_segments=page_settings['sidebar_segments'],
+        articles=dbarticles
         )
 
 @views.route('/articles', methods=['GET', 'POST'])
@@ -94,7 +98,7 @@ def articles():
         '#',
         '#'
     ]
-    
+
     newsletterForm()
 
     return render_template(
@@ -118,7 +122,7 @@ def eventsGridview():
         '#',
         '/events/events-mapview'
     ]
-    
+
     newsletterForm()
 
     return render_template(
@@ -129,7 +133,7 @@ def eventsGridview():
         sidebar_links=sidebar_links, 
         sidebar_segments=page_settings['sidebar_segments']
         )
-    
+
 @views.route('/events/events-mapview')
 def eventsMapview():
     page_settings = {
@@ -166,7 +170,7 @@ def volunteer():
     ]
 
     newsletterForm()
-    
+
     return render_template(
         './volunteer.html', 
         cover_picture=page_settings['cover_picture'], 
@@ -188,7 +192,7 @@ def support():
         '#',
         '#'
     ]
-    
+
     newsletterForm()
 
     return render_template(
@@ -245,7 +249,6 @@ def articleManager():
                 return redirect(request.url)
             file = request.files['fileupload']
             if file and allowed_file(file.filename):
-                file_extention = file.filename.split('.')[-1]
                 try:
                     filename = str(Writer.query.order_by(desc(Writer.id)).first().id + 1)
                 except:
@@ -253,7 +256,7 @@ def articleManager():
             else:
                 flash('Invalid file')
                 return redirect(request.url)
-                    
+
             firstname = request.form.get('firstname')
             lastname = request.form.get('lastname')
             if len(firstname) <= 0:
@@ -270,10 +273,11 @@ def articleManager():
                 db.session.add(new_writer)
                 db.session.commit()
                 if not file.filename == '':
-                    file.save(path.join(current_app.config['UPLOAD_FOLDER'], 'writer_pfps', filename + '.' + file_extention))
+                    file = Image.open(file)
+                    file.save(path.join(current_app.config['UPLOAD_FOLDER'], 'writer_pfps', filename + '.webp'), format="webp")
                 flash('Writer added.', category='success')
                 return redirect(request.url)
-            
+
         elif form_name == 'add-article':
             if 'fileupload' not in request.files:
                 flash('No file part')
@@ -283,7 +287,6 @@ def articleManager():
                 flash('No selected file')
                 return redirect(request.url)
             if file and allowed_file(file.filename):
-                file_extention = file.filename.split('.')[-1]
                 try:
                     filename = str(Article.query.order_by(desc(Article.id)).first().id + 1)
                 except:
@@ -291,14 +294,14 @@ def articleManager():
             else:
                 flash('Invalid file')
                 return redirect(request.url)
-                
+
             writerid = request.form.get('writerid')
             date = request.form.get('date')
             title = request.form.get('title')
             description = request.form.get('description')
             content = request.form.get('content')
             ytembed = request.form.get('ytembed')
-            
+
             dsplit = date.split('-')
             if date != '':
                 dtransformed = datetime(int(dsplit[0]),int(dsplit[1]),int(dsplit[2]))
@@ -317,7 +320,8 @@ def articleManager():
                     new_article = Article(writer_id=writerid, title=title, description=description, content=content, youtube_embed_link=ytembed)
                     db.session.add(new_article)
                     db.session.commit()
-                    file.save(path.join(current_app.config['UPLOAD_FOLDER'], 'article_covers', filename + '.' + file_extention))
+                    file = Image.open(file)
+                    file.save(path.join(current_app.config['UPLOAD_FOLDER'], 'article_covers', filename + '.webp'), format="webp")
                     flash('Article added.', category='success')
                     return redirect(request.url)
                 elif dtransformed > datetime.now():
@@ -327,10 +331,11 @@ def articleManager():
                     new_article = Article(writer_id=writerid, date=dtransformed, title=title, description=description, content=content, youtube_embed_link=ytembed)
                     db.session.add(new_article)
                     db.session.commit()
-                    file.save(path.join(current_app.config['UPLOAD_FOLDER'], 'article_covers', filename + '.' + file_extention))
+                    file = Image.open(file)
+                    file.save(path.join(current_app.config['UPLOAD_FOLDER'], 'article_covers', filename + '.webp'), format="webp")
                     flash('Article added.', category='success')
                     return redirect(request.url)
-                
+
         elif form_name == 'remove-subscriber':
             subscriberid = request.form.get('subscriberid')
             subscriber_check = Subscription.query.filter_by(id=subscriberid).first()
@@ -342,7 +347,7 @@ def articleManager():
                 db.session.commit()
                 flash('Subscriber has been deleted.')
                 return redirect(request.url)
-        
+
         elif form_name == 'remove-writer':
             writerid = request.form.get('writerid')
             writer_check = Writer.query.filter_by(id=writerid).first()
@@ -357,7 +362,7 @@ def articleManager():
                 db.session.commit()
                 flash('Writer has been deleted.')
                 return redirect(request.url)
-        
+
         elif form_name == 'remove-article':
             articleid = request.form.get('articleid')
             article_check = Article.query.filter_by(id=articleid).first()
@@ -369,8 +374,7 @@ def articleManager():
                 db.session.commit()
                 flash('Article has been deleted.')
                 return redirect(request.url)
-                
-                
+
         elif form_name == 'email_subscription':
             email = request.form.get('newsletter')
             email_exists_check = Subscription.query.filter_by(email=email).first()
@@ -387,7 +391,7 @@ def articleManager():
                     db.session.commit()
                     flash('Thanks for subscribing!', category='success')
                     return redirect(request.url)
-    
+
     return render_template(
         './hidden/article-manager.html', 
         cover_picture=page_settings['cover_picture'], 
@@ -396,7 +400,7 @@ def articleManager():
         sidebar_links=sidebar_links, 
         sidebar_segments=page_settings['sidebar_segments']
         )
-    
+
 @views.route('/hidden/db-viewer', methods=['GET', 'POST']) #should be hidden
 def articleDatabaseViewer():
     page_settings = {
@@ -409,13 +413,13 @@ def articleDatabaseViewer():
         '/',
         '#'
     ]
-    
+
     newsletterForm()
 
     dbsubscribers = Subscription.query.all()
     dbwriters = Writer.query.all()
     dbarticles = Article.query.all()
-    
+
     return render_template(
         './hidden/db-viewer.html', 
         cover_picture=page_settings['cover_picture'], 
