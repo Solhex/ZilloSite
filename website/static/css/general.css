@@ -1,0 +1,11 @@
+a:hover {
+    color: var(--2-clr) !important;
+}
+
+a:active {
+    color: var(--3-clr) !important;
+}
+
+a {
+    color: var(--3-clr) !important;
+}
