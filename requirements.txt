@@ -1,4 +1,5 @@
 flask
 Flask-SQLAlchemy
+flask-migrate
 flask-login
 Pillow
