@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% block title %}ZilloWirral | Article Maker{% endblock %}
+{% block title %}ZilloWirral | DB Viewer{% endblock %}
 
 {% block sidebar_icon1 %}
   <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="var(--2-clr)" class="bi bi-house-heart" viewBox="0 0 16 16">
@@ -44,7 +44,7 @@
             {{ subscriber.email }}
           </div>
           <div class="col-3 border">
-            {{ subscriber.date_joined }}
+            {{ subscriber.datetime_joined }}
           </div>
         </div>
       {% endfor %}
@@ -69,11 +69,14 @@
         <div class="col-2 border">
           Lastname
         </div>
-        <div class="col-4 border">
+        <div class="col-2 border">
           Picture Link
         </div>
         <div class="col-3 border">
           Articles Linked
+        </div>
+        <div class="col-2 border">
+          Date Joined
         </div>
       </div>
 
@@ -88,11 +91,14 @@
           <div class="col-2 border">
             {{ writer.lastname }}
           </div>
-          <div class="col-4 border">
+          <div class="col-2 border">
             {{ writer.picture_link }}
           </div>
           <div class="col-3 border">
             {{ writer.articles }}
+          </div>
+          <div class="col-2 border">
+            {{ writer.datetime_joined }}
           </div>
         </div>
       {% endfor %}
@@ -112,7 +118,10 @@
           ID
         </div>
         <div class="col-1 border">
-          Date
+          Date Posted
+        </div>
+        <div class="col-1 border">
+          Date Created
         </div>
         <div class="col-2 border">
           Title
@@ -120,7 +129,7 @@
         <div class="col-2 border">
           Description
         </div>
-        <div class="col-4 border">
+        <div class="col-3 border">
           Content
         </div>
         <div class="col-1 border">
@@ -137,7 +146,10 @@
             {{ article.id }}
           </div>
           <div class="col-1 border">
-            {{ article.date }}
+            {{ article.datetime_posted }}
+          </div>
+          <div class="col-1 border">
+            {{ article.datetime_created }}
           </div>
           <div class="col-2 border">
             {{ article.title }}
@@ -145,7 +157,7 @@
           <div class="col-2 border">
             {{ article.description }}
           </div>
-          <div class="col-4 border">
+          <div class="col-3 border">
             {{ article.content }}
           </div>
           <div class="col-1 border">
@@ -153,6 +165,96 @@
           </div>
           <div class="col-1 border">
             {{ article.writer_id }}
+          </div>
+        </div>
+      {% endfor %}
+
+    </div>
+
+  </div>
+
+  <div class="p-2" style="width:100%;">
+
+    <h2>Events</h2>
+
+    <div class="container my-5">
+
+      <div class="row">
+        <div class="col-1 border">
+          ID
+        </div>
+        <div class="col-1 border">
+          Name
+        </div>
+        <div class="col-1 border">
+          Description
+        </div>
+        <div class="col-1 border">
+          Address1
+        </div>
+        <div class="col-1 border">
+          Address2
+        </div>
+        <div class="col-1 border">
+          City
+        </div>
+        <div class="col-1 border">
+          County
+        </div>
+        <div class="col-1 border">
+          Country
+        </div>
+        <div class="col-1 border">
+          Postcode
+        </div>
+        <div class="col-1 border">
+          Datetime End
+        </div>
+        <div class="col-1 border">
+          Datetime Start
+        </div>
+        <div class="col-1 border">
+          Datetime Posted
+        </div>
+      </div>
+
+      {% for event in events %}
+        <div class="row">
+          <div class="col-1 border">
+            {{ event.id }}
+          </div>
+          <div class="col-1 border">
+            {{ event.name }}
+          </div>
+          <div class="col-1 border">
+            {{ event.description }}
+          </div>
+          <div class="col-1 border">
+            {{ event.address1 }}
+          </div>
+          <div class="col-1 border">
+            {{ event.address2 }}
+          </div>
+          <div class="col-1 border">
+            {{ event.city }}
+          </div>
+          <div class="col-1 border">
+            {{ event.county }}
+          </div>
+          <div class="col-1 border">
+            {{ event.country }}
+          </div>
+          <div class="col-1 border">
+            {{ event.postcode }}
+          </div>
+          <div class="col-1 border">
+            {{ event.datetime_end }}
+          </div>
+          <div class="col-1 border">
+            {{ event.datetime_start }}
+          </div>
+          <div class="col-1 border">
+            {{ event.datetime_posted }}
           </div>
         </div>
       {% endfor %}
