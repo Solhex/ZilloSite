@@ -1,4 +1,9 @@
 {% extends "base.html" %}
+
+{% block link %}
+  <link href="/static/css/mapview.css" rel="stylesheet" type="text/css"> <!-- Loads in the mapview css -->
+{% endblock %}
+
 {% block title %}ZilloWirral | Volunteer Mapview{% endblock %}
 
 {% block sidebar_icon1 %}
@@ -16,29 +21,20 @@
   </svg>
 {% endblock %}
 
-
 {% block content %}
-  <h1>this is the volunteer-mapview page</h1>
-  <h1>this is the volunteer-mapview page</h1>
-  <h1>this is the volunteer-mapview page</h1>
-  <h1>this is the volunteer-mapview page</h1>
-  <h1>this is the volunteer-mapview page</h1>
-  <h1>this is the volunteer-mapview page</h1>
-  <h1>this is the volunteer-mapview page</h1>
-  <h1>this is the volunteer-mapview page</h1>
-  <h1>this is the volunteer-mapview page</h1>
-  <h1>this is the volunteer-mapview page</h1>
-  <h1>this is the volunteer-mapview page</h1>
-  <h1>this is the volunteer-mapview page</h1>
-  <h1>this is the volunteer-mapview page</h1>
-  <h1>this is the volunteer-mapview page</h1>
-  <h1>this is the volunteer-mapview page</h1>
-  <h1>this is the volunteer-mapview page</h1>
-  <h1>this is the volunteer-mapview page</h1>
-  <h1>this is the volunteer-mapview page</h1>
-  <h1>this is the volunteer-mapview page</h1>
-  <h1>this is the volunteer-mapview page</h1>
-  <h1>this is the volunteer-mapview page</h1>
-  <h1>this is the volunteer-mapview page</h1>
-  <h1>this is the volunteer-mapview page</h1>
+  <iframe 
+  src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d19032.095334512935!2d-3.0177396140079114!3d53.39672671631785!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2suk!4v1646162068200!5m2!1sen!2suk" 
+
+  frameborder="0" 
+  marginheight="0" 
+  marginwidth="0" 
+  width="100%" 
+  height="100%" 
+  scrolling="auto"
+
+  style="border:0;" 
+  allowfullscreen="" 
+  loading="lazy">
+  </iframe>
+  <!-- adds a regular google maps iframe -->
 {% endblock %}
