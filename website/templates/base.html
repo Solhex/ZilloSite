@@ -72,7 +72,7 @@
             <a {% if current_page_num == 1 %}class="nav-link h5 m-2 active" aria-current="page"{% else %}class="nav-link h5 m-2"{% endif %} href="/">Home</a>
             <a {% if current_page_num == 2 %}class="nav-link h5 m-2 active" aria-current="page"{% else %}class="nav-link h5 m-2"{% endif %} href="/articles/1">Articles</a>
             <a {% if current_page_num == 3 %}class="nav-link h5 m-2 active" aria-current="page"{% else %}class="nav-link h5 m-2"{% endif %} href="/events/events-gridview/1">Events</a>
-            <a {% if current_page_num == 4 %}class="nav-link h5 m-2 active" aria-current="page"{% else %}class="nav-link h5 m-2"{% endif %} href="/volunteer/volunteer-gridview">Volunteer</a>
+            <a {% if current_page_num == 4 %}class="nav-link h5 m-2 active" aria-current="page"{% else %}class="nav-link h5 m-2"{% endif %} href="/volunteer/volunteer-gridview/1">Volunteer</a>
             <a {% if current_page_num == 5 %}class="nav-link h5 m-2 active" aria-current="page"{% else %}class="nav-link h5 m-2"{% endif %} href="/support/support-home">Support</a>
             <a {% if current_page_num == 6 %}class="nav-link h5 m-2 active" aria-current="page"{% else %}class="nav-link h5 m-2"{% endif %} href="/aboutus">About Us</a>
           </div>
@@ -124,8 +124,8 @@
               <ul class="nav flex-column">
                 <li class="nav-item mb-2"><a href="/" class="nav-link p-0 text-muted">Home</a></li>
                 <li class="nav-item mb-2"><a href="/articles/1" class="nav-link p-0 text-muted">Articles</a></li>
-                <li class="nav-item mb-2"><a href="/events/events-gridview" class="nav-link p-0 text-muted">Events</a></li>
-                <li class="nav-item mb-2"><a href="/volunteer/volunteer-gridview" class="nav-link p-0 text-muted">Volunteer</a></li>
+                <li class="nav-item mb-2"><a href="/events/events-gridview/1" class="nav-link p-0 text-muted">Events</a></li>
+                <li class="nav-item mb-2"><a href="/volunteer/volunteer-gridview/1" class="nav-link p-0 text-muted">Volunteer</a></li>
               </ul>
             </div>
       
@@ -143,9 +143,9 @@
               <div class="d-flex w-100 gap-2">
                 <form method="POST">
                   <input type="hidden" name="form-name" value="email_subscription">
-                  <label for="newsletter" class="visually-hidden">Email address</label>
+                  <label for="email" class="visually-hidden">Email address</label>
                   <div class="input-group mb-3">
-                    <input type="text" id="newsletter" name="newsletter" class="form-control" placeholder="Email Address" aria-label="Email Address">
+                    <input type="text" id="email" name="email" class="form-control" placeholder="Email Address" aria-label="Email Address">
                   </div>
                   <button type="submit" class="btn btn-primary">Subscribe</button>
                 </form>
