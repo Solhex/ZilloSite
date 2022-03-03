@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request, flash, redirect, current_app
-from .models import Article, Writer, Subscription, Event
+from .models import Article, Writer, Subscription, Event, Volunteer
 from sqlalchemy import desc
 from . import db
 from datetime import datetime
@@ -20,7 +20,7 @@ def newsletterForm():
     if request.method == 'POST':
         form_name = request.form['form-name']
         if form_name == 'email_subscription':
-            email = request.form.get('newsletter')
+            email = request.form.get('email')
             email_exists_check = Subscription.query.filter_by(email=email).first()
             if email_exists_check:
                 flash('Email Address Already Signed Up!', category='error')
@@ -171,8 +171,8 @@ def eventsMapview():
         sidebar_segments=page_settings['sidebar_segments']
         )
 
-@views.route('/volunteer/volunteer-gridview', methods=['GET', 'POST'])
-def volunteerGridview():
+@views.route('/volunteer/volunteer-gridview/<int:pg>', methods=['GET', 'POST'])
+def volunteerGridview(pg):
     page_settings = {
         'cover_picture': True,
         'current_page': 4,
@@ -186,13 +186,20 @@ def volunteerGridview():
 
     newsletterForm()
 
+    dbvolunteers = Volunteer.query.order_by(desc(Volunteer.id)).limit(50).all()
+    
+    dbvolunteersdivision = (-(-len(dbvolunteers)//5))
+
     return render_template(
         './volunteer/volunteer-gridview.html', 
         cover_picture=page_settings['cover_picture'], 
         current_page_num=page_settings['current_page'], 
         footer=page_settings['footer'],
         sidebar_links=sidebar_links, 
-        sidebar_segments=page_settings['sidebar_segments']
+        sidebar_segments=page_settings['sidebar_segments'],
+        volunteers=dbvolunteers,
+        max_pages=dbvolunteersdivision,
+        volunteer_page=pg
     )
     
 @views.route('/volunteer/volunteer-mapview', methods=['GET', 'POST'])
@@ -425,7 +432,7 @@ def articleManager():
                 return redirect(request.url)
             
             if len(name) <= 5:
-                flash('Enter a title with more then 5 characters.', category='error')
+                flash('Enter a name with more then 5 characters.', category='error')
                 return redirect(request.url)
             elif len(description) <= 50:
                 flash('Content must be more then 50 characters long.', category='error')
@@ -452,6 +459,85 @@ def articleManager():
                 file = Image.open(file)
                 file.save(path.join(current_app.config['UPLOAD_FOLDER'], 'event_covers', filename + '.webp'), format="webp")
                 flash('Event added.', category='success')
+                return redirect(request.url)
+
+        elif form_name == 'add-volunteer':
+            if 'fileupload' not in request.files:
+                flash('No file part')
+                return redirect(request.url)
+            file = request.files['fileupload']
+            if file.filename == '':
+                flash('No selected file')
+                return redirect(request.url)
+            if file and allowed_file(file.filename):
+                try:
+                    filename = str(Volunteer.query.order_by(desc(Volunteer.id)).first().id + 1)
+                except:
+                    filename = str(1)
+            else:
+                flash('Invalid file')
+                return redirect(request.url)
+
+            name = request.form.get('name')
+            description = request.form.get('description')
+            addr1 = request.form.get('addr1')
+            addr2 = request.form.get('addr2')
+            city = request.form.get('city')
+            county = request.form.get('county')
+            country = request.form.get('country')
+            postcode = request.form.get('postcode').upper()
+            datestart = request.form.get('datestart')
+            timestart = request.form.get('timestart')
+            dateend = request.form.get('dateend')
+            timeend = request.form.get('timeend')
+            
+            if datestart and timestart != '':
+                dsplit_start = datestart.split('-')
+                tsplit_start = timestart.split(':')
+                dstransformed = datetime(int(dsplit_start[0]),int(dsplit_start[1]),int(dsplit_start[2]),int(tsplit_start[0]),int(tsplit_start[1]))
+            else:
+                flash('Enter a start date and time.', category='error')
+                return redirect(request.url)
+            if dateend and timeend != '':
+                dsplit_end = dateend.split('-')
+                tsplit_end = timeend.split(':')
+                detransformed = datetime(int(dsplit_end[0]),int(dsplit_end[1]),int(dsplit_end[2]),int(tsplit_end[0]),int(tsplit_end[1]))
+            else:
+                flash('Enter a end date and time.', category='error')
+                return redirect(request.url)
+            
+            if dstransformed > detransformed:
+                flash('Start date cannot be greater then end date.', category='error')
+                return redirect(request.url)
+            
+            if len(name) <= 5:
+                flash('Enter a name with more then 5 characters.', category='error')
+                return redirect(request.url)
+            elif len(description) <= 50:
+                flash('Content must be more then 50 characters long.', category='error')
+                return redirect(request.url)
+            elif len(addr1) < 5:
+                flash('Address 1 must be 5 or more characters long.', category='error')
+                return redirect(request.url)
+            elif len(city) < 3:
+                flash('City must be 3 or more characters long.', category='error')
+                return redirect(request.url)
+            elif len(country) < 5:
+                flash('Country must be 5 or more characters long.', category='error')
+                return redirect(request.url)
+            elif not fullmatch(POSTCODE_REGEX, postcode):
+                flash('Enter a valid postcode address.', category='error')
+                return redirect(request.url)
+            elif detransformed < datetime.now():
+                flash('End date cannot be in the past.', category='error')
+                return redirect(request.url)
+            else:
+                new_volunteer = Volunteer(name=name, description=description, address1=addr1, address2=addr2, city=city, county=county, country=country, postcode=postcode, datetime_end=detransformed, datetime_start=dstransformed)
+                db.session.add(new_volunteer)
+                db.session.commit()
+                file = Image.open(file)
+                file.save(path.join(current_app.config['UPLOAD_FOLDER'], 'volunteer_covers', filename + '.webp'), format="webp")
+                flash('Volunteer added.', category='success')
                 return redirect(request.url)
 
         elif form_name == 'remove-subscriber':
@@ -513,6 +599,20 @@ def articleManager():
                 flash('Event has been deleted.')
                 return redirect(request.url)
 
+        elif form_name == 'remove-volunteer':
+            volunteerid = request.form.get('volunteerid')
+            volunteer_check = Volunteer.query.filter_by(id=volunteerid).first()
+            if not event_check:
+                flash('Volunteer does not exist.', category='error')
+                return redirect(request.url)
+            else:
+                db.session.delete(volunteer_check)
+                db.session.commit()
+                if path.exists(path.join(current_app.config['UPLOAD_FOLDER'], 'volunteer_covers', str(volunteer_check.id) + '.webp')):
+                    remove(path.join(current_app.config['UPLOAD_FOLDER'], 'volunteer_covers', str(volunteer_check.id) + '.webp'))
+                flash('Volunteer has been deleted.')
+                return redirect(request.url)
+
         elif form_name == 'email_subscription':
             email = request.form.get('newsletter')
             email_exists_check = Subscription.query.filter_by(email=email).first()
@@ -558,6 +658,7 @@ def articleDatabaseViewer():
     dbwriters = Writer.query.all()
     dbarticles = Article.query.all()
     dbevents = Event.query.all()
+    dbvolunteers = Volunteer.query.all()
 
     return render_template(
         './hidden/db-viewer.html', 
@@ -569,5 +670,6 @@ def articleDatabaseViewer():
         subscribers=dbsubscribers,
         writers=dbwriters,
         articles=dbarticles,
-        events=dbevents
+        events=dbevents,
+        volunteers=dbvolunteers
         )

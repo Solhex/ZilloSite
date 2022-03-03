@@ -82,7 +82,7 @@
         <input type="number" id="writerid" name="writerid" class="form-control" placeholder="Writer ID" aria-label="Writer ID">
       </div>
 
-      <label for="formFile" class="form-label">Article Image Upload* (16mb max upload)</label>
+      <label for="formFile" class="form-label">Article Image Upload* (16mb max upload, pref aspect ratio 16:9)</label>
       <div class="input-group mb-3">
         <input type="file" id="fileupload" name="fileupload" class="form-control">
       </div>
@@ -141,7 +141,7 @@
         <input type="text" id="name" name="name" class="form-control" placeholder="Name" aria-label="Name">
       </div>
 
-      <label for="formFile" class="form-label">Event Image Upload* (16mb max upload)</label>
+      <label for="formFile" class="form-label">Event Image Upload* (16mb max upload, pref aspect ratio 16:9)</label>
       <div class="input-group mb-3">
         <input type="file" id="fileupload" name="fileupload" class="form-control">
       </div>
@@ -199,6 +199,83 @@
       <label for="eventid" class="form-label">Event ID*</label>
       <div class="input-group mb-3">
         <input type="number" id="eventid" name="eventid" class="form-control" placeholder="Event ID" aria-label="Event ID">
+      </div>
+      
+      <div class="col-auto">
+        <button type="submit" class="btn btn-danger mb-3">Remove</button>
+      </div>
+    </form>
+
+  <div class="p-2" style="width:100%;">
+
+    <h2>Volunteer Manager</h2>
+
+    <form method="POST" enctype="multipart/form-data">
+      <input type="hidden" name="form-name" value="add-volunteer">
+
+      <label for="title" class="form-label">Name*</label>
+      <div class="input-group mb-3">
+        <input type="text" id="name" name="name" class="form-control" placeholder="Name" aria-label="Name">
+      </div>
+
+      <label for="formFile" class="form-label">Volunteer Image Upload* (16mb max upload, pref aspect ratio 16:9)</label>
+      <div class="input-group mb-3">
+        <input type="file" id="fileupload" name="fileupload" class="form-control">
+      </div>
+      
+      <label for="description" class="form-label">Description*</label>
+      <div class="input-group mb-3">
+        <textarea id="description" name="description" class="form-control" style="height: 7.5em;" placeholder="Description" aria-label="Description"></textarea>
+      </div>
+
+      <label for="title" class="form-label">Address 1*</label>
+      <div class="input-group mb-3">
+        <input type="text" id="addr1" name="addr1" class="form-control" placeholder="Address 1" aria-label="Address 1">
+      </div>
+
+      <label for="title" class="form-label">Address 2</label>
+      <div class="input-group mb-3">
+        <input type="text" id="addr2" name="addr2" class="form-control" placeholder="Address 2" aria-label="Address 2">
+      </div>
+
+      <label for="title" class="form-label">City* and County</label>
+      <div class="input-group mb-3">
+        <input type="text" id="city" name="city" class="form-control" placeholder="City" aria-label="City">
+        <input type="text" id="county" name="county" class="form-control" placeholder="County" aria-label="County">
+      </div>
+
+      <label for="country" class="form-label">Country*</label>
+      <div class="input-group mb-3">
+        <input type="text" id="country" name="country" class="form-control" placeholder="Country" aria-label="Country">
+      </div>
+
+      <label for="postcode" class="form-label">Postcode*</label>
+      <div class="input-group mb-3">
+        <input type="text" id="postcode" name="postcode" class="form-control" placeholder="Postcode" aria-label="Postcode">
+      </div>
+
+      <label for="date" class="form-label">Date Start*</label>
+      <div class="input-group mb-3">
+        <input type="date" id="datestart" name="datestart" class="form-control" placeholder="Date Start" aria-label="Date Start">
+        <input type="time" id="timestart" name="timestart" class="form-control" placeholder="Time" aria-label="Time">
+      </div>
+
+      <label for="date" class="form-label">Date End*</label>
+      <div class="input-group mb-3">
+        <input type="date" id="dateend" name="dateend" class="form-control" placeholder="Date Start" aria-label="Date Start">
+        <input type="time" id="timeend" name="timeend" class="form-control" placeholder="Time" aria-label="Time">
+      </div>
+
+      <div class="col-auto">
+        <button type="submit" class="btn btn-primary mb-3">Add</button>
+      </div>
+    </form>
+
+    <form method="POST">
+      <input type="hidden" name="form-name" value="remove-volunteer">
+      <label for="volunteerid" class="form-label">Volunteer ID*</label>
+      <div class="input-group mb-3">
+        <input type="number" id="volunteerid" name="volunteerid" class="form-control" placeholder="Volunteer ID" aria-label="Volunteer ID">
       </div>
       
       <div class="col-auto">
