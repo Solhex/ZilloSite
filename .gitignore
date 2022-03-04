@@ -127,4 +127,6 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
-article+writermock.txt
+databaseChecker.py
+migrations/
+databases/
