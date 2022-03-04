@@ -9,3 +9,8 @@ a:active {
 a {
     color: var(--3-clr) !important;
 }
+
+/** this css is dedicated to global changes within the website 
+so far its dedicated to chaning the html colour when, hovering, 
+clicked, and inactive, !important forces changes irriguardless of
+style priority **/

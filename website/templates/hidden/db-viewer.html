@@ -1,22 +1,22 @@
-{% extends "base.html" %}
-{% block title %}ZilloWirral | DB Viewer{% endblock %}
+{% extends "base.html" %} <!-- uses base.html as a template to build the current page with the use of blocks -->
+{% block title %}ZilloWirral | DB Viewer{% endblock %} <!-- Tells flask that the block to add content in has ended -->
 
-{% block sidebar_icon1 %}
+{% block sidebar_icon1 %} <!-- will be inserted into the corrosponding same named block within base.html -->
   <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="var(--2-clr)" class="bi bi-house-heart" viewBox="0 0 16 16">
       <path fill-rule="evenodd" d="M8.707 1.5a1 1 0 0 0-1.414 0L.646 8.146a.5.5 0 0 0 .708.707L2 8.207V13.5A1.5 1.5 0 0 0 3.5 15h9a1.5 1.5 0 0 0 1.5-1.5V8.207l.646.646a.5.5 0 0 0 .708-.707L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.707 1.5ZM13 7.207l-5-5-5 5V13.5a.5.5 0 0 0 .5.5h9a.5.5 0 0 0 .5-.5V7.207Zm-5-.225C9.664 5.309 13.825 8.236 8 12 2.175 8.236 6.336 5.309 8 6.982Z"/>
   </svg>
-{% endblock %}
+{% endblock %} <!-- Tells flask that the block to add content in has ended -->
 
-{% block sidebar_icon2 %}
+{% block sidebar_icon2 %} <!-- will be inserted into the corrosponding same named block within base.html -->
   <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="var(--2-clr)" class="bi bi-journal" viewBox="0 0 16 16">
     <path d="M3 0h10a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-1h1v1a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v1H1V2a2 2 0 0 1 2-2z"/>
     <path d="M1 5v-.5a.5.5 0 0 1 1 0V5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0V8h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0v.5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1z"/>
   </svg>
-{% endblock %}
+{% endblock %} <!-- Tells flask that the block to add content in has ended -->
 
-<!-- {% block cover_text %}Welcome to Zillo!{% endblock %} -->
+<!-- {% block cover_text %}Welcome to Zillo!{% endblock %} <!-- Tells flask that the block to add content in has ended --> -->
 
-{% block content %}
+{% block content %} <!-- Inserts content within the base html template with the same block name -->
   <div class="p-2" style="width:100%;">
     
     <h2>Subscribers</h2>
@@ -350,4 +350,4 @@
     </div>
 
   </div>
-{% endblock %}
+{% endblock %} <!-- Tells flask that the block to add content in has ended -->

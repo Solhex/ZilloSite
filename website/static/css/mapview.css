@@ -1,6 +1,8 @@
 html {
     overflow: hidden;
 }
+
+/** makes it so that the scroll bar doesnt appear if elements go out of the viewport **/
  
 html, body, div, iframe {
     margin: 0px; 
@@ -8,11 +10,14 @@ html, body, div, iframe {
     height: 97.9%; 
     border: none;
 }
+/** makes it so all tags have no margin, padding, heights are set to 97.9% and there are no borders **/
 
 iframe {
     display: block; 
     width: 100%; 
-    border: none; 
     overflow-y: auto; 
     overflow-x: hidden;
 }
+
+/** changes all iframe's display to block, with the with of 100% and overflow-x 
+and y makes it so that the scrollbar doesnt appear if elements go out of the viewport **/

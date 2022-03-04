@@ -1,93 +1,96 @@
-{% extends "base.html" %}
-{% block title %}ZilloWirral | Articles{% endblock %}
+{% extends "base.html" %} <!-- uses base.html as a template to build the current page with the use of blocks -->
+{% block title %}ZilloWirral | Articles{% endblock %} <!-- Tells flask that the block to add content in has ended -->
 
-{% block sidebar_icon1 %}
+{% block sidebar_icon1 %} <!-- will be inserted into the corrosponding same named block within base.html -->
     <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="var(--2-clr)" class="bi bi-list-task" viewBox="1 0 16 16">
         <path fill-rule="evenodd" d="M2 2.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5V3a.5.5 0 0 0-.5-.5H2zM3 3H2v1h1V3z"/>
         <path d="M5 3.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zM5.5 7a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1h-9zm0 4a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1h-9z"/>
         <path fill-rule="evenodd" d="M1.5 7a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5H2a.5.5 0 0 1-.5-.5V7zM2 7h1v1H2V7zm0 3.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5H2zm1 .5H2v1h1v-1z"/>
     </svg>
-{% endblock %}
+{% endblock %} <!-- Tells flask that the block to add content in has ended -->
 
 {% block cover_picture %}
     <img src="\static\assets\placeholders\TEMP35_1.webp" alt="Pooltable in dim lighting" class="card-img"/>
-{% endblock %}
+{% endblock %} <!-- Tells flask that the block to add content in has ended -->
 <!-- image ratio == 3.5:1-->
 
-{% block cover_text %}Get In Formed!{% endblock %}
+{% block cover_text %}Get In Formed!{% endblock %} <!-- Tells flask that the block to add content in has ended -->
 
-{% block content %}
-<div class="my-5" style="width:100%;">
+{% block content %} <!-- Inserts content within the base html template with the same block name -->
+    <div class="my-5 w-100">
 
-    {% if article_page == 1 %}
-        <div class="mb-5 fs-1 fw-bold text-center">
-            Read Our Latest Articles!
-        </div>
-    {% endif %}
-
-    {% for article in articles[ article_page * 5 - 5: article_page * 5 - 1 ] %}
-        <div class="row mb-5 g-3" style="width:100%;">
-            <div class="col-lg text-center">
-                <img src="\static\assets\article_covers\{{ article.id }}.webp" class="mx-auto rounded" style="width:70%;"/>
+        {% if article_page == 1 %} <!-- checks if the article_page url variable is 1 and executes the code below if so -->
+            <div class="mb-5 fs-1 fw-bold text-center"> <!-- mb-5 sets the bottom margin to 3rem, fs-1 sets the font size to h1, fw-bold sets the font weight to bold and text-center text aligns to the center -->
+                Read Our Latest Articles!
             </div>
-            <div class="col-lg">
-                <div class="mx-auto" style="width:80%">
-                    <div class="mb-3 fs-3 fw-bold" style="width:100%;">
-                        {{ article.title }}
-                    </div>
-                    <div class="mb-4 lead fs-4">
-                        {% if article.description != ''%}
-                            {{ article.description }}
-                        {% elif article.content | length > 250 %}
-                            {{ article.content[0:249] + '...' }}
-                        {% else %}
-                            {{ article.content }}
-                        {% endif %}
-                    </div>
-                    <div class="lead fs-5">
-                        Published {{ article.date }}
+        {% endif %} <!-- ends the if statement -->
+
+        {% for article in articles[ article_page * 5 - 5: article_page * 5 - 1 ] %} <!-- creates a for loop for increments of 5 within the articles database query passed though by view.py -->
+            <div class="row mb-5 g-3 w-100"> <div class="row mb-5 g-3 w-100"> <!-- g-3 sets the margin next to other elements to 1rem, w-100 sets the width to 100% -->
+                <div class="col-lg text-center"> <!-- col-lg changes the column size to 100% width when sized down from 992px -->
+                    <img src="\static\assets\article_covers\{{ article.id }}.webp" class="mx-auto rounded" style="width:70%;"/> <!-- inserts the article image which corrosponds to the article id + .webp, and also rounded slightly rounds the image to be more appealing -->
+                </div>
+                <div class="col-lg">
+                    <div class="mx-auto" style="width:80%"> <!-- mx-auto sets the left and right margin to equally take up any remaining x space -->
+                        <div class="mb-3 fs-3 fw-bold w-100">
+                            {{ article.title }} <!-- inserts article's name, article is gotten from the for loop and any thing that has article.something corrosponds to the item within the article dictionary -->
+                        </div>
+                        <div class="mb-4 lead fs-4">
+                            {% if article.description != ''%}
+                                {{ article.description }}
+                            {% elif article.content | length > 250 %} <!-- the "| length" function counts the length of the content of the article, this function is from flask -->
+                                {{ article.content[0:249] + '...' }} <!-- python counts from 0 so its 250 in total -->
+                            {% else %}
+                                {{ article.content }}
+                            {% endif %}
+                            <!-- this if statement checks if theres a description and if so 
+                            prints it out, however if there isnt it'll print out the first 250
+                            characters of the content then add a ... afterwards -->
+                        </div>
+                        <div class="lead fs-5">
+                            Published {{ article.date }}
+                        </div>
                     </div>
                 </div>
             </div>
+        {% endfor %}
+
+        {% if articles[article_page * 5] == Null %} <!-- checks if theres less then 5 articles for the current page and if so executes the bottom -->
+            <div class="my-5 fs-1 fw-bold text-center"> <!-- my-5 sets the top and bottom margin to 3rem, fs-1 sets the font size to h1, fw-bolds sets the font weight to bold and text-center sets the text-align to center -->
+                Come Back Later When More Articles Are Published!
+            <div>
+        {% endif %}
+
+        <div class="container my-5 text-center">
+            
+            <a class="m-2 text-decoration-none" {% if article_page - 1 > 0 %}href="/articles/{{ article_page - 1 }}"{% endif %}> <!-- creates a hyperlinked svg image / icon that has an if statement to check if its on the first page and if so do not hyperlink it to the previous page -->
+                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-caret-left-fill" viewBox="0 2 16 18">
+                    <path d="m3.86 8.753 5.482 4.796c.646.566 1.658.106 1.658-.753V3.204a1 1 0 0 0-1.659-.753l-5.48 4.796a1 1 0 0 0 0 1.506z"/>
+                </svg>
+            </a>
+
+            {% if article_page - 2 > 0 %} <!-- checks if the user can go back two article pages without going under 0 and if so create content below -->
+                <a class="h3 m-2 text-decoration-none" href="/articles/{{ article_page - 2 }}">{{ article_page - 2 }}</a>
+            {% endif %}
+            {% if article_page - 1 > 0 %} <!-- checks if the user can go back one article pages without going under 0 and if so create content below -->
+                <a class="h3 m-2 text-decoration-none" href="/articles/{{ article_page - 1 }}">{{ article_page - 1 }}</a>
+            {% endif %}
+
+            <a class="h3 m-2 text-decoration-none active" aria-current="page">{{ article_page }}</a> <!-- shows the current page -->
+
+            {% if max_pages - article_page > 0 %} <!-- checks if the user can go forward one article pages without going over the max pages and if so create content below -->
+                <a class="h3 m-2 text-decoration-none" href="/articles/{{ article_page + 1 }}">{{ article_page + 1 }}</a>
+            {% endif %}
+
+            {% if max_pages - (article_page + 1) > 0 %} <!-- checks if the user can go forward two article pages without going over the max pages and if so create content below -->
+                <a class="h3 m-2 text-decoration-none" href="/articles/{{ article_page + 2 }}">{{ article_page + 2 }}</a>
+            {% endif %}
+
+            <a class="m-2 text-decoration-none" {% if max_pages - article_page > 0 %}href="/articles/{{ article_page + 1 }}{% endif %}"> <!-- creates a hyperlinked svg image / icon that has an if statement to check if it can go to the next page without going over the max pages -->
+                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-caret-right-fill" viewBox="0 2 16 18">
+                    <path d="m12.14 8.753-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z"/>
+                </svg>
+            </a>
         </div>
-    {% endfor %}
-
-    {% if articles[article_page * 5] == Null %}
-        <div class="my-5 fs-1 fw-bold text-center">
-            Come Back Later When More Articles Are Published!
-        <div>
-    {% endif %}
-
-    <div class="my-5 container text-center" style="width:100%;">
-        
-        <a class="m-2 text-decoration-none" {% if article_page - 1 > 0 %}href="/articles/{{ article_page - 1 }}"{% endif %}>
-            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-caret-left-fill" viewBox="0 2 16 18">
-                <path d="m3.86 8.753 5.482 4.796c.646.566 1.658.106 1.658-.753V3.204a1 1 0 0 0-1.659-.753l-5.48 4.796a1 1 0 0 0 0 1.506z"/>
-            </svg>
-        </a>
-
-        {% if article_page - 2 > 0 %}
-            <a class="h3 m-2 text-decoration-none" href="/articles/{{ article_page - 2 }}">{{ article_page - 2 }}</a>
-        {% endif %}
-        {% if article_page - 1 > 0 %}
-            <a class="h3 m-2 text-decoration-none" href="/articles/{{ article_page - 1 }}">{{ article_page - 1 }}</a>
-        {% endif %}
-
-        <a class="h3 m-2 text-decoration-none active" aria-current="page">{{ article_page }}</a>
-
-        {% if max_pages - article_page > 0 %}
-            <a class="h3 m-2 text-decoration-none" href="/articles/{{ article_page + 1 }}">{{ article_page + 1 }}</a>
-        {% endif %}
-
-        {% if max_pages - (article_page + 1) > 0 %}
-            <a class="h3 m-2 text-decoration-none" href="/articles/{{ article_page + 2 }}">{{ article_page + 2 }}</a>
-        {% endif %}
-
-        <a class="m-2 text-decoration-none" {% if max_pages - article_page > 0 %}href="/articles/{{ article_page + 1 }}{% endif %}">
-            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-caret-right-fill" viewBox="0 2 16 18">
-                <path d="m12.14 8.753-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z"/>
-            </svg>
-        </a>
     </div>
-</div>
-{% endblock %}
+{% endblock %} <!-- Tells flask that the block to add content in has ended -->

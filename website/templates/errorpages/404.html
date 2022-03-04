@@ -1,18 +1,18 @@
-{% extends "base.html" %}
-{% block title %}ZilloWirral | 404!{% endblock %}
+{% extends "base.html" %} <!-- uses base.html as a template to build the current page with the use of blocks -->
+{% block title %}ZilloWirral | 404!{% endblock %} <!-- Tells flask that the block to add content in has ended -->
 
 
-{% block cover_text %}About Zillo{% endblock %}
+{% block cover_text %}About Zillo{% endblock %} <!-- Tells flask that the block to add content in has ended -->
 
-{% block content %}
-<div class="container" style="width:100%;">
-    <div class="m-5 text-center">
-        <p class="fw-bold" style="font-size:11rem;">404!</p>
+{% block content %} <!-- Inserts content within the base html template with the same block name -->
+<div class="w-100"> <!-- w-100 sets the width to 100%-->
+    <div class="m-5 text-center"> <!-- m-5 sets the margin to 1rem * 3 (3rem), text-center just sets the style tag text-align to center -->
+        <p class="fw-bold" style="font-size:11rem;">404!</p> <!-- fw-bold sets the font wight to bold -->
     </div>
     <div class="m-5">
-        <p class="text-center lead">The page you're looking for could not be found!</p>
+        <p class="text-center lead">The page you're looking for could not be found!</p> <!-- lead simpily changes the text's font and size to make it stand out more -->
         <p class="text-center lead">Check if you've correctly entered the url from the addressbar.</p>
-        <p class="text-center lead">Or click <a href="/">here</a> to go back to the homepage.</p>
+        <p class="text-center lead">Or click <a href="/">here</a> to go back to the homepage.</p> <!-- the a tag used here is justs used to make a peice of text a hyper link text -->
     </div>
 </div>
-{% endblock %}
+{% endblock %} <!-- Tells flask that the block to add content in has ended -->

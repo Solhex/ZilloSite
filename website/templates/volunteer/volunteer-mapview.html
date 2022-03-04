@@ -1,40 +1,36 @@
-{% extends "base.html" %}
+{% extends "base.html" %} <!-- uses base.html as a template to build the current page with the use of blocks --> <!-- Tells flask that this html file will be added on to the base.html file via blocks -->
 
-{% block link %}
+{% block link %} <!-- Inserts content within the base html template with the same block name -->
   <link href="/static/css/mapview.css" rel="stylesheet" type="text/css"> <!-- Loads in the mapview css -->
-{% endblock %}
+{% endblock %} <!-- Tells flask that the block to add content in has ended -->
 
-{% block title %}ZilloWirral | Volunteer Mapview{% endblock %}
+{% block title %}ZilloWirral | Volunteer Mapview{% endblock %} <!-- Tells flask that the block to add content in has ended -->
 
-{% block sidebar_icon1 %}
+{% block sidebar_icon1 %} <!-- will be inserted into the corrosponding same named block within base.html -->
   <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="var(--2-clr)" class="bi bi-geo-alt" viewBox="0 0 16 16">
     <path d="M12.166 8.94c-.524 1.062-1.234 2.12-1.96 3.07A31.493 31.493 0 0 1 8 14.58a31.481 31.481 0 0 1-2.206-2.57c-.726-.95-1.436-2.008-1.96-3.07C3.304 7.867 3 6.862 3 6a5 5 0 0 1 10 0c0 .862-.305 1.867-.834 2.94zM8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10z"/>
     <path d="M8 8a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm0 1a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
   </svg>
-{% endblock %}
+{% endblock %} <!-- Tells flask that the block to add content in has ended -->
 
-{% block sidebar_icon2 %}
+{% block sidebar_icon2 %} <!-- will be inserted into the corrosponding same named block within base.html -->
   <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="var(--2-clr)" class="bi bi-list-task" viewBox="1 0 16 16">
     <path fill-rule="evenodd" d="M2 2.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5V3a.5.5 0 0 0-.5-.5H2zM3 3H2v1h1V3z"/>
     <path d="M5 3.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zM5.5 7a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1h-9zm0 4a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1h-9z"/>
     <path fill-rule="evenodd" d="M1.5 7a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5H2a.5.5 0 0 1-.5-.5V7zM2 7h1v1H2V7zm0 3.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5H2zm1 .5H2v1h1v-1z"/>
   </svg>
-{% endblock %}
+{% endblock %} <!-- Tells flask that the block to add content in has ended -->
 
-{% block content %}
+{% block content %} <!-- Inserts content within the base html template with the same block name -->
   <iframe 
-  src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d19032.095334512935!2d-3.0177396140079114!3d53.39672671631785!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2suk!4v1646162068200!5m2!1sen!2suk" 
-
-  frameborder="0" 
-  marginheight="0" 
-  marginwidth="0" 
-  width="100%" 
-  height="100%" 
-  scrolling="auto"
-
-  style="border:0;" 
-  allowfullscreen="" 
-  loading="lazy">
+    width="100%" 
+    height="100%" 
+    frameborder="0" 
+    scrolling="no" 
+    marginheight="0" 
+    marginwidth="0" 
+    src="https://www.openstreetmap.org/export/embed.html?bbox=-3.247146606445313%2C53.271783479238216%2C-3.1242370605468754%2C53.45412253304956&amp;layer=mapnik" 
+    style="border: 1px solid black">
   </iframe>
-  <!-- adds a regular google maps iframe -->
-{% endblock %}
+  <!-- adds a regular openstreetmap iframe with the width and height set to 100% and with out any margins nor borders and scrolling bars -->
+{% endblock %} <!-- Tells flask that the block to add content in has ended -->

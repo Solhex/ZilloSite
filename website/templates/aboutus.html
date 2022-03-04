@@ -1,44 +1,95 @@
-{% extends "base.html" %}
-{% block title %}ZilloWirral | About Us{% endblock %}
+{% extends "base.html" %} <!-- uses base.html as a template to build the current page with the use of blocks -->
+{% block title %}ZilloWirral | About Us{% endblock %} <!-- Tells flask that the block to add content in has ended -->
 
-{% block sidebar_icon1 %}
+{% block sidebar_icon1 %} <!-- will be inserted into the corrosponding same named block within base.html -->
     <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="var(--2-clr)" class="bi bi-house-heart" viewBox="0 0 16 16">
         <path fill-rule="evenodd" d="M8.707 1.5a1 1 0 0 0-1.414 0L.646 8.146a.5.5 0 0 0 .708.707L2 8.207V13.5A1.5 1.5 0 0 0 3.5 15h9a1.5 1.5 0 0 0 1.5-1.5V8.207l.646.646a.5.5 0 0 0 .708-.707L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.707 1.5ZM13 7.207l-5-5-5 5V13.5a.5.5 0 0 0 .5.5h9a.5.5 0 0 0 .5-.5V7.207Zm-5-.225C9.664 5.309 13.825 8.236 8 12 2.175 8.236 6.336 5.309 8 6.982Z"/>
     </svg>
-{% endblock %}
+{% endblock %} <!-- Tells flask that the block to add content in has ended -->
 
-<!--
-{% block sidebar_icon2 %}
-    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="var(--2-clr)" class="bi bi-house-heart" viewBox="0 0 16 16">
-        <path fill-rule="evenodd" d="M8.707 1.5a1 1 0 0 0-1.414 0L.646 8.146a.5.5 0 0 0 .708.707L2 8.207V13.5A1.5 1.5 0 0 0 3.5 15h9a1.5 1.5 0 0 0 1.5-1.5V8.207l.646.646a.5.5 0 0 0 .708-.707L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.707 1.5ZM13 7.207l-5-5-5 5V13.5a.5.5 0 0 0 .5.5h9a.5.5 0 0 0 .5-.5V7.207Zm-5-.225C9.664 5.309 13.825 8.236 8 12 2.175 8.236 6.336 5.309 8 6.982Z"/>
-    </svg>
-{% endblock %}
--->
+{% block cover_picture %}
+    <img src="\static\assets\placeholders\TEMP35_1.webp" alt="Pooltable in dim lighting" class="card-img"/>
+{% endblock %} <!-- Tells flask that the block to add content in has ended -->
+<!-- image ratio == 3.5:1-->
 
-{% block cover_text %}About Zillo{% endblock %}
+{% block cover_text %}About Zillo{% endblock %} <!-- Tells flask that the block to add content in has ended -->
 
-{% block content %}
-    <h1>this is the aboutus page</h1>
-    <h1>this is the aboutus page</h1>
-    <h1>this is the aboutus page</h1>
-    <h1>this is the aboutus page</h1>
-    <h1>this is the aboutus page</h1>
-    <h1>this is the aboutus page</h1>
-    <h1>this is the aboutus page</h1>
-    <h1>this is the aboutus page</h1>
-    <h1>this is the aboutus page</h1>
-    <h1>this is the aboutus page</h1>
-    <h1>this is the aboutus page</h1>
-    <h1>this is the aboutus page</h1>
-    <h1>this is the aboutus page</h1>
-    <h1>this is the aboutus page</h1>
-    <h1>this is the aboutus page</h1>
-    <h1>this is the aboutus page</h1>
-    <h1>this is the aboutus page</h1>
-    <h1>this is the aboutus page</h1>
-    <h1>this is the aboutus page</h1>
-    <h1>this is the aboutus page</h1>
-    <h1>this is the aboutus page</h1>
-    <h1>this is the aboutus page</h1>
-    <h1>this is the aboutus page</h1>
-{% endblock %}
+{% block content %} <!-- Inserts content within the base html template with the same block name -->
+    <div>
+        <div>
+            <div class="lead fs-4" style="margin: 0 10vw 0 10vw;">
+                Vel pretium lectus quam id leo. Ut pharetra sit amet aliquam id diam. 
+                Cursus sit amet dictum sit amet justo donec enim. Ut consequat semper 
+                viverra nam libero justo laoreet sit amet. Pellentesque habitant morbi 
+                tristique senectus et. Mauris commodo quis imperdiet massa tincidunt nunc 
+                pulvinar. Purus semper eget duis at tellus at. Enim nulla aliquet porttitor 
+                lacus luctus accumsan tortor posuere.
+                <br> <!-- adds a break line -->
+                <br>
+                Cursus eget nunc scelerisque viverra mauris in aliquam sem, nunc 
+                scelerisque viverra mauris in aliquam sem, magna aliqua. Cursus eget 
+                nunc scelerisque viverra mauris in aliquam sem, sed do eiusmod tempor 
+                incididunt ut labore et dolore magna.
+                <br>
+                <br>
+                Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+                Cursus eget nunc scelerisque 
+            </div>
+            <div class="text-center mx-auto my-5 pt-4 fw-bold fs-5 border-top border-2" style="width:25%;"> <!-- border-top creates a border line at the top of the div and border-2 sets the border width to 2px -->
+                - Us At Zillo
+                <div class="row row-col-3 mt-3"> <!-- creates a row with only 3 columns -->
+                    <div class="col mx-auto"><a class="link-dark" href="#"><svg class="bi" width="24" height="24"><use xlink:href="#twitter"></svg></a></div> <!-- the href="#" should be changed to the appropriate social media link -->
+                    <div class="col mx-auto"><a class="link-dark" href="#"><svg class="bi" width="24" height="24"><use xlink:href="#instagram"></svg></a></div> <!-- svg denotes a svg path will be inserted here with the approprate width and height -->
+                    <div class="col mx-auto"><a class="link-dark" href="#"><svg class="bi" width="24" height="24"><use xlink:href="#facebook"></svg></a></div> <!-- the use xlink:href="" is used to reference the previously denoted svg element within the top of the base.html file -->
+                </div>
+            </div>
+        </div>
+        <div class="py-5"> <!-- creates a top and bottom padding od 3rem -->
+            <div class="text-center fw-bold fs-1">
+                Want To Get Into Contact?
+            </div>
+            <div class="my-4 lead fs-4" style="margin: 0 10vw 0 10vw;"> <!-- the style creates a margin of 10vw on the left and right of the div -->
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do 
+                eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+                Cursus eget nunc scelerisque viverra mauris, adipiscing elit, sed do 
+                eiusmod tempor incididunt ut.
+            </div>
+            <div class="mx-auto py-4" style="width:60%;"> <!-- creates a 60% width div and uses mx-auto to set equal margins to center it -->
+                <form class="row g-2" method="POST"> <!-- will not be tied to a database but will be used with a email api to email the user for them to reply with -->
+                    <input type="hidden" name="form-name" value="contact_enquiry">
+                    <div class="col-10"> <!-- as within bootstrap sets the max row col to 12 ive set this to col-10 to cover 10 columns -->
+                        <input type="text" id="email" name="email" class="form-control" placeholder="Email Address" aria-label="Email Address">
+                    </div>
+                    <div class="col-2"> <!-- col-2 sets the column coverage to 2 -->
+                        <button type="submit" class="btn btn-primary">Enquire</button> <!-- a button input that sends off the information within the form with the method perviously set -->
+                    </div>
+                </form>
+            </div>
+            <div class="row row-col-3 mt-3 text-center mx-auto"> <!-- sets the max per row columns to 3 -->
+                <div style="width:45%;"><hr class="float-end" size="2px" style="width:35%;"></hr></div> <!-- hr creates a line with the size of 2px that floats to the right -->
+                <div class="col fs-4 fw-bold">Or</div>
+                <div style="width:45%;"><hr class="float-start" size="2px" style="width:35%;"></hr></div> <!-- hr creates a line with the size of 2px that floats to the left -->
+            </div>
+            <div class="mt-5 text-center mx-auto">
+                <div class="lead fw-bold fs-4">Contact Options</div>
+            </div>
+            <div class="row row-col-3 m-4 text-center mx-auto" style="width:75%;">
+                <div class="col lead fs-5">
+                    Email:
+                    <br>
+                    contactus@zillo.com
+                </div>
+                <div class="col lead fs-5">
+                    Zillo Phone number:
+                    <br>
+                    07xxxxxxxxx
+                </div>
+                <div class="col lead fs-5">
+                    Offices:
+                    <br>
+                    1 Address Example, Filler, Filler, Postcode
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %} <!-- Tells flask that the block to add content in has ended -->

@@ -5,3 +5,7 @@
     --4-clr: #fec601;
     --5-clr: #ea7317;
 }
+
+/** creates colour variables that can be easily changed 
+later for colour scheme changes or theme changes these can be 
+called by var(--x-clr) within html **/
