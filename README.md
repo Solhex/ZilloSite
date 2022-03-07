@@ -1,14 +1,22 @@
-# How to run the website
+# Before running the post production website
+Before running the code within a post production enviroment please do the following:
 
-Make sure python3 is installed
+* Set debug mode to `False` within `main.py`.
 
-Install all of the modules within requirements.txt, to do this easily, use within cmd in the zillosite directory:
+* Change the `app.config['SECRET_KEY']` within `website/__init__.py` to a long complex string value.
+
+# Running the website
+
+Make sure python3 is installed.
+
+Install all of the modules within `requirements.txt`, to do this easily, use within cmd in the zillosite directory:
 
 ```
 pip install -r requirements.txt
 ```
 
-If no errors have appeared, open and execute main.py
+If no errors have appeared, then open and execute `main.py` and thats it
+
 
 # How to edit the columns of existing databases 
 
@@ -41,3 +49,11 @@ flask db upgrade
 ```
 
 If no errors have appeared then its all done.
+
+If you want to revert changes you can simpily use:
+
+```
+flask db downgrade
+```
+
+To revert back to your older database.
