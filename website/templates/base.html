@@ -72,7 +72,7 @@
           <div><svg width="32" height="32" fill="var(--2-clr)"><use xlink:href="#list"></svg></div> <!-- Just adds a svg image with a css class -->
         </button>
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup"> <!-- collapse class tells any div to hide its content, practically also chaning the height to 0% -->
-          <div class="navbar-nav mx-auto"> <!-- mx-auto sets the margin x area to auto with css -->
+          <div class="navbar-nav"> <!-- navbar-nav simpily slightly modifies the styles of the text within but also designates what div will be used by the javascript later -->
             <a {% if current_page_num == 1 %}class="nav-link h5 m-2 active" aria-current="page"{% else %}class="nav-link h5 m-2"{% endif %} href="/">Home</a> <!-- a tag means when clicking the items within it it will redirect you to whats within the href tag -->
             <a {% if current_page_num == 2 %}class="nav-link h5 m-2 active" aria-current="page"{% else %}class="nav-link h5 m-2"{% endif %} href="/articles/1">Articles</a> <!-- anything within the curly brackets with percent signs will be executed as python code by flask here it is an if statement -->
             <a {% if current_page_num == 3 %}class="nav-link h5 m-2 active" aria-current="page"{% else %}class="nav-link h5 m-2"{% endif %} href="/events/events-gridview/1">Events</a> <!-- nav-link mostly acts as a decorator, the class h5 makes any text akin to the h5 element, m-2 increases the margin around the div / element -->
