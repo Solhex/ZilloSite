@@ -69,10 +69,16 @@
         <div class="col-2 border">
           Lastname
         </div>
-        <div class="col-2 border">
-          Picture Link
+        <div class="col-1 border">
+          Twitter ID
         </div>
-        <div class="col-3 border">
+        <div class="col-1 border">
+          Instagram ID
+        </div>
+        <div class="col-1 border">
+          Facebook ID
+        </div>
+        <div class="col-2 border">
           Articles Linked
         </div>
         <div class="col-2 border">
@@ -91,10 +97,16 @@
           <div class="col-2 border">
             {{ writer.lastname }}
           </div>
-          <div class="col-2 border">
-            {{ writer.picture_link }}
+          <div class="col-1 border">
+            {{ writer.twitterid }}
           </div>
-          <div class="col-3 border">
+          <div class="col-1 border">
+            {{ writer.instagramid }}
+          </div>
+          <div class="col-1 border">
+            {{ writer.facebookid }}
+          </div>
+          <div class="col-2 border">
             {{ writer.articles }}
           </div>
           <div class="col-2 border">
@@ -343,6 +355,46 @@
           </div>
           <div class="col-1 border">
             {{ volunteer.datetime_posted }}
+          </div>
+        </div>
+      {% endfor %}
+
+    </div>
+
+  <div class="p-2" style="width:100%;">
+
+    <h2>Event Comment</h2>
+
+    <div class="container my-5">
+
+      <div class="row">
+        <div class="col-1 border">
+          ID
+        </div>
+        <div class="col-3 border">
+          Username
+        </div>
+        <div class="col-6 border">
+          Content
+        </div>
+        <div class="col-2 border">
+          Event Link
+        </div>
+      </div>
+
+      {% for comment in comments %}
+        <div class="row">
+          <div class="col-1 border">
+            {{ comment.id }}
+          </div>
+          <div class="col-3 border">
+            {{ comment.username }}
+          </div>
+          <div class="col-6 border">
+            {{ comment.content }}
+          </div>
+          <div class="col-2 border">
+            {{ comment.event_id }}
           </div>
         </div>
       {% endfor %}

@@ -48,8 +48,8 @@ def create_database(app):                                           # creates a 
         if not path.exists('website' + 'databases' + key + '.db'):  # checks if the database for that key exists, if not then it executes the code below, the database' name and the key's name must be the same for this to work
             db.create_all(bind=key)                                 # uses flask_sqlalchemy's create_all function to create the file for the bind
     
-def create_dir():                                                                                   # creates a function
-    required_dirs = {'article_covers', 'writer_pfps', 'event_covers', 'volunteer_covers'}           # creates a set of required directories, sets are not organized nor can contain duplicates
-    for dir in required_dirs:                                                                       # creates a loop for each item within the list
-        if not path.exists(UPLOAD_FOLDER + dir):                                                    # checks if it exists, if not then it executes the code below
-            mkdir(UPLOAD_FOLDER + dir)                                                              # creates that directory
+def create_dir():                                                                   # creates a function
+    required_dirs = {'article_covers', 'event_covers', 'volunteer_covers'}          # creates a set of required directories, sets are not organized nor can contain duplicates
+    for dir in required_dirs:                                                       # creates a loop for each item within the list
+        if not path.exists(UPLOAD_FOLDER + dir):                                    # checks if it exists, if not then it executes the code below
+            mkdir(UPLOAD_FOLDER + dir)                                              # creates that directory

@@ -47,9 +47,19 @@
         <input type="text" id="lastname" name="lastname" class="form-control" placeholder="Lastname" aria-label="Lastname">
       </div>
 
-      <label for="pictureurl" class="form-label">Image Upload (16mb max upload)</label>
+      <label for="twitter" class="form-label">Twitter url id (do not add @)</label>
       <div class="input-group mb-3">
-        <input type="file" id="fileupload" name="fileupload" class="form-control">
+        <input type="text" id="twitter" name="twitter" class="form-control" placeholder="goodkidband" aria-label="twitter">
+      </div>
+
+      <label for="instagram" class="form-label">Instagram url id</label>
+      <div class="input-group mb-3">
+        <input type="text" id="instagram" name="instagram" class="form-control" placeholder="goodkidband" aria-label="instagram">
+      </div>
+
+      <label for="facebook" class="form-label">Facebook url id</label>
+      <div class="input-group mb-3">
+        <input type="text" id="facebook" name="facebook" class="form-control" placeholder="goodkidband" aria-label="facebook">
       </div>
 
       <div class="col-auto">
@@ -87,7 +97,7 @@
         <input type="file" id="fileupload" name="fileupload" class="form-control">
       </div>
 
-      <label for="date" class="form-label">Date</label>
+      <label for="date" class="form-label">Date Created (Not Published)</label>
       <div class="input-group mb-3">
         <input type="date" id="date" name="date" class="form-control" placeholder="Date" aria-label="Date">
       </div>
@@ -99,10 +109,10 @@
       
       <label for="description" class="form-label">Description</label>
       <div class="input-group mb-3">
-        <textarea id="description" name="description" class="form-control" style="height: 7.5em;" placeholder="Description" aria-label="Description"></textarea>
+        <textarea id="description" name="description" class="form-control w-100" style="height: 7.5em;" placeholder="Description" aria-label="Description"></textarea>
       </div>
 
-      <label for="content" class="form-label">Article Content*</label>
+      <label for="content" class="form-label">Article Content (use &lt;embedyt> to embed yt videos)*</label>
       <div class="input-group mb-3">
         <textarea id="content" name="content" class="form-control" style="height: 40em;" placeholder="Content" aria-label="Content"></textarea>
       </div>

@@ -5,7 +5,9 @@ class Writer(db.Model):                                     # defines the writer
     id = db.Column(db.Integer, primary_key=True)            # creates a column called id, as a integer, set as the primary key, meaning it'll increment every entry addition
     firstname = db.Column(db.String(50), nullable=False)    # creates a column called firstname, as a string with the max string length of 50, and make it required to be filled in
     lastname = db.Column(db.String(50), nullable=False)     # creates a column called lastname, as a string with the max string length of 50, and make it required to be filled in
-    picture_link = db.Column(db.Boolean(), default=False)   # creates a column called picture_link, as a boolean value (True / False), with the default value of False
+    twitterid = db.Column(db.String(50))                    # creates a column called twitterid, as a string with the max string length of 50
+    instagramid = db.Column(db.String(50))                  # creates a column called instagramid, as a string with the max string length of 50
+    facebookid = db.Column(db.String(50))                   # creates a column called facebookid, as a string with the max string length of 50
     datetime_joined = db.Column(db.DateTime(timezone=True), default=func.now()) # creates a column called datetime_joined, as a datetime python value, with the default value of the current datetime
     articles = db.relationship('Article')                   # creates a column of relationships between the article table
 
@@ -16,7 +18,7 @@ class Article(db.Model):                                    # defines the articl
     title = db.Column(db.String(100), nullable=False)       # creates a column called title, as a string with the max string length of 100, required to be filled in
     description = db.Column(db.String(256))                 # creates a column called description, as a string with the max string length of 256, not required to be filled in
     content = db.Column(db.String(5000), nullable=False)
-    youtube_embed_link = db.Column(db.String(200))
+    youtube_embed_link = db.Column(db.String(50))
     writer_id = db.Column(db.Integer, db.ForeignKey('writer.id'))               # creates a foreignkey between the writer table, with the writer id as the foreignkey
 
 class Subscription(db.Model):                               # defines the subscription table and uses db.model to inform that it comforms to the sqlalchemy module
@@ -29,7 +31,7 @@ class Event(db.Model):                                      # defines the event 
     __bind_key__ = 'event_database'                         # __bind_key__ binds it to the event_database database within app.config['SQLALCHEMY_BINDS']
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), nullable=False)
-    description = db.Column(db.String(256), nullable=False)
+    description = db.Column(db.String(1024), nullable=False)
     address1 = db.Column(db.String(256), nullable=False)
     address2 = db.Column(db.String(256))
     city = db.Column(db.String(256), nullable=False)
@@ -39,6 +41,15 @@ class Event(db.Model):                                      # defines the event 
     datetime_end = db.Column(db.DateTime(timezone=True))
     datetime_start = db.Column(db.DateTime(timezone=True))
     datetime_posted = db.Column(db.DateTime(timezone=True), nullable=False, default=func.now())
+    comments = db.relationship('EventComment')                                                              # creates a column of relationships between the eventcomment table
+
+class EventComment(db.Model):                               # defines the eventcomment table and uses db.model to inform that it comforms to the sqlalchemy module
+    __bind_key__ = 'event_database'                         # __bind_key__ binds it to the event_database database within app.config['SQLALCHEMY_BINDS']
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(100), nullable=False)
+    content = db.Column(db.String(512), nullable=False)
+    datetime_posted = db.Column(db.DateTime(timezone=True), nullable=False, default=func.now())
+    event_id = db.Column(db.Integer, db.ForeignKey('event.id'))             # creates a foreignkey between the event table, with the event id as the foreignkey
 
 class Volunteer(db.Model):                                  # defines the volunteer table and uses db.model to inform that it comforms to the sqlalchemy module
     __bind_key__ = 'volunteer_database'                     # __bind_key__ binds it to the volunteer_database database within app.config['SQLALCHEMY_BINDS']
