@@ -17,9 +17,8 @@
 {% endblock %} <!-- Tells flask that the block to add content in has ended -->
 
 {% block cover_picture %} <!-- will be inserted into the corrosponding same named block within base.html -->
-  <img src="\static\assets\page_covers\volunteer_gridview.webp" alt="" class="card-img"/>
+  <div class="view-image-container card-img" style="background-image: url('../../static/assets/page_covers/volunteer_gridview.webp');"></div>
 {% endblock %} <!-- Tells flask that the block to add content in has ended -->
-<!-- image ratio == 3.5:1-->
 
 {% block cover_text %}Volunteer Near You!{% endblock %}  <!-- will be inserted into the corrosponding same named block within base.html -->
 
@@ -35,7 +34,7 @@
     {% for volunteer in volunteers[ volunteer_page * 5 - 5: volunteer_page * 5 - 1 ] %}  <!-- creates a for loop for increments of 5 within the volunteers database query passed though by view.py -->
       <div class="row mb-5 g-3 w-100"> <div class="row mb-5 g-3 w-100"> <!-- g-3 sets the margin next to other elements to 1rem, w-100 sets the width to 100% -->
         <div class="col-lg text-center"> <!-- col-lg changes the column size to 100% width when sized down from 992px -->
-          <img src="\static\assets\volunteer_covers\{{ volunteer.id }}.webp" class="mx-auto rounded" style="width:70%;"/> <!-- inserts the volunteer image which corrosponds to the volunteer id + .webp, and also rounded slightly rounds the image to be more appealing -->
+          <div class="gridview-image-container mx-auto rounded" style="background-image: url(../../static/assets/volunteer_covers/{{ volunteer.id }}.webp); width:70%;"></div> <!-- inserts the volunteer image which corrosponds to the volunteer id + .webp, and also rounded slightly rounds the image to be more appealing -->
         </div>
         <div class="col-lg">
           <div class="mx-auto" style="width:80%"> <!-- mx-auto sets the left and right margin to equally take up any remaining x space -->

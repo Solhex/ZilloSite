@@ -1,45 +1,104 @@
 {% extends "/support/support-base.html" %} <!-- uses /support/support-base.html as a template to build the current page with the use of blocks -->
 {% block title %}ZilloWirral | Support Home{% endblock %} <!-- Tells flask that the block to add content in has ended -->
 
-{% block sidebar_icon1 %} <!-- will be inserted into the corrosponding same named block within base.html -->
-  <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="var(--2-clr)" class="bi bi-geo-alt" viewBox="0 0 16 16">
-    <path d="M12.166 8.94c-.524 1.062-1.234 2.12-1.96 3.07A31.493 31.493 0 0 1 8 14.58a31.481 31.481 0 0 1-2.206-2.57c-.726-.95-1.436-2.008-1.96-3.07C3.304 7.867 3 6.862 3 6a5 5 0 0 1 10 0c0 .862-.305 1.867-.834 2.94zM8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10z"/>
-    <path d="M8 8a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm0 1a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
-  </svg>
-{% endblock %} <!-- Tells flask that the block to add content in has ended -->
-
-{% block sidebar_icon2 %} <!-- will be inserted into the corrosponding same named block within base.html -->
-  <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="var(--2-clr)" class="bi bi-list-task" viewBox="1 0 16 16">
-    <path fill-rule="evenodd" d="M2 2.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5V3a.5.5 0 0 0-.5-.5H2zM3 3H2v1h1V3z"/>
-    <path d="M5 3.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zM5.5 7a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1h-9zm0 4a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1h-9z"/>
-    <path fill-rule="evenodd" d="M1.5 7a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5H2a.5.5 0 0 1-.5-.5V7zM2 7h1v1H2V7zm0 3.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5H2zm1 .5H2v1h1v-1z"/>
-  </svg>
-{% endblock %} <!-- Tells flask that the block to add content in has ended -->
+{% block cover_picture %}
+  <div class="view-image-container card-img" style="background-image: url('../../static/assets/page_covers/support/home.webp');"></div>
+{% endblock %}
 
 {% block cover_text %}Support{% endblock %} <!-- Tells flask that the block to add content in has ended -->
 
 {% block content %} <!-- Inserts content within the base html template with the same block name -->
-  <h1>this is the support-addiction page</h1>
-  <h1>this is the support-addiction page</h1>
-  <h1>this is the support-addiction page</h1>
-  <h1>this is the support-addiction page</h1>
-  <h1>this is the support-addiction page</h1>
-  <h1>this is the support-addiction page</h1>
-  <h1>this is the support-addiction page</h1>
-  <h1>this is the support-addiction page</h1>
-  <h1>this is the support-addiction page</h1>
-  <h1>this is the support-addiction page</h1>
-  <h1>this is the support-addiction page</h1>
-  <h1>this is the support-addiction page</h1>
-  <h1>this is the support-addiction page</h1>
-  <h1>this is the support-addiction page</h1>
-  <h1>this is the support-addiction page</h1>
-  <h1>this is the support-addiction page</h1>
-  <h1>this is the support-addiction page</h1>
-  <h1>this is the support-addiction page</h1>
-  <h1>this is the support-addiction page</h1>
-  <h1>this is the support-addiction page</h1>
-  <h1>this is the support-addiction page</h1>
-  <h1>this is the support-addiction page</h1>
-  <h1>this is the support-addiction page</h1>
+  <div class="mb-5 fs-1 fw-bold text-center">
+    Seeking Help?
+  </div>
+
+  <div class="row" style="margin: 0 10vw 0 10vw;">
+    <div class="col-lg">
+      <div class="pb-5 lead fs-4">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
+        sed do eiusmod tempor incididunt ut labore et dolore magna 
+        aliqua. Cursus eget nunc scelerisque viverra mauris in 
+        aliquam sem, ipsum dolor sit amet, consectetur adipiscing elit, 
+        sed do eiusmod tempor incididunt ut labore et dolore magna 
+        aliqua. Cursus eget nunc scelerisque viverra mauris in 
+        aliquam sem. Cursus eget nunc scelerisque viverra mauris in 
+        aliquam sem, ipsum dolor sit amet, consectetur adipiscing elit, 
+        sed do eiusmod tempor incididunt ut labore et dolore magna 
+        aliqua. Cursus eget nunc scelerisque viverra mauris in 
+        aliquam sem.
+      </div>
+    </div>
+    <div class="col-lg">
+      <div class="text-center">
+        <iframe 
+        width="560" 
+        height="315" 
+        src="https://www.youtube.com/embed/C0DPdy98e4c" 
+        title="YouTube video player" 
+        frameborder="0" 
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+        allowfullscreen>
+        </iframe>
+      </div>
+    </div>
+  </div>
+
+  <div style="width:100%;">
+    <hr class="mx-auto m-5" size="2px" style="width:50%;"></hr>
+  </div>
+
+  <div class="row mb-5 g-3" style="margin: 0 10vw 0 10vw;">
+
+    <div class="col-lg my-auto">
+      <div class="mb-3 fs-2 fw-bold text-center">
+        Lorem ipsum dolor sit
+      </div>
+      <div class="pb-5 mx-auto lead fs-4" style="width:40rem;">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
+        sed do eiusmod tempor incididunt ut labore et dolore magna 
+        aliqua.
+      </div>
+      <div class="mb-3 fs-2 fw-bold text-center">
+        Lorem ipsum dolor sit
+      </div>
+      <div class="pb-5 mx-auto lead fs-4" style="width:40rem;">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
+        sed do eiusmod tempor incididunt ut labore et dolore magna 
+        aliqua.
+      </div>
+      <div class="mb-3 fs-2 fw-bold text-center">
+        Lorem ipsum dolor sit
+      </div>
+      <div class="pb-5 mx-auto lead fs-4" style="width:40rem;">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
+        sed do eiusmod tempor incididunt ut labore et dolore magna 
+        aliqua.
+      </div>
+
+    </div>
+
+    <div class="col-lg">
+
+      <div class="mb-3 fs-2 fw-bold text-center">
+        Lorem ipsum dolor sit
+      </div>
+      <div class="pb-5 mx-auto lead fs-4" style="width:40rem;">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do 
+        eiusmod tempor incididunt ut labore et dolore magna aliqua. Nisl 
+        pretium fusce id velit ut tortor. Pellentesque massa placerat 
+        duis ultricies lacus. Lobortis scelerisque fermentum dui 
+        faucibus in ornare quam viverra. Bibendum arcu vitae elementum 
+        curabitur vitae nunc sed. Id nibh tortor id aliquet lectus proin 
+        nibh nisl condimentum. Pharetra convallis posuere morbi leo urna 
+        molestie. Tortor aliquam nulla facilisi cras fermentum odio eu 
+        feugiat. Eu tincidunt tortor aliquam nulla facilisi cras 
+        fermentum odio. Libero enim sed faucibus turpis in. Sit amet 
+        aliquam id diam maecenas ultricies mi eget mauris. Accumsan 
+        tortor posuere ac ut consequat semper viverra nam libero. Odio 
+        pellentesque diam volutpat commodo sed egestas egestas fringilla.
+      </div>
+
+    </div>
+
+  </div>
 {% endblock %} <!-- Tells flask that the block to add content in has ended -->

@@ -8,9 +8,8 @@
 {% endblock %} <!-- Tells flask that the block to add content in has ended -->
 
 {% block cover_picture %}
-    <img src="\static\assets\page_covers\aboutus.webp" alt="Pooltable in dim lighting" class="card-img"/>
+    <div class="view-image-container card-img" style="background-image: url('../../static/assets/page_covers/aboutus.webp');"></div>
 {% endblock %} <!-- Tells flask that the block to add content in has ended -->
-<!-- image ratio == 3.5:1-->
 
 {% block cover_text %}About Zillo{% endblock %} <!-- Tells flask that the block to add content in has ended -->
 
@@ -18,29 +17,37 @@
     <div>
         <div>
             <div class="lead fs-4" style="margin: 0 10vw 0 10vw;">
-                Vel pretium lectus quam id leo. Ut pharetra sit amet aliquam id diam. 
-                Cursus sit amet dictum sit amet justo donec enim. Ut consequat semper 
-                viverra nam libero justo laoreet sit amet. Pellentesque habitant morbi 
-                tristique senectus et. Mauris commodo quis imperdiet massa tincidunt nunc 
-                pulvinar. Purus semper eget duis at tellus at. Enim nulla aliquet porttitor 
-                lacus luctus accumsan tortor posuere.
+                The Zillo website was created specifically for young audiances living 
+                within the Wirral peninsula to engauge within the community and spread, 
+                their ideas, experiences, and thoughts on the happenings of the community.
                 <br> <!-- adds a break line -->
                 <br>
-                Cursus eget nunc scelerisque viverra mauris in aliquam sem, nunc 
-                scelerisque viverra mauris in aliquam sem, magna aliqua. Cursus eget 
-                nunc scelerisque viverra mauris in aliquam sem, sed do eiusmod tempor 
-                incididunt ut labore et dolore magna.
+                Here we offer a hub of articles, events and voluntering work to do, all to 
+                get younger folk out and about, especially with our Young Reporters Initiative 
+                that enables young folk to publish their own opinions, view points and 
+                interests to a larger audiance, so please support us and them!
                 <br>
                 <br>
-                Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-                Cursus eget nunc scelerisque 
+                We can also thank our upbringing and website to the kind folks over at the 
+                <u><a href="www.wmc.ac.uk">Wirral Metropolitan College</a></u>, starting 
+                in April 2020 we've always tried working as close as possible with web 
+                development students to transform Zillo into a website made by the youth 
+                for the youth, we went from consept to beta sites all the way to a fully 
+                fleged website, all completed as a part of their final exams to get them 
+                ready for a real one-to-one web development discussion.
+                <br>
+                <br>
+                As our partnership with the folks at 
+                <u><a href="www.wmc.ac.uk">Wirral Metropolitan College</a></u> grow and 
+                progress you can surely expect more from us within the near future providing 
+                more oppertunities for students across the college.
             </div>
             <div class="text-center mx-auto my-5 pt-4 fw-bold fs-5 border-top border-2" style="width:25%;"> <!-- border-top creates a border line at the top of the div and border-2 sets the border width to 2px -->
                 - Us At Zillo
                 <div class="row row-col-3 mt-3"> <!-- creates a row with only 3 columns -->
-                    <div class="col mx-auto"><a class="link-dark" href="#"><svg class="bi" width="24" height="24"><use xlink:href="#twitter"></svg></a></div> <!-- the href="#" should be changed to the appropriate social media link -->
-                    <div class="col mx-auto"><a class="link-dark" href="#"><svg class="bi" width="24" height="24"><use xlink:href="#instagram"></svg></a></div> <!-- svg denotes a svg path will be inserted here with the approprate width and height -->
-                    <div class="col mx-auto"><a class="link-dark" href="#"><svg class="bi" width="24" height="24"><use xlink:href="#facebook"></svg></a></div> <!-- the use xlink:href="" is used to reference the previously denoted svg element within the top of the base.html file -->
+                    <div class="col mx-auto"><a class="link-dark" href="https://twitter.com/WirralCouncil"><svg class="bi" width="24" height="24"><use xlink:href="#twitter"></svg></a></div> <!-- the href="#" should be changed to the appropriate social media link -->
+                    <div class="col mx-auto"><a class="link-dark" href="https://www.instagram.com/wirralcouncil/"><svg class="bi" width="24" height="24"><use xlink:href="#instagram"></svg></a></div> <!-- svg denotes a svg path will be inserted here with the approprate width and height -->
+                    <div class="col mx-auto"><a class="link-dark" href="https://www.facebook.com/wirralcouncil"><svg class="bi" width="24" height="24"><use xlink:href="#facebook"></svg></a></div> <!-- the use xlink:href="" is used to reference the previously denoted svg element within the top of the base.html file -->
                 </div>
             </div>
         </div>
@@ -49,19 +56,23 @@
                 Want To Get Into Contact?
             </div>
             <div class="my-4 lead fs-4" style="margin: 0 10vw 0 10vw;"> <!-- the style creates a margin of 10vw on the left and right of the div -->
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do 
-                eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-                Cursus eget nunc scelerisque viverra mauris, adipiscing elit, sed do 
-                eiusmod tempor incididunt ut.
+                We here at Zillo pride our selves on our transparency with our 
+                and the rest of the Wirral community, when it comes to organizational 
+                communitive transactions amongst our organization, if you would like 
+                to get to know more about us here at Zillo, or even Wirral, please 
+                do enquire about it with us below!
             </div>
             <div class="mx-auto py-4" style="width:60%;"> <!-- creates a 60% width div and uses mx-auto to set equal margins to center it -->
-                <form class="row g-2" method="POST"> <!-- will not be tied to a database but will be used with a email api to email the user for them to reply with -->
+                <form method="POST"> <!-- will not be tied to a database but will be used with a email api to email the user for them to reply with -->
                     <input type="hidden" name="form-name" value="contact_enquiry">
-                    <div class="col-10"> <!-- as within bootstrap sets the max row col to 12 ive set this to col-10 to cover 10 columns -->
+                    <div>
                         <input type="text" id="email" name="email" class="form-control" placeholder="Email Address" aria-label="Email Address">
                     </div>
-                    <div class="col-2"> <!-- col-2 sets the column coverage to 2 -->
-                        <button type="submit" class="btn btn-primary">Enquire</button> <!-- a button input that sends off the information within the form with the method perviously set -->
+                    <div class="my-3">
+                        <textarea id="message" name="message" class="form-control" style="height: 7.5em;" placeholder="Message" aria-label="Message"></textarea>
+                    </div>
+                    <div>
+                        <button type="submit" class="btn btn-primary w-100">Enquire</button> <!-- a button input that sends off the information within the form with the method perviously set -->
                     </div>
                 </form>
             </div>

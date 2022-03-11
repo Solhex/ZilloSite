@@ -14,3 +14,26 @@ a {
 so far its dedicated to chaning the html colour when, hovering, 
 clicked, and inactive, !important forces changes irriguardless of
 style priority **/
+
+.view-image-container {
+    width: 100%;
+    height: 32rem;
+    background-size: cover;
+    background-position: center;
+}
+
+.gridview-image-container {
+    width: 100%;
+    height: 17.5vw;
+    background-size: cover;
+    background-position: center;
+}
+
+@media only screen and (max-width: 992px) {
+    .gridview-image-container {
+        height: 32.5vw;
+    }
+}
+
+/** this changes any differently aspect ratio sized image to a 
+aspect ratio near 3.5:1 (maybe 0-2px off)**/
