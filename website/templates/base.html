@@ -6,7 +6,7 @@
 
     <meta charset="utf-8" /> <!-- Tells the browser what charset it is in -->
     <meta name="viewport" content="width=device-width, initial-scale=1" /> <!-- Tells the browser what size should the site be viewed in -->
-    <meta name="description" content="A Personal Portfolio for whatever alias I'm using."> <!--Gives the description to the search engine to dislpay-->
+    <meta name="description" content="Here at Zillo we impower younger audiances to explore and report insteresting events and happenings around the Wirral Peninsula, Join us and help out empowering the community for younger people to enjoy."> <!--Gives the description to the search engine to dislpay-->
     <meta name="author" content="Cassis Texic / 30164968"> <!--Just a label to say who made the site-->
     <meta name="keywords" content="zillo, zillowirral, wirral, help, youth, test, test site"> <!--Keywords to help the website be found-->
 
@@ -69,12 +69,12 @@
           </a> <!-- Ends the a tag -->
         </div>
         <button class="navbar-toggler m-2 mx-3" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation"> <!-- data-bs-toggle and data-bs-target uses a javascript to change all collapse class divs to hide their content, aria declarations is used on interactive elements to be interactive with other aria declarations -->
-          <div><svg width="32" height="32" fill="var(--2-clr)"><use xlink:href="#list"></svg></div> <!-- Just adds a svg image with a css class -->
+          <div><svg width="32" height="32" fill="var(--2-clr)"><use xlink:href="#list"></svg></div> <!-- Just adds a svg with the height and width of 32 and the colour as 2-clr from variables.css image -->
         </button>
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup"> <!-- collapse class tells any div to hide its content, practically also chaning the height to 0% -->
           <div class="navbar-nav mx-auto"> <!-- mx-auto sets the margin x area to auto with css -->
             <a {% if current_page_num == 1 %}class="nav-link h5 m-2 active" aria-current="page"{% else %}class="nav-link h5 m-2"{% endif %} href="/">Home</a> <!-- a tag means when clicking the items within it it will redirect you to whats within the href tag -->
-            <a {% if current_page_num == 2 %}class="nav-link h5 m-2 active" aria-current="page"{% else %}class="nav-link h5 m-2"{% endif %} href="/articles/1">Articles</a> <!-- anything within the curly brackets with percent signs will be executed as python code by flask here it is an if statement -->
+            <a {% if current_page_num == 2 %}class="nav-link h5 m-2 active" aria-current="page"{% else %}class="nav-link h5 m-2"{% endif %} href="/articles/articles/1">Articles</a> <!-- anything within the curly brackets with percent signs will be executed as python code by flask here it is an if statement -->
             <a {% if current_page_num == 3 %}class="nav-link h5 m-2 active" aria-current="page"{% else %}class="nav-link h5 m-2"{% endif %} href="/events/events-gridview/1">Events</a> <!-- nav-link mostly acts as a decorator, the class h5 makes any text akin to the h5 element, m-2 increases the margin around the div / element -->
             <a {% if current_page_num == 4 %}class="nav-link h5 m-2 active" aria-current="page"{% else %}class="nav-link h5 m-2"{% endif %} href="/volunteer/volunteer-gridview/1">Volunteer</a> <!-- as a if statement was used, flask requires a endif in curlybrackets and percent signs area to close off the code affected by the statement -->
             <a {% if current_page_num == 5 %}class="nav-link h5 m-2 active" aria-current="page"{% else %}class="nav-link h5 m-2"{% endif %} href="/support/support-home">Support</a>
@@ -108,13 +108,13 @@
           {% block cover_picture %} <!-- Tells flask that the block to add content in has ended -->
           {% endblock %} <!-- Tells flask that the block to add content in has ended -->
         </div>
-        <div class="position-absolute start-50 translate-middle px-2 bg-light" style="top:12.5vw; border-radius:3px"> <!-- position-absolute class sets the position to absolute start-50 sets the x measurement to 50% of the viewport's size in pixels, translate-middle gets half of the div's size and takes it off of start-50 to make the div in the center px-2 sets the padding of the div to 1rem * .5 bg-light justs sets the background-color and text-color to a light theme -->
+        <div class="position-absolute start-50 translate-middle px-2 bg-light" style="top:16rem; border-radius:3px"> <!-- position-absolute class sets the position to absolute start-50 sets the x measurement to 50% of the viewport's size in pixels, translate-middle gets half of the div's size and takes it off of start-50 to make the div in the center px-2 sets the padding of the div to 1rem * .5 bg-light justs sets the background-color and text-color to a light theme -->
           <h1 style="font-size:4vw;"><b>{% block cover_text %}{% endblock %}</b></h1> <!-- uses a h1 tag with the font-size style to change the font size to 4vw which resizes with the viewport, the <b></b> tags just make the text bold, if i used the fw-bold class here it would change the font to bootstraps perfered font which is ok but it didnt feel pronounced enough for me -->
         </div>
       </div>
     {% endif %} <!-- ends the if statement -->
 
-    <div style="{% if sidebar_segments >= 1 %}margin-left:4rem;{% endif %} {% if cover_picture %}margin-top: 30vw;{% endif %}">
+    <div style="{% if sidebar_segments >= 1 %}margin-left:4rem;{% endif %} {% if cover_picture %}margin-top: 35rem;{% endif %}">
       {% block content %} <!-- Inserts content within the base html template with the same block name -->
       {% endblock %} <!-- Tells flask that the block to add content in has ended -->
     </div>
@@ -127,7 +127,7 @@
               <h5>Sections</h5> <!-- h5 tag to add text within a heading 5 size -->
               <div class="nav flex-column"> <!-- nav justs changes the appearance of links slightly, flex-column makes the column display set to flex -->
                 <div class="nav-item mb-2"><a href="/" class="nav-link p-0">Home</a></div> <!-- nav-item applies mostly aesthetic features to any text within -->
-                <div class="nav-item mb-2"><a href="/articles/1" class="nav-link p-0">Articles</a></div> <!-- mb-2 sets the bottom margin to 1rem * .5 (.5rem) -->
+                <div class="nav-item mb-2"><a href="/articles/articles/1" class="nav-link p-0">Articles</a></div> <!-- mb-2 sets the bottom margin to 1rem * .5 (.5rem) -->
                 <div class="nav-item mb-2"><a href="/events/events-gridview/1" class="nav-link p-0">Events</a></div> <!-- p-0 sets the padding to 0 -->
                 <div class="nav-item mb-2"><a href="/volunteer/volunteer-gridview/1" class="nav-link p-0">Volunteer</a></div>
               </div>
@@ -157,9 +157,9 @@
           <div class="d-flex justify-content-between py-4 my-4 border-top">
             <p>&copy; 2022 Zillo, All rights reserved.</p> <!-- &copy; justs adds the copyright symbol to the paragraph like a normal character -->
             <div class="d-flex"> <!-- d-flex makes all children elements display set to flex -->
-              <div class="ms-3"><a href="#"><svg width="24" height="24"><use xlink:href="#twitter"></svg></a></div> <!-- the href="#" should be changed to the appropriate social media link -->
-              <div class="ms-3"><a href="#"><svg width="24" height="24"><use xlink:href="#instagram"></svg></a></div> <!-- svg denotes a svg path will be inserted here with the approprate width and height -->
-              <div class="ms-3"><a href="#"><svg width="24" height="24"><use xlink:href="#facebook"></svg></a></div> <!-- the use xlink:href="" is used to reference the previously denoted svg element at the top of the html file -->
+              <div class="ms-3"><a href="https://twitter.com/WirralCouncil"><svg width="24" height="24"><use xlink:href="#twitter"></svg></a></div> <!-- the href="#" should be changed to the appropriate social media link -->
+              <div class="ms-3"><a href="https://www.instagram.com/wirralcouncil/"><svg width="24" height="24"><use xlink:href="#instagram"></svg></a></div> <!-- svg denotes a svg path will be inserted here with the approprate width and height -->
+              <div class="ms-3"><a href="https://www.facebook.com/wirralcouncil"><svg width="24" height="24"><use xlink:href="#facebook"></svg></a></div> <!-- the use xlink:href="" is used to reference the previously denoted svg element at the top of the html file -->
             </div>
           </div>
         </footer>
