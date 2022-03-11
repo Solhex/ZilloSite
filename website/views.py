@@ -1,5 +1,5 @@
-from flask import Blueprint, render_template, request, flash, redirect, current_app # imports basic flask modules
-from .models import Article, Writer, Subscription, Event, Volunteer                 # imports all database classes that'll be used to format entries
+from flask import Blueprint, render_template, request, flash, redirect, current_app, abort          # imports basic flask modules
+from .models import Article, Writer, Subscription, Event, Volunteer, EventComment                   # imports all database classes that'll be used to format entries
 from sqlalchemy import desc                                                         # imports desc used for queries to sort in decending order
 from . import db                                                                    # imports db from __init__.py
 from datetime import datetime                                                       # import datetime to get the current date and time
@@ -11,7 +11,7 @@ views = Blueprint('views', __name__)                                            
 
 EMAIL_REGEX = r'\b[\w\d.%+-]+@[A-Za-z\d]+(\.[A-Za-z]{2,}){1,2}\b'                   # creates a real string variable with a regex pattern for matching emails within, capitalized to remind other editors that it should be treated like a constant
 POSTCODE_REGEX = r'\b[A-Za-z]{1,2}(\d{1,2}|\d[A-Za-z]) ?\d[A-Za-z]{2}\b'            # creates a real string variable with a regex pattern for matching postcodes within
-ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'webp', 'ico'}                        # creates a set of file types allowed to be uploaded, sets are not organized nor can contain duplicates
+ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'webp', 'ico'}                          # creates a set of file types allowed to be uploaded, sets are not organized nor can contain duplicates
 
 def allowed_file(filename):                                                                         # creates a function with the file's name passed in
 	return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS             # returns a True or False if the extention of the filename is within the ALLOWED_EXTENSIONS set
@@ -61,7 +61,7 @@ def error_404():
 @views.route('/', methods=['GET', 'POST'])                          # a decorator that calls the funcation below when routed to / from any html page, methods are used to denote what requests are allowed to be made, POST is need to post infomration and GET is needed to get that information
 def home():
     page_settings = {                                               # creates a dictionary called page_settings
-        'cover_picture': True,                                      # adds the cover_picture as a key and False as it's value to the dictionary, this means the cover photo will appear within the html page, make sure to add the appropriate blocks to add the title and image link wihtin the html pages
+        'cover_picture': True,                                      # adds the cover_picture as a key and False as it's value to the dictionary, this means the cover photo will appear within the html page, make sure to add the appropriate blocks to add the title and image link within the html pages
         'current_page': 1,                                          # adds the current_page as a key and 0 as it's value to the dictionary
         'footer' : True,                                            # adds the footer as a key and True as it's value to the dictionary
         'sidebar_segments':1 #maximum 2                             # adds the sidebar_segments as a key and 2 as it's value to the dictionary
@@ -84,7 +84,7 @@ def home():
         articles=dbarticles                                         # creates a variable called articles that passes though dbarticles, the article query
         )                                                           # ends render_template function
 
-@views.route('/articles/<int:pg>', methods=['GET', 'POST'])         # a decorator that calls the funcation below when routed to /articles/<insert_integer_number> from any html page, <int:pg> acts like a variable that will be used to check for the page number, any number can be inserted so long as its an integer, a number must be inserted else it will 404
+@views.route('/articles/articles/<int:pg>', methods=['GET', 'POST'])                # a decorator that calls the funcation below when routed to /articles/articles/<insert_integer_number> from any html page, <int:pg> acts like a variable that will be used to check for the page number, any number can be inserted so long as its an integer, a number must be inserted else it will 404
 def articles(pg):                                                   # creates a function called articles but also passes though the value of <int:pg> to be used later
     page_settings = {                                               # creates a dictionary called page_settings
         'cover_picture': True,                                      # adds the cover_picture as a key and False as it's value to the dictionary
@@ -93,7 +93,7 @@ def articles(pg):                                                   # creates a 
         'sidebar_segments':1 #maximum 2                             # adds the sidebar_segments as a key and 2 as it's value to the dictionary
         }                                                           # closes the dictionary
     sidebar_links = [                                               # creates a list called sidebar_links
-        '/articles/1'                                               # adds articles/1 to the list
+        '/articles/articles/1'                                      # adds /articles/articles/1 to the list
     ]                                                               # closes the list
 
     subscribeForm()                # executes the subscribeForm function
@@ -103,7 +103,7 @@ def articles(pg):                                                   # creates a 
     dbarticledivision = (-(-len(dbarticles)//5))                    # creates a variable called dbarticledivision which gets the length of dbarticles and integer divides it by five while rounding it up
 
     return render_template(                                         # returns render_template, this function means it'll render a html file for the user to see when this function is called
-        './articles.html',                                          # passes through the relative path of the page it'll send the user to, here it is /articles page
+        './articles/articles.html',                                                 # passes through the relative path of the page it'll send the user to, here it is /articles/articles page
         cover_picture=page_settings['cover_picture'],               # creates a variable called cover_picture with the value within page_settings' cover_picture key, the passes it though to be used within the html file
         current_page_num=page_settings['current_page'],             # creates a variable called current_page_num with the value within page_settings' current_page key
         footer=page_settings['footer'],                             # creates a variable called footer with the value within page_settings' footer key
@@ -112,6 +112,43 @@ def articles(pg):                                                   # creates a 
         articles=dbarticles,                                        # creates a variable called articles with the value of dbarticles, the query made before
         max_pages=dbarticledivision,                                # creates a variable called max_pages with the value of dbarticledivision
         article_page=pg                                             # creates a variable called article_page with the value of pg, the passed though value from the url
+        )                                                           # ends render_template function
+
+@views.route('/articles/article-view/<string:articletitle>', methods=['GET', 'POST'])               # a decorator that calls the funcation below when routed to /articles/articles/<insert_string> from any html page, <string:articletitle> acts like a variable that will be used to check for the article, it will 404 if an improper title is inserted
+def articleView(articletitle):                                                                      # creates a function called articles but also passes though the value of <string:articletitle> to be used later
+    page_settings = {                                               # creates a dictionary called page_settings
+        'cover_picture': True,                                      # adds the cover_picture as a key and False as it's value to the dictionary
+        'current_page': 2,                                          # adds the current_page as a key and 0 as it's value to the dictionary
+        'footer' : True,                                            # adds the footer as a key and True as it's value to the dictionary
+        'sidebar_segments':1 #maximum 2                             # adds the sidebar_segments as a key and 2 as it's value to the dictionary
+        }                                                           # closes the dictionary
+    sidebar_links = [                                               # creates a list called sidebar_links
+        '/articles/articles/1'                                      # adds /articles/articles/1 to the list
+    ]                                                               # closes the list
+
+    subscribeForm()                # executes the subscribeForm function
+
+    articletitle = articletitle.replace('-',' ')
+
+    dbarticle = Article.query.filter_by(title=articletitle).first() # uses a query filter to the article from the Articles database, this query will be used to show article items / to pass though a query of the article to the html page
+
+    if not dbarticle:                                               # this is used to check if the article doesnt exists
+        abort(404)                                                  # this is used to raise a 404 if the article doesnt exist
+
+    dbwriter = Writer.query.filter_by(id=dbarticle.writer_id).first()               # uses a query filter to get the article's writer's information
+        
+    max_article = Article.query.order_by(desc(Article.id)).first().id               # uses a query filter to get items from the Articles database and sorts them by decending id value, and limits the query to 50 rows, this query will be used to show article items / to pass though a query of the database to the html page
+
+    return render_template(                                         # returns render_template, this function means it'll render a html file for the user to see when this function is called
+        './articles/article-view.html',                             # passes through the relative path of the page it'll send the user to, here it is /articles/articles page
+        cover_picture=page_settings['cover_picture'],               # creates a variable called cover_picture with the value within page_settings' cover_picture key, the passes it though to be used within the html file
+        current_page_num=page_settings['current_page'],             # creates a variable called current_page_num with the value within page_settings' current_page key
+        footer=page_settings['footer'],                             # creates a variable called footer with the value within page_settings' footer key
+        sidebar_links=sidebar_links,                                # creates a variable called sidebar_links with the list of sidebar_links
+        sidebar_segments=page_settings['sidebar_segments'],         # creates a variable called sidebar_segments with the value within page_settings' sidebar_segments key
+        max_article=max_article,                                    # creates a variable called articles with the value of dbarticles, the query made before
+        article=dbarticle,                                          # creates a variable called articles with the value of dbarticles, the query made before
+        writer=dbwriter                                             # creates a variable called articles with the value of dbarticles, the query made before
         )                                                           # ends render_template function
 
 @views.route('/events/events-gridview/<int:pg>', methods=['GET', 'POST'])           # in the link /events/events-gridview/<int:pg>, <int:pg> acts like a variable that can be manually inserted and will be used to check for the page number, any number can be inserted so long as its an integer
@@ -123,7 +160,7 @@ def eventsGridview(pg):                                                         
         'sidebar_segments':2 #maximum 2
         }
     sidebar_links = [
-        '/events/events-mapview',                                   # adds /events/events-mapview to the list, a different page link that will be used wihtin the html
+        '/events/events-mapview',                                   # adds /events/events-mapview to the list, a different page link that will be used within the html
         '#'
     ]
 
@@ -167,6 +204,72 @@ def eventsMapview():
         sidebar_segments=page_settings['sidebar_segments']
         )
 
+@views.route('/events/event-view/<string:eventtitle>', methods=['GET', 'POST'])         # in the link /events/event-view/<string:eventtitle>, <string:eventtitle> acts like a variable that can be manually inserted and will be used to check for the page number, any string can be inserted
+def eventView(eventtitle):                                                              # passes though the value of <string:eventtitle> to be used later
+    page_settings = {
+        'cover_picture': True,
+        'current_page': 3,
+        'footer' : True,
+        'sidebar_segments':2 #maximum 2
+        }
+    sidebar_links = [
+        '/events/events-mapview',                                   # adds /events/events-mapview to the list, a different page link that will be used within the html
+        '/events/events-gridview/1'
+    ]
+
+    subscribeForm()                # executes the subscribeForm function
+
+    eventtitle = eventtitle.replace('-',' ')
+
+    dbevent = Event.query.filter_by(name=eventtitle).first()        # uses a query filter to the article from the Event database, this query will be used to show event items / to pass though a query of the event to the html page
+
+    if not dbevent:                                                 # this is used to check if the article doesnt exists
+        abort(404)                                                  # this is used to raise a 404 if the article doesnt exist
+
+    dbcomments = EventComment.query.filter_by(event_id=dbevent.id).limit(15).all()                       # uses a query filter to get items from the EventComment database and sorts them by decending id value, and limits the query to 15 rows
+
+    max_event = Event.query.order_by(desc(Event.id)).first().id     # uses a query filter to get items from the Articles database and sorts them by decending id value, and limits the query to 50 rows, this query will be used to show article items / to pass though a query of the database to the html page
+
+    if request.method == 'POST':                                    # checks if inforamtion passed though was though the POST method if so execute code within
+
+        form_name = request.form['form-name']                       # gets the form name and stores it, form-name is from the html form input preset from within the current html page
+        if form_name == 'add-comment':                              # checks if the form name is email_subscription and if so execute code within
+
+            username = request.form.get('username')                 # creates a variable called firstname then stores the request of the data inputted from the form input tag with the name of firstname
+            content = request.form.get('comment')                   # creates a variable called lastname then stores the request of the data inputted from the form input tag with the name of lastname
+
+            if len(username) < 1:                                                               # if statment if the if statement was false that gets the length of the username and checks if its smaller then 0 characters if so execute code below
+                flash('Enter a username is with 1 or more characters.', category='error')       # creates a flash, a message passed though flask that can be added into the html page after the it executes the return function to notify the user, here it warns the user
+                return redirect(request.url)                                                    # redirects the user to the current url
+            elif len(username) > 100:                                                           # an else if statment if the if statement was false that gets the length of the username and checks if its larger then 100 characters if so execute code below
+                flash('Enter a username is with 100 or less characters.', category='error')     # creates a flash, a message passed though flask that can be added into the html page after the it executes the return function to notify the user, here it warns the user
+                return redirect(request.url)                                                    # redirects the user to the current url
+            elif len(content) < 25:                                                             # an else if statment if the if statement was false that gets the length of the content and checks if its smaller then 25 characters if so execute code below
+                flash('Content must be 25 or more characters long.', category='error')          # creates a flash, a message passed though flask that can be added into the html page after the it executes the return function to notify the user, here it warns the user
+                return redirect(request.url)                                                    # redirects the user to the current url
+            elif len(content) > 512:                                                            # an else if statment if the if statement was false that gets the length of the content and checks if its smaller then 25 characters if so execute code below
+                flash('Content must be 512 or less characters long.', category='error')         # creates a flash, a message passed though flask that can be added into the html page after the it executes the return function to notify the user, here it warns the user
+                return redirect(request.url)                                                    # redirects the user to the current url
+            else:
+                new_comment = EventComment(username=username, content=content, event_id=dbevent.id)
+                db.session.add(new_comment)
+                db.session.commit()
+                flash('Comment added.', category='success')
+                return redirect(request.url)
+
+    return render_template(                                         # returns render_template, this function means it'll render a html file for the user to see when this function is called
+        './events/event-view.html',                                 # passes through the relative path of the page it'll send the user to, here it is /articles/articles page
+        cover_picture=page_settings['cover_picture'],               # creates a variable called cover_picture with the value within page_settings' cover_picture key, the passes it though to be used within the html file
+        current_page_num=page_settings['current_page'],             # creates a variable called current_page_num with the value within page_settings' current_page key
+        footer=page_settings['footer'],                             # creates a variable called footer with the value within page_settings' footer key
+        sidebar_links=sidebar_links,                                # creates a variable called sidebar_links with the list of sidebar_links
+        sidebar_segments=page_settings['sidebar_segments'],         # creates a variable called sidebar_segments with the value within page_settings' sidebar_segments key
+        max_event=max_event,                                        # creates a variable called articles with the value of dbarticles, the query made before
+        event=dbevent,                                              # creates a variable called articles with the value of dbarticles, the query made before
+        comments=dbcomments                                         # creates a variable called comments with the value of dbcomments, the query made before
+        )                                                           # ends render_template function
+
+
 @views.route('/volunteer/volunteer-gridview/<int:pg>', methods=['GET', 'POST'])     # in the link /volunteer/volunteer-gridview/<int:pg>, <int:pg> acts like a variable that can be manually inserted and will be used to check for the page number, any number can be inserted so long as its an integer
 def volunteerGridview(pg):                                                          # passes though the value of <int:pg> to be used later
     page_settings = {
@@ -182,9 +285,9 @@ def volunteerGridview(pg):                                                      
 
     subscribeForm()                # executes the subscribeForm function
 
-    dbvolunteers = Volunteer.query.order_by(desc(Volunteer.id)).limit(50).all() # uses a query filter to get items from the Volunteer database and sorts them by decending id value, and limits the query to 50 rows
+    dbvolunteers = Volunteer.query.order_by(desc(Volunteer.id)).limit(50).all()     # uses a query filter to get items from the Volunteer database and sorts them by decending id value, and limits the query to 50 rows
     
-    dbvolunteersdivision = (-(-len(dbvolunteers)//5))                           # creates a variable called dbvolunteersdivision which gets the length of dbvolunteers and integer divides it by five while rounding it up
+    dbvolunteersdivision = (-(-len(dbvolunteers)//5))                               # creates a variable called dbvolunteersdivision which gets the length of dbvolunteers and integer divides it by five while rounding it up
 
     return render_template(
         './volunteer/volunteer-gridview.html', 
@@ -193,9 +296,9 @@ def volunteerGridview(pg):                                                      
         footer=page_settings['footer'],
         sidebar_links=sidebar_links, 
         sidebar_segments=page_settings['sidebar_segments'],
-        volunteers=dbvolunteers,                                # creates a variable called events with the value of dbevents
-        max_pages=dbvolunteersdivision,                         # creates a variable called max_pages with the value of dbeventdivision
-        volunteer_page=pg                                       # creates a variable called event_page with the value of pg
+        volunteers=dbvolunteers,                                    # creates a variable called events with the value of dbevents
+        max_pages=dbvolunteersdivision,                             # creates a variable called max_pages with the value of dbeventdivision
+        volunteer_page=pg                                           # creates a variable called event_page with the value of pg
     )
     
 @views.route('/volunteer/volunteer-mapview', methods=['GET', 'POST'])
@@ -263,7 +366,7 @@ def aboutus():
         sidebar_segments=page_settings['sidebar_segments']
         )
 
-@views.route('/hidden/db-manager', methods=['GET', 'POST'])      # should NOT be be linked whatsoever to the post production website
+@views.route('/hidden/db-manager', methods=['GET', 'POST'])         # should NOT be be linked whatsoever to the post production website
 def articleManager():
     page_settings = {
         'cover_picture': False,
@@ -278,28 +381,16 @@ def articleManager():
 
     subscribeForm()                # executes the subscribeForm function
     
-    if request.method == 'POST':                                # checks if inforamtion passed though was though the POST method if so execute code within
+    if request.method == 'POST':                                    # checks if inforamtion passed though was though the POST method if so execute code within
 
-        form_name = request.form['form-name']                   # gets the form name and stores it, form-name is from the html form input preset from within the current html page
-        if form_name == 'add-writer':                           # checks if the form name is email_subscription and if so execute code within
+        form_name = request.form['form-name']                       # gets the form name and stores it, form-name is from the html form input preset from within the current html page
+        if form_name == 'add-writer':                               # checks if the form name is email_subscription and if so execute code within
 
-            if 'fileupload' not in request.files:               # checks if there is a file upload option within the form with the name of fileupload, request.files gets all files uploaded and the names form inputs their from and puts it into a dictionary
-                flash('No file part', category='error')         # creates a flash, a message passed though flask that can be added into the html page after the it executes the return function to notify the user, here it warns the user, although this is more of a site problem
-                return redirect(request.url)                    # redirects the user to the current url
-
-            file = request.files['fileupload']                  # creates a variable called file and stores all of the data of fileupload within
-
-            if file and allowed_file(file.filename):            # an if statement that firstly checks if file input from html exists, and then runs the file's name through the allowed_file function from earlier which checks if that file's extention is allowed to avoid some xss vulnerabilities
-                try:                                                                            # trys the code below but if an exception is made by python it stops and executes the except code below
-                    filename = str(Writer.query.order_by(desc(Writer.id)).first().id + 1)       # creates a variable called filename, not to be confused with file.filename, and uses a query filter to get the first item from the Writer database sorted them by decending id value and adds one, stringifies it, then stores it
-                except:                                                                         # if the code within try exceptions the code below will run 
-                    filename = str(1)                           # creates a variable called filename, not to be confused with file.filename, and stores 1 as a string
-            else:                                               # if the if statement fails the it will execute the code below
-                flash('Invalid file', category='error')         # creates a flash, a message passed though flask that can be added into the html page  after the it executes the return function to notify the user, here it warns the user
-                return redirect(request.url)                    # redirects the user to the current url
-
-            firstname = request.form.get('firstname')           # creates a variable called firstname then stores the request of the data inputted from the form input tag with the name of firstname
-            lastname = request.form.get('lastname')             # creates a variable called lastname then stores the request of the data inputted from the form input tag with the name of lastname
+            firstname = request.form.get('firstname')               # creates a variable called firstname then stores the request of the data inputted from the form input tag with the name of firstname
+            lastname = request.form.get('lastname')                 # creates a variable called lastname then stores the request of the data inputted from the form input tag with the name of lastname
+            twitterid = request.form.get('twitter')                 # creates a variable called twitterid then stores the request of the data inputted from the form input tag with the name of twitter
+            instagramid = request.form.get('instagram')             # creates a variable called instagramid then stores the request of the data inputted from the form input tag with the name of instagram
+            facebookid = request.form.get('facebook')               # creates a variable called facebookid then stores the request of the data inputted from the form input tag with the name of facebook
 
             if len(firstname) <= 0:                                                             # gets the length of the firstname and checks if its equal to or smaller then 0 if so execute code below
                 flash('Enter a firstname is with 1 or more characters.', category='error')      # creates a flash, a message passed though flask that can be added into the html page after the it executes the return function to notify the user, here it warns the user
@@ -313,51 +404,60 @@ def articleManager():
             elif len(lastname) > 50:                                                            # an else if statment if the if statement was false that gets the length of the lastname and checks if its larger then 50 if so execute code below
                 flash('Enter a lastname is with 50 or less characters.', category='error')      # creates a flash, a message passed though flask that can be added into the html page after the it executes the return function to notify the user, here it warns the user
                 return redirect(request.url)                                                    # redirects the user to the current url
-            
-            else:                                                               # if all if and elif statments were false executes the code below
-                if file.filename == '':                                                                         # checks if the original file.filename NOT filename has anything within, and if not if so execute code below
-                    new_writer = Writer(firstname=firstname, lastname=lastname, picture_link=False)             # creates variable called new_writer with the formatting of Writer in models.py with firstname arg set as the firstname variable, lastname arg set as the lastname variable, and picture_link arg set as False, due to no image being present
-                else:                                                                                           # if the if statement fails the it will execute the code below
-                    new_writer = Writer(firstname=firstname, lastname=lastname, picture_link=True)              # creates variable called new_writer with the formatting of Writer in models.py with firstname arg set as the firstname variable, lastname arg set as the lastname variable, and picture_link arg set as True, due to an image being present
-                db.session.add(new_writer)                                                                      # adds the new_writer to the sqlalchemy session
-                db.session.commit()                                                                             # commits all database changes
-
-                if not file.filename == '':                                                                     # checks if the original file.filename NOT filename has anything within, and if so execute code below
-                    file = Image.open(file)                                                                                     # overwrites the file variable and uses pillow to open the image and saves it
-                    file.save(path.join(current_app.config['UPLOAD_FOLDER'], 'writer_pfps', filename + '.webp'), format="webp") # saves the file to writer_pfps with the value of filename and .webp then pillow converts the file format to webp, since filename is set as the name of the file and is just the id of the current commit it avoids some possible possible vulnerabilities
+            elif len(twitterid) > 50:                                                           # an else if statment if the if statement was false that gets the length of the lastname and checks if its larger then 50 if so execute code below
+                flash('Enter a twitterid is with 50 or less characters.', category='error')     # creates a flash, a message passed though flask that can be added into the html page after the it executes the return function to notify the user, here it warns the user
+                return redirect(request.url)                                                    # redirects the user to the current url
+            elif len(instagramid) > 50:                                                         # an else if statment if the if statement was false that gets the length of the lastname and checks if its larger then 50 if so execute code below
+                flash('Enter a instagramid is with 50 or less characters.', category='error')   # creates a flash, a message passed though flask that can be added into the html page after the it executes the return function to notify the user, here it warns the user
+                return redirect(request.url)                                                    # redirects the user to the current url
+            elif len(facebookid) > 50:                                                          # an else if statment if the if statement was false that gets the length of the lastname and checks if its larger then 50 if so execute code below
+                flash('Enter a facebookid is with 50 or less characters.', category='error')    # creates a flash, a message passed though flask that can be added into the html page after the it executes the return function to notify the user, here it warns the user
+                return redirect(request.url)                                                    # redirects the user to the current url
+            else:                                                                                                                                               # if all if and elif statments were false executes the code below
+                new_writer = Writer(firstname=firstname, lastname=lastname, twitterid=twitterid, instagramid=instagramid, facebookid=facebookid)                # creates variable called new_writer with the formatting of Writer in models.py with firstname arg set as the firstname variable, and lastname arg set as the lastname variable
+                db.session.add(new_writer)                                                                                                                      # adds the new_writer to the sqlalchemy session
+                db.session.commit()                                                             # commits all database changes
                 
-                flash('Writer added.', category='success')      # creates a flash, a message passed though flask that can be added into the html page after the it executes the return function to notify the user, here it notifies the user of success
-                return redirect(request.url)                    # redirects the user to the current url
+                flash('Writer added.', category='success')          # creates a flash, a message passed though flask that can be added into the html page after the it executes the return function to notify the user, here it notifies the user of success
+                return redirect(request.url)                        # redirects the user to the current url
 
-        elif form_name == 'add-article':                        # checks if the form name is add-article and if so execute code within
+        elif form_name == 'add-article':                            # checks if the form name is add-article and if so execute code within
 
-            if 'fileupload' not in request.files:               # checks if there is a file upload option within the form with the name of fileupload, request.files gets all files uploaded and the names form inputs their from and puts it into a dictionary
-                flash('No file part', category='error')         # creates a flash, a message passed though flask that can be added into the html page after the it executes the return function to notify the user, here it warns the user, although this is more of a site problem
-                return redirect(request.url)                    # redirects the user to the current url
+            if 'fileupload' not in request.files:                   # checks if there is a file upload option within the form with the name of fileupload, request.files gets all files uploaded and the names form inputs their from and puts it into a dictionary
+                flash('No file part', category='error')             # creates a flash, a message passed though flask that can be added into the html page after the it executes the return function to notify the user, here it warns the user, although this is more of a site problem
+                return redirect(request.url)                        # redirects the user to the current url
 
-            file = request.files['fileupload']                  # creates a variable called file and stores all of the data of fileupload within
+            file = request.files['fileupload']                      # creates a variable called file and stores all of the data of fileupload within
 
-            if file.filename == '':                             # checks if the original file.filename NOT filename has anything within, and if not if so execute code below
-                flash('No selected file', category='error')     # creates a flash, a message passed though flask that can be added into the html page after the it executes the return function to notify the user, here it warns the user, although this is more of a site problem
-                return redirect(request.url)                    # redirects the user to the current url
+            if file.filename == '':                                 # checks if the original file.filename NOT filename has anything within, and if not if so execute code below
+                flash('No selected file', category='error')         # creates a flash, a message passed though flask that can be added into the html page after the it executes the return function to notify the user, here it warns the user, although this is more of a site problem
+                return redirect(request.url)                        # redirects the user to the current url
 
-            if file and allowed_file(file.filename):            # an if statement that firstly checks if file input from html exists, and then runs the file's name through the allowed_file function from earlier which checks if that file's extention is allowed to avoid some xss vulnerabilities
+            if file and allowed_file(file.filename):                # an if statement that firstly checks if file input from html exists, and then runs the file's name through the allowed_file function from earlier which checks if that file's extention is allowed to avoid some xss vulnerabilities
                 try:                                                                            # trys the code below but if an exception is made by python it stops and executes the except code below
                     filename = str(Article.query.order_by(desc(Article.id)).first().id + 1)     # creates a variable called filename, and uses a query filter to get the first item from the Article database sorted them by decending id value and adds one, stringifies it, then stores it
                 except:                                                                         # if the code within try exceptions the code below will run 
-                    filename = str(1)                           # creates a variable called filename, not to be confused with file.filename, and stores 1 as a string
-            else:                                               # if the if statement fails the it will execute the code below
-                flash('Invalid file', category='error')         # creates a flash, a message passed though flask that can be added into the html page  after the it executes the return function to notify the user, here it warns the user
-                return redirect(request.url)                    # redirects the user to the current url
+                    filename = str(1)                               # creates a variable called filename, not to be confused with file.filename, and stores 1 as a string
+            else:                                                   # if the if statement fails the it will execute the code below
+                flash('Invalid file', category='error')             # creates a flash, a message passed though flask that can be added into the html page  after the it executes the return function to notify the user, here it warns the user
+                return redirect(request.url)                        # redirects the user to the current url
 
-            writerid = request.form.get('writerid')             # creates a variable called writerid then stores the request of the data inputted from the form input tag with the name of writerid
-            datetime_created = request.form.get('date')         # creates a variable called datetime_created then stores the request of the data inputted from the form input tag with the name of date
-            title = request.form.get('title')                   # creates a variable called title then stores the request of the data inputted from the form input tag with the name of title
-            description = request.form.get('description')       # creates a variable called description then stores the request of the data inputted from the form input tag with the name of description
-            content = request.form.get('content')               # creates a variable called content then stores the request of the data inputted from the form input tag with the name of content
-            ytembed = request.form.get('ytembed')               # creates a variable called ytembed then stores the request of the data inputted from the form input tag with the name of ytembed
+            writerid = request.form.get('writerid')                 # creates a variable called writerid then stores the request of the data inputted from the form input tag with the name of writerid
+            datetime_created = request.form.get('date')             # creates a variable called datetime_created then stores the request of the data inputted from the form input tag with the name of date
+            title = request.form.get('title')                       # creates a variable called title then stores the request of the data inputted from the form input tag with the name of title
+            description = request.form.get('description')           # creates a variable called description then stores the request of the data inputted from the form input tag with the name of description
+            content = request.form.get('content')                   # creates a variable called content then stores the request of the data inputted from the form input tag with the name of content
+            ytembed = request.form.get('ytembed')                   # creates a variable called ytembed then stores the request of the data inputted from the form input tag with the name of ytembed
 
-            if datetime_created != '':                          # if datetime_created has something within it then execute the code below
+            if '<embedyt>' in content and ytembed == '':
+                flash('Enter a youtube video id for the embedyt tag.', category='error')        # creates a flash, a message passed though flask that can be added into the html page after the it executes the return function to notify the user, here it warns the user
+                return redirect(request.url)                                                    # redirects the user to the current url
+            
+            elif '<embedyt>' not in content and ytembed != '':
+                flash('Enter a embedyt tag for the youtube video embed.', category='error')     # creates a flash, a message passed though flask that can be added into the html page after the it executes the return function to notify the user, here it warns the user
+                return redirect(request.url)                                                    # redirects the user to the current url
+
+            if datetime_created != '':                              # if datetime_created has something within it then execute the code below
                 dsplit = datetime_created.split('-')                                            # creates a variable called dsplit and gets datetime_created then splits it into a list of strings for each - within datetime_created 
                 dtransformed = datetime(int(dsplit[0]),int(dsplit[1]),int(dsplit[2]))           # creates variable called dtransformed with the formatting of the datetime model from the datetime module with dsplit[0] set as the year, dsplit[1] set as the month, and dsplit[2] set as the day, integer-izing all of the variables in the process
             writer_check = Writer.query.filter_by(id=writerid).first()                          # creates variable called writer_check with the query result of the first matching writer with the inputted id from writerid
@@ -380,8 +480,8 @@ def articleManager():
             elif len(content) > 5000:                                                           # checks if the content length is 5000 or less characters long
                 flash('Content must be 5000 or less characters long.', category='error')
                 return redirect(request.url)
-            elif len(ytembed) > 200:                                                            # checks if the content length is 5000 or less characters long
-                flash('Content must be 200 or less characters long.', category='error')
+            elif len(ytembed) > 50:                                                            # checks if the content length is 5000 or less characters long
+                flash('Content must be 50 or less characters long.', category='error')
                 return redirect(request.url)
             else:
                 if datetime_created == '':                                                                                                                      # if a date_created wasnt present execute code below
@@ -400,26 +500,26 @@ def articleManager():
                 flash('Article added.', category='success')
                 return redirect(request.url)
 
-        elif form_name == 'add-event':                          # checks if the form name is add-event and if so execute code within
+        elif form_name == 'add-event':                              # checks if the form name is add-event and if so execute code within
 
-            if 'fileupload' not in request.files:               # checks if there is a file upload option within the form with the name of fileupload, request.files gets all files uploaded and the names form inputs their from and puts it into a dictionary
-                flash('No file part', category='error')         # creates a flash, a message passed though flask that can be added into the html page after the it executes the return function to notify the user, here it warns the user, although this is more of a site problem
-                return redirect(request.url)                    # redirects the user to the current url
+            if 'fileupload' not in request.files:                   # checks if there is a file upload option within the form with the name of fileupload, request.files gets all files uploaded and the names form inputs their from and puts it into a dictionary
+                flash('No file part', category='error')             # creates a flash, a message passed though flask that can be added into the html page after the it executes the return function to notify the user, here it warns the user, although this is more of a site problem
+                return redirect(request.url)                        # redirects the user to the current url
 
-            file = request.files['fileupload']                  # creates a variable called file and stores all of the data of fileupload within
+            file = request.files['fileupload']                      # creates a variable called file and stores all of the data of fileupload within
 
-            if file.filename == '':                             # checks if the original file.filename NOT filename has anything within, and if not if so execute code below
-                flash('No selected file', category='error')     # creates a flash, a message passed though flask that can be added into the html page after the it executes the return function to notify the user, here it warns the user, although this is more of a site problem
-                return redirect(request.url)                    # redirects the user to the current url
+            if file.filename == '':                                 # checks if the original file.filename NOT filename has anything within, and if not if so execute code below
+                flash('No selected file', category='error')         # creates a flash, a message passed though flask that can be added into the html page after the it executes the return function to notify the user, here it warns the user, although this is more of a site problem
+                return redirect(request.url)                        # redirects the user to the current url
 
-            if file and allowed_file(file.filename):            # an if statement that firstly checks if file input from html exists, and then runs the file's name through the allowed_file function from earlier which checks if that file's extention is allowed to avoid some xss vulnerabilities
+            if file and allowed_file(file.filename):                # an if statement that firstly checks if file input from html exists, and then runs the file's name through the allowed_file function from earlier which checks if that file's extention is allowed to avoid some xss vulnerabilities
                 try:                                                                            # trys the code below but if an exception is made by python it stops and executes the except code below
                     filename = str(Event.query.order_by(desc(Event.id)).first().id + 1)         # creates a variable called filename, and uses a query filter to get the first item from the Article database sorted them by decending id value and adds one, stringifies it, then stores it
                 except:                                                                         # if the code within try exceptions the code below will run 
-                    filename = str(1)                           # creates a variable called filename, not to be confused with file.filename, and stores 1 as a string
-            else:                                               # if the if statement fails the it will execute the code below
-                flash('Invalid file', category='error')         # creates a flash, a message passed though flask that can be added into the html page  after the it executes the return function to notify the user, here it warns the user
-                return redirect(request.url)                    # redirects the user to the current url
+                    filename = str(1)                               # creates a variable called filename, not to be confused with file.filename, and stores 1 as a string
+            else:                                                   # if the if statement fails the it will execute the code below
+                flash('Invalid file', category='error')             # creates a flash, a message passed though flask that can be added into the html page  after the it executes the return function to notify the user, here it warns the user
+                return redirect(request.url)                        # redirects the user to the current url
 
             name = request.form.get('name')
             description = request.form.get('description')
@@ -428,22 +528,22 @@ def articleManager():
             city = request.form.get('city')
             county = request.form.get('county')
             country = request.form.get('country')
-            postcode = request.form.get('postcode').upper()     # creates a variable called postcode then gets the request of the data inputted from the form input tag with the name of postcode, capitalizes it, then stores it
+            postcode = request.form.get('postcode').upper()         # creates a variable called postcode then gets the request of the data inputted from the form input tag with the name of postcode, capitalizes it, then stores it
             datestart = request.form.get('datestart')
             timestart = request.form.get('timestart')
             dateend = request.form.get('dateend')
             timeend = request.form.get('timeend')
 
-            if datestart and timestart != '':                   # checks if both datestart and timestart holds something
-                dsplit_start = datestart.split('-')             #creates a variable called dsplit_start and gets datestart then splits it into a list of strings for each - within datestart
+            if datestart and timestart != '':                       # checks if both datestart and timestart holds something
+                dsplit_start = datestart.split('-')                 # creates a variable called dsplit_start and gets datestart then splits it into a list of strings for each - within datestart
                 tsplit_start = timestart.split(':')                                                                                                             # creates a variable called tsplit_start and gets timestart then splits it into a list of strings for each - within timestart
                 dstransformed = datetime(int(dsplit_start[0]),int(dsplit_start[1]),int(dsplit_start[2]),int(tsplit_start[0]),int(tsplit_start[1]))              # creates variable called dstransformed with the formatting of the datetime model from the datetime module with dsplit_start[0] set as the year, dsplit_start[1] set as the month, dsplit_start[2] set as the day, tsplit_start[0] set as the hour, and tsplit_start[1] set as the minute, integer-izing all of the variables in the process
             else:
                 flash('Enter a start date and time.', category='error')
                 return redirect(request.url)
 
-            if dateend and timeend != '':                       # checks if both datestart and timestart holds something
-                dsplit_end = dateend.split('-')                 # creates a variable called dsplit_end and gets dateend then splits it into a list of strings for each - within dateend
+            if dateend and timeend != '':                           # checks if both datestart and timestart holds something
+                dsplit_end = dateend.split('-')                     # creates a variable called dsplit_end and gets dateend then splits it into a list of strings for each - within dateend
                 tsplit_end = timeend.split(':')                                                                                                                 # creates a variable called tsplit_end and gets timeend then splits it into a list of strings for each - within timeend
                 detransformed = datetime(int(dsplit_end[0]),int(dsplit_end[1]),int(dsplit_end[2]),int(tsplit_end[0]),int(tsplit_end[1]))                        # creates variable called dstransformed with the formatting of the datetime model from the datetime module with dsplit_end[0] set as the year, dsplit_end[1] set as the month, dsplit_end[2] set as the day, tsplit_end[0] set as the hour, and tsplit_end[1] set as the minute, integer-izing all of the variables in the process
             else:
@@ -463,8 +563,8 @@ def articleManager():
             elif len(description) < 50:                                                         # checks if the length of description is less then 50 characters long
                 flash('Description must be 50 or more characters long.', category='error')
                 return redirect(request.url)
-            elif len(description) > 256:                                                        # checks if the length of description is more then 256 characters long
-                flash('Description must be 256 or less characters long.', category='error')
+            elif len(description) > 1024:                                                       # checks if the length of description is more then 256 characters long
+                flash('Description must be 1024 or less characters long.', category='error')
                 return redirect(request.url)
             elif len(addr1) < 5:                                                                # checks if the length of addr1 is less then 5 characters long
                 flash('Address 1 must be 5 or more characters long.', category='error')
@@ -504,22 +604,22 @@ def articleManager():
 
         elif form_name == 'add-volunteer':
 
-            if 'fileupload' not in request.files:               # checks if there is a file upload option within the form with the name of fileupload, request.files gets all files uploaded and the names form inputs their from and puts it into a dictionary
-                flash('No file part', category='error')         # creates a flash, a message passed though flask that can be added into the html page after the it executes the return function to notify the user, here it warns the user, although this is more of a site problem
-                return redirect(request.url)                    # redirects the user to the current url
+            if 'fileupload' not in request.files:                   # checks if there is a file upload option within the form with the name of fileupload, request.files gets all files uploaded and the names form inputs their from and puts it into a dictionary
+                flash('No file part', category='error')             # creates a flash, a message passed though flask that can be added into the html page after the it executes the return function to notify the user, here it warns the user, although this is more of a site problem
+                return redirect(request.url)                        # redirects the user to the current url
 
-            file = request.files['fileupload']                  # creates a variable called file and stores all of the data of fileupload within
+            file = request.files['fileupload']                      # creates a variable called file and stores all of the data of fileupload within
 
-            if file.filename == '':                             # checks if the original file.filename NOT filename has anything within, and if not if so execute code below
-                flash('No selected file', category='error')     # creates a flash, a message passed though flask that can be added into the html page after the it executes the return function to notify the user, here it warns the user, although this is more of a site problem
-                return redirect(request.url)                    # redirects the user to the current url
+            if file.filename == '':                                 # checks if the original file.filename NOT filename has anything within, and if not if so execute code below
+                flash('No selected file', category='error')         # creates a flash, a message passed though flask that can be added into the html page after the it executes the return function to notify the user, here it warns the user, although this is more of a site problem
+                return redirect(request.url)                        # redirects the user to the current url
 
-            if file and allowed_file(file.filename):            # an if statement that firstly checks if file input from html exists, and then runs the file's name through the allowed_file function from earlier which checks if that file's extention is allowed to avoid some xss vulnerabilities
+            if file and allowed_file(file.filename):                # an if statement that firstly checks if file input from html exists, and then runs the file's name through the allowed_file function from earlier which checks if that file's extention is allowed to avoid some xss vulnerabilities
                 try:                                                                            # trys the code below but if an exception is made by python it stops and executes the except code below
                     filename = str(Volunteer.query.order_by(desc(Volunteer.id)).first().id + 1) # creates a variable called filename, and uses a query filter to get the first item from the Volunteer database sorted them by decending id value and adds one, stringifies it, then stores it
                 except:
-                    filename = str(1)                           # creates a variable called filename, not to be confused with file.filename, and stores 1 as a string
-            else:                                               # if the if statement fails the it will execute the code below
+                    filename = str(1)                               # creates a variable called filename, not to be confused with file.filename, and stores 1 as a string
+            else:                                                   # if the if statement fails the it will execute the code below
                 flash('Invalid file')
                 return redirect(request.url)
 
@@ -530,22 +630,22 @@ def articleManager():
             city = request.form.get('city')
             county = request.form.get('county')
             country = request.form.get('country')
-            postcode = request.form.get('postcode').upper()     # creates a variable called postcode then gets the request of the data inputted from the form input tag with the name of postcode, capitalizes it, then stores it
+            postcode = request.form.get('postcode').upper()         # creates a variable called postcode then gets the request of the data inputted from the form input tag with the name of postcode, capitalizes it, then stores it
             datestart = request.form.get('datestart')
             timestart = request.form.get('timestart')
             dateend = request.form.get('dateend')
             timeend = request.form.get('timeend')
             
-            if datestart and timestart != '':                   # checks if both datestart and timestart holds something
-                dsplit_start = datestart.split('-')             #creates a variable called dsplit_start and gets datestart then splits it into a list of strings for each - within datestart
+            if datestart and timestart != '':                       # checks if both datestart and timestart holds something
+                dsplit_start = datestart.split('-')                 #creates a variable called dsplit_start and gets datestart then splits it into a list of strings for each - within datestart
                 tsplit_start = timestart.split(':')                                                                                                             # creates a variable called tsplit_start and gets timestart then splits it into a list of strings for each - within timestart
                 dstransformed = datetime(int(dsplit_start[0]),int(dsplit_start[1]),int(dsplit_start[2]),int(tsplit_start[0]),int(tsplit_start[1]))              # creates variable called dstransformed with the formatting of the datetime model from the datetime module with dsplit_start[0] set as the year, dsplit_start[1] set as the month, dsplit_start[2] set as the day, tsplit_start[0] set as the hour, and tsplit_start[1] set as the minute, integer-izing all of the variables in the process
             else:
                 flash('Enter a start date and time.', category='error')
                 return redirect(request.url)
 
-            if dateend and timeend != '':                       # checks if both datestart and timestart holds something
-                dsplit_end = dateend.split('-')                 # creates a variable called dsplit_end and gets dateend then splits it into a list of strings for each - within dateend
+            if dateend and timeend != '':                           # checks if both datestart and timestart holds something
+                dsplit_end = dateend.split('-')                     # creates a variable called dsplit_end and gets dateend then splits it into a list of strings for each - within dateend
                 tsplit_end = timeend.split(':')                                                                                                                 # creates a variable called tsplit_end and gets timeend then splits it into a list of strings for each - within timeend
                 detransformed = datetime(int(dsplit_end[0]),int(dsplit_end[1]),int(dsplit_end[2]),int(tsplit_end[0]),int(tsplit_end[1]))                        # creates variable called dstransformed with the formatting of the datetime model from the datetime module with dsplit_end[0] set as the year, dsplit_end[1] set as the month, dsplit_end[2] set as the day, tsplit_end[0] set as the hour, and tsplit_end[1] set as the minute, integer-izing all of the variables in the process
             else:
@@ -611,8 +711,8 @@ def articleManager():
                 flash('Subscriber does not exist.', category='error')
                 return redirect(request.url)
             else:
-                db.session.delete(subscriber_check)             # removes the subscriber_check from the database within the sqlalchemy session
-                db.session.commit()                             # commits all database changes
+                db.session.delete(subscriber_check)                 # removes the subscriber_check from the database within the sqlalchemy session
+                db.session.commit()                                 # commits all database changes
                 flash('Subscriber has been deleted.')
                 return redirect(request.url)
 
@@ -629,9 +729,7 @@ def articleManager():
                     if path.exists(path.join(current_app.config['UPLOAD_FOLDER'], 'article_covers', str(article.id) + '.webp')):                # checks if the image for the article cover exists 
                         remove(path.join(current_app.config['UPLOAD_FOLDER'], 'article_covers', str(article.id) + '.webp'))                     # if the image for the article cover then it will delete that image
                 db.session.delete(writer_check)                                                                                                 # removes the writer_check from the database within the sqlalchemy session
-                db.session.commit()                                                                                                                             # commits all database changes
-                if writer_check.picture_link and path.exists(path.join(current_app.config['UPLOAD_FOLDER'], 'writer_pfps', str(writer_check.id) + '.webp')):    # checks if writer's picture_link within the query is true and checks if theres an image within the correct path is present
-                    remove(path.join(current_app.config['UPLOAD_FOLDER'], 'writer_pfps', str(writer_check.id) + '.webp'))                                       # if both items are true it will then delete that image
+                db.session.commit()                                                                                                             # commits all database changes
                 flash('Writer has been deleted.')
                 return redirect(request.url)
 
@@ -686,7 +784,7 @@ def articleManager():
         sidebar_segments=page_settings['sidebar_segments']
         )
 
-@views.route('/hidden/db-viewer', methods=['GET', 'POST'])      # should NOT be be linked whatsoever to the post production website
+@views.route('/hidden/db-viewer', methods=['GET', 'POST'])          # should NOT be be linked whatsoever to the post production website
 def articleDatabaseViewer():
     page_settings = {
         'cover_picture': False,
@@ -706,6 +804,7 @@ def articleDatabaseViewer():
     dbarticles = Article.query.all()                                            # uses a query filter to get all items from the Article database and sorts them by decending id value
     dbevents = Event.query.all()                                                # uses a query filter to get all items from the Event database and sorts them by decending id value
     dbvolunteers = Volunteer.query.all()                                        # uses a query filter to get all items from the Volunteer database and sorts them by decending id value
+    dbecomments = EventComment.query.all()                                      # uses a query filter to get all items from the EventComments database and sorts them by decending id value
 
     return render_template(
         './hidden/db-viewer.html', 
@@ -718,5 +817,6 @@ def articleDatabaseViewer():
         writers=dbwriters,                                                      # creates a variable called writers with the value of dbwriters
         articles=dbarticles,                                                    # creates a variable called articles with the value of dbarticles
         events=dbevents,                                                        # creates a variable called events with the value of dbevents
-        volunteers=dbvolunteers                                                 # creates a variable called volunteers with the value of dbvolunteers
+        volunteers=dbvolunteers,                                                # creates a variable called volunteers with the value of dbvolunteers
+        comments=dbecomments                                                    # creates a variable called volunteers with the value of dbvolunteers
         )
