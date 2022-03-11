@@ -1,0 +1,16 @@
+@media only screen and (max-width: 992px) {
+    iframe {
+        width:500px;
+        height:275px;
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    iframe {
+        width:350px;
+        height:200px;
+    }
+}
+
+/** these two media rules are solely used to resize iframes 
+to more propperly fit on to screens when down sized **/
