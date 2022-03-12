@@ -366,7 +366,7 @@ def aboutus():
         sidebar_segments=page_settings['sidebar_segments']
         )
 
-@views.route('/hidden/db-manager', methods=['GET', 'POST'])         # should NOT be be linked whatsoever to the post production website
+@views.route('/hidden/db-manager', methods=['GET', 'POST'])         # should NOT be be linked whatsoever to the post production website AND THIS LINE SHOULD BE REMOVED, use this code as an example of how python flask works with forms
 def articleManager():
     page_settings = {
         'cover_picture': False,
@@ -784,7 +784,7 @@ def articleManager():
         sidebar_segments=page_settings['sidebar_segments']
         )
 
-@views.route('/hidden/db-viewer', methods=['GET', 'POST'])          # should NOT be be linked whatsoever to the post production website
+@views.route('/hidden/db-viewer', methods=['GET', 'POST'])          # should NOT be be linked whatsoever to the post production website AND THIS LINE SHOULD BE REMOVED
 def articleDatabaseViewer():
     page_settings = {
         'cover_picture': False,

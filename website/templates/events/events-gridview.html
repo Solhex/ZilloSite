@@ -42,9 +42,9 @@
           <a class="nav-link" href="/events/event-view/{{ event.name.replace(' ','-') }}">
             <div class="mx-auto" style="width:80%"> <!-- mx-auto sets the left and right margin to equally take up any remaining x space -->
               <div class="row mb-4 fs-5 lead">
-                <div class="col-lg-9"> <!-- resizes the div to 80% of the viewport -->
-                  <div class="mb-3 fs-3 fw-bold" style="width:80%;"> <!-- resizes the div to 80% of the viewport -->
-                    {{ event.name }} <!-- inserts event's name, event is gotten from the for loop and any thing that has event.something corrosponds to the item within the event dictionary -->
+                <div class="col-lg-9"> <!-- effectivly resizes the div to 80% of the viewport and makes it a column -->
+                  <div class="mb-3 fs-3 fw-bold"> <!-- resizes the div to 80% of the viewport -->
+                    {{ event.name }} <!-- inserts event's name, event is gotten from the for loop and any thing that has event.something corrosponds to the item within the event "dictionary" -->
                   </div>
                   {% if event.description | length > 250 %} <!-- the "| length" function counts the length of the description of the event, this function is from flask / jinja -->
                       {{ event.description[0:249] + '...' }} <!-- python counts from 0 so its 250 in total -->
@@ -53,7 +53,7 @@
                   {% endif %}
                 </div>
                 <div class="col-lg-3 text-center"> <!-- resizes the div to 20% of the viewport -->
-                  <div class="mb-3 fs-3 fw-bold"> <!-- resizes the div to 20% of the viewport -->
+                  <div class="mb-3 fs-3 fw-bold"> <!-- adds a 1rem bottom margin, makes the font size h3 and bolds the text -->
                     Address
                   </div>
                   {{ event.address1 }}
@@ -73,7 +73,7 @@
                   {{ event.postcode }}
                 </div>
               </div>
-              <div class="lead fs-5"> <!-- sets font size to h5 -->
+              <div class="lead fs-5"> <!-- changes the font text style, font, size, weight etc, and sets font size to h5 -->
                 Starts: {{ event.datetime_start }}
                 Ends: {{ event.datetime_end }}
               </div>
