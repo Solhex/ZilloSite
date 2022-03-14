@@ -155,3 +155,4 @@ website/static/assets/writer_pfps/2.webp
 databaseChecker.py
 website/static/assets/placeholders/aboutus_beta.webp
 website/databases/volunteer_database.db
+*.db
