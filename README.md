@@ -5,6 +5,8 @@ Before running the code within a post production enviroment please do the follow
 
 * Change the `app.config['SECRET_KEY']` within `website/__init__.py` to a long complex string value.
 
+* Remove the routes for the hidden pages, delete lines 369 and 787 within `website/views.py`
+
 # Running the website
 
 Make sure python3 is installed.
