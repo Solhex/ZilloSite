@@ -41,11 +41,14 @@ def create_app():                                                               
     return app                                      # returns app
 
 def create_database(app):                                           # creates a function with a required passed variable
-    if not path.exists('website' + ARICLE_WRITER_DB_NAME):          # checks if the file at /databases/article_database.db exists, if not then it executes the code below
+    if not path.exists(path.join('website', 'databases')):                        # checks if website/databases exists, if not then it executes the code below
+        mkdir(path.join('website', 'databases'))                                # creates that directory with the mkdir os function
+    
+    if not path.exists('website' + ARICLE_WRITER_DB_NAME):          # checks if the file at website/databases/article_database.db exists, if not then it executes the code below
         db.create_all(app=app)                                      # uses flask_sqlalchemy's create_all function to create the file
         
     for key in app.config['SQLALCHEMY_BINDS']:                      # creates a for loop for each key within the app.config['SQLALCHEMY_BINDS']
-        if not path.exists('website' + 'databases' + key + '.db'):  # checks if the database for that key exists, if not then it executes the code below, the database' name and the key's name must be the same for this to work
+        if not path.exists(path.join('website', 'databases', key + '.db')):  # checks if the database for that key exists, if not then it executes the code below, the database' name and the key's name must be the same for this to work
             db.create_all(bind=key)                                 # uses flask_sqlalchemy's create_all function to create the file for the bind
     
 def create_dir():                                                                   # creates a function
