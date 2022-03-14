@@ -16,7 +16,7 @@ class Article(db.Model):                                    # defines the articl
     datetime_posted = db.Column(db.DateTime(timezone=True), default=func.now())
     datetime_created = db.Column(db.DateTime(timezone=True), default=func.now())
     title = db.Column(db.String(100), nullable=False)       # creates a column called title, as a string with the max string length of 100, required to be filled in
-    description = db.Column(db.String(256))                 # creates a column called description, as a string with the max string length of 256, not required to be filled in
+    description = db.Column(db.String(512))                 # creates a column called description, as a string with the max string length of 256, not required to be filled in
     content = db.Column(db.String(5000), nullable=False)
     youtube_embed_link = db.Column(db.String(50))
     writer_id = db.Column(db.Integer, db.ForeignKey('writer.id'))               # creates a foreignkey between the writer table, with the writer id as the foreignkey
@@ -55,7 +55,7 @@ class Volunteer(db.Model):                                  # defines the volunt
     __bind_key__ = 'volunteer_database'                     # __bind_key__ binds it to the volunteer_database database within app.config['SQLALCHEMY_BINDS']
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), nullable=False)
-    description = db.Column(db.String(256), nullable=False)
+    description = db.Column(db.String(512), nullable=False)
     address1 = db.Column(db.String(256), nullable=False)
     address2 = db.Column(db.String(256))
     city = db.Column(db.String(256), nullable=False)

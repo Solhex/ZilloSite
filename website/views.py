@@ -219,7 +219,7 @@ def eventView(eventtitle):                                                      
 
     subscribeForm()                # executes the subscribeForm function
 
-    eventtitle = eventtitle.replace('-',' ')
+    eventtitle = eventtitle.replace('-',' ').replace('?',r'%3F')
 
     dbevent = Event.query.filter_by(name=eventtitle).first()        # uses a query filter to the article from the Event database, this query will be used to show event items / to pass though a query of the event to the html page
 
@@ -471,8 +471,8 @@ def articleManager():
             elif len(title) > 100:                                                              # checks if the title length is 100 or less characters long
                 flash('Enter a title with 100 or less characters.', category='error') 
                 return redirect(request.url)
-            elif len(description) > 246:                                                        # checks if the title description is 246 or less characters long
-                flash('Description must be 246 or less characters long.', category='error') 
+            elif len(description) > 512:                                                        # checks if the title description is 246 or less characters long
+                flash('Description must be 512 or less characters long.', category='error') 
                 return redirect(request.url)
             elif len(content) < 50:                                                             # checks if the content length is 50 or more characters long
                 flash('Content must be 50 or more characters long.', category='error')
@@ -480,7 +480,7 @@ def articleManager():
             elif len(content) > 5000:                                                           # checks if the content length is 5000 or less characters long
                 flash('Content must be 5000 or less characters long.', category='error')
                 return redirect(request.url)
-            elif len(ytembed) > 50:                                                            # checks if the content length is 5000 or less characters long
+            elif len(ytembed) > 50:                                                             # checks if the content length is 5000 or less characters long
                 flash('Content must be 50 or less characters long.', category='error')
                 return redirect(request.url)
             else:
@@ -665,8 +665,8 @@ def articleManager():
             elif len(description) < 50:                                                         # checks if the length of description is less then 50 characters long
                 flash('Description must be 50 or more characters long.', category='error')
                 return redirect(request.url)
-            elif len(description) > 256:                                                        # checks if the length of description is more then 256 characters long
-                flash('Description must be 256 or less characters long.', category='error')
+            elif len(description) > 512:                                                        # checks if the length of description is more then 256 characters long
+                flash('Description must be 512 or less characters long.', category='error')
                 return redirect(request.url)
             elif len(addr1) < 5:                                                                # checks if the length of addr1 is less then 5 characters long
                 flash('Address 1 must be 5 or more characters long.', category='error')
@@ -764,7 +764,7 @@ def articleManager():
         elif form_name == 'remove-volunteer':
             volunteerid = request.form.get('volunteerid')
             volunteer_check = Volunteer.query.filter_by(id=volunteerid).first()
-            if not event_check:
+            if not volunteer_check:
                 flash('Volunteer does not exist.', category='error')
                 return redirect(request.url)
             else:
