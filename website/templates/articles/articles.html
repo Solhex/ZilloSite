@@ -27,12 +27,12 @@
         {% for article in articles[ article_page * 5 - 5: article_page * 5 - 1 ] %} <!-- creates a for loop for increments of 5 within the articles database query passed though by view.py -->
             <div class="row mb-5 g-3 w-100"> <div class="row mb-5 g-3 w-100"> <!-- g-3 sets the margin next to other elements to 1rem, w-100 sets the width to 100% -->
                 <div class="col-lg text-center"> <!-- col-lg changes the column size to 100% width when sized down from 992px -->
-                    <a class="nav-link" href="/articles/article-view/{{ article.title.replace(' ','-') }}">
+                    <a class="nav-link" href="/articles/article-view/{{ article.title.replace(' ','-').replace('?','%3F') }}">
                         <div class="gridview-image-container mx-auto rounded" style="background-image: url(../../static/assets/article_covers/{{ article.id }}.webp); width:70%;"></div> <!-- inserts the article image which corrosponds to the article id + .webp, and also rounded slightly rounds the image to be more appealing -->
                     </a>
                 </div>
                 <div class="col-lg">
-                    <a class="nav-link" href="/articles/article-view/{{ article.title.replace(' ','-') }}">
+                    <a class="nav-link" href="/articles/article-view/{{ article.title.replace(' ','-').replace('?','%3F') }}">
                         <div class="mx-auto" style="width:80%"> <!-- mx-auto sets the left and right margin to equally take up any remaining x space -->
                             <div class="mb-3 fs-3 fw-bold w-100">
                                 {{ article.title }} <!-- inserts article's name, article is gotten from the for loop and any thing that has article.something corrosponds to the item within the article dictionary -->

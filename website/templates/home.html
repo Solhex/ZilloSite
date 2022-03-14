@@ -39,12 +39,12 @@
         {% for article in articles %}
         <div class="row mb-5 g-3 w-100">
             <div class="col-lg text-center">
-                <a class="nav-link" href="/articles/article-view/{{ article.id }}">
+                <a class="nav-link" href="/articles/article-view/{{ article.title.replace(' ','-').replace('?','%3F') }}">
                     <div class="gridview-image-container mx-auto rounded" style="background-image: url(../../static/assets/article_covers/{{ article.id }}.webp); width:75%;"></div> <!-- inserts the article image which corrosponds to the article id + .webp, and also rounded slightly rounds the image to be more appealing -->
                 </a>
             </div>
             <div class="col-lg">
-                <a class="nav-link" href="/articles/article-view/{{ article.id }}">
+                <a class="nav-link" href="/articles/article-view/{{ article.title.replace(' ','-').replace('?','%3F') }}">
                     <div class="mx-auto" style="width:80%">
                         <div class="mb-3 fs-3 fw-bold" style="width:100%;">
                             {{ article.title }}
