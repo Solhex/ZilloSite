@@ -43,28 +43,10 @@
     </svg> <!-- closes the svg tag -->
     <!-- svg's will be referenced by xlink:href within the svg tag-->
 
-    {% for sidebar_segment in range(sidebar_segments) %} <!-- Checks the variable sidebar_segments (editable in views.py), and repeats this code for the number inputted -->
-      <div class="d-flex flex-column flex-shrink-0 top-{% if sidebar_segment == 1 %}50{% else %}0{% endif %}" style="position:fixed; width: 4rem; height: {% if sidebar_segments == 1 %}100{% else %}50{% endif %}%;"> <!-- sets the side navbar the if statement splitups the navabar into 2 if setted within view.py-->
-        <ul class="nav nav-flush flex-column mb-auto text-center"> <!-- creates a column that centers elements like text -->
-          <li class="nav-item"> <!-- creates a row with a list -->
-            <a href="{{ sidebar_links[sidebar_segment] }}" class="nav-link position-absolute top-50 start-0 translate-middle-y" data-bs-placement="right"> <!-- sets the  -->
-              {% if sidebar_segment == 0 %} <!--  -->
-                {% block sidebar_icon1 %}
-                {% endblock %} <!-- Tells flask that the block to add content in has ended -->
-              {% elif sidebar_segment == 1 %}
-                {% block sidebar_icon2 %}
-                {% endblock %} <!-- Tells flask that the block to add content in has ended -->
-              {% endif %}
-            </a>
-          </li ><!-- Ends the list item -->
-        </ul> <!-- Ends the unordered list -->
-      </div> <!-- Ends div -->
-    {% endfor %} <!-- Tells flask that the for loop ends here -->
-
     <nav class="navbar navbar-expand-lg navbar-light" style="background-color: var(--1-clr);">
       <div class="container-fluid"> <!-- div with a bootstrap container that items within are affected to be inline -->
         <div class="navbar-header mx-3"> <!-- the mx class sets a margin spacer -->
-          <a class="navbar-brand" href="/"> <!-- navbar-brand will anchor the contents and float left them within a navbar container, the a tag will redirect users when an element within is clicked on to the href link, /hidden/db-manager MUST be changed to / -->
+          <a class="navbar-brand" href="/"> <!-- navbar-brand will anchor the contents and float left them within a navbar container, the a tag will redirect users when an element within is clicked on to the href link -->
             <img src="/static/assets/ZilloLogo.webp" alt="Zillo logo" width="110" height="60"> <!-- inserts the zillologo -->
           </a> <!-- Ends the a tag -->
         </div>
@@ -73,12 +55,12 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup"> <!-- collapse class tells any div to hide its content, practically also chaning the height to 0% -->
           <div class="navbar-nav"> <!-- navbar-nav simpily slightly modifies the styles of the text within but also designates what div will be used by the javascript later -->
-            <a {% if current_page_num == 1 %}class="nav-link h5 m-2 active" aria-current="page"{% else %}class="nav-link h5 m-2"{% endif %} href="/">Home</a> <!-- a tag means when clicking the items within it it will redirect you to whats within the href tag -->
-            <a {% if current_page_num == 2 %}class="nav-link h5 m-2 active" aria-current="page"{% else %}class="nav-link h5 m-2"{% endif %} href="/articles/articles/1">Articles</a> <!-- anything within the curly brackets with percent signs will be executed as python code by flask here it is an if statement -->
-            <a {% if current_page_num == 3 %}class="nav-link h5 m-2 active" aria-current="page"{% else %}class="nav-link h5 m-2"{% endif %} href="/events/events-gridview/1">Events</a> <!-- nav-link mostly acts as a decorator, the class h5 makes any text akin to the h5 element, m-2 increases the margin around the div / element -->
-            <a {% if current_page_num == 4 %}class="nav-link h5 m-2 active" aria-current="page"{% else %}class="nav-link h5 m-2"{% endif %} href="/volunteer/volunteer-gridview/1">Volunteer</a> <!-- as a if statement was used, flask requires a endif in curlybrackets and percent signs area to close off the code affected by the statement -->
-            <a {% if current_page_num == 5 %}class="nav-link h5 m-2 active" aria-current="page"{% else %}class="nav-link h5 m-2"{% endif %} href="/support/support-home">Support</a>
-            <a {% if current_page_num == 6 %}class="nav-link h5 m-2 active" aria-current="page"{% else %}class="nav-link h5 m-2"{% endif %} href="/aboutus">About Us</a>
+            <a class="nav-link h5 m-2 {% if current_page_num == 1 %}active" aria-current="page"{% else %}"{% endif %} href="/">Home</a> <!-- a tag means when clicking the items within it it will redirect you to whats within the href tag -->
+            <a class="nav-link h5 m-2 {% if current_page_num == 2 %}active" aria-current="page"{% else %}"{% endif %} href="/articles/articles/1">Articles</a> <!-- anything within the curly brackets with percent signs will be executed as python code by flask here it is an if statement -->
+            <a class="nav-link h5 m-2 {% if current_page_num == 3 %}active" aria-current="page"{% else %}"{% endif %} href="/events/events-gridview/1">Events</a> <!-- nav-link mostly acts as a decorator, the class h5 makes any text akin to the h5 element, m-2 increases the margin around the div / element -->
+            <a class="nav-link h5 m-2 {% if current_page_num == 4 %}active" aria-current="page"{% else %}"{% endif %} href="/volunteer/volunteer-gridview/1">Volunteer</a> <!-- as a if statement was used, flask requires a endif in curlybrackets and percent signs area to close off the code affected by the statement -->
+            <a class="nav-link h5 m-2 {% if current_page_num == 5 %}active" aria-current="page"{% else %}"{% endif %} href="/support/support-home">Support</a>
+            <a class="nav-link h5 m-2 {% if current_page_num == 6 %}active" aria-current="page"{% else %}"{% endif %} href="/aboutus">About Us</a>
           </div>
         </div>
       </div>
@@ -103,7 +85,7 @@
     {% endwith %} <!-- ends with loop -->
 
     {% if cover_picture %} <!-- checks if the variable passed to this page via flask within views.py is true and if so execute / include the code below -->
-      <div class="position-relative" style="{% if sidebar_segments >= 1 %}margin-left:4rem;{% endif %}"> <!-- position-relative class applies the display:relative; style to this class, the margin style is used to accommodate fot the width of the sidebar and will only appear if the sidebar var is set above 1 -->
+      <div class="position-relative"> <!-- position-relative class applies the display:relative; style to this class, the margin style is used to accommodate fot the width of the sidebar and will only appear if the sidebar var is set above 1 -->
         <div class="position-absolute top-0 start-0 w-100"> <!-- position-absolute class sets the div's position to absolute so I can use pixel persice measurements to organize the div, here i use the classes top-0 and start-0 to set the y and x measurements to 0 with bootstrap, and w-100 sets the width to 100% -->
           {% block cover_picture %} <!-- Tells flask that the block to add content in has ended -->
           {% endblock %} <!-- Tells flask that the block to add content in has ended -->
@@ -114,7 +96,29 @@
       </div>
     {% endif %} <!-- ends the if statement -->
 
-    <div style="{% if sidebar_segments >= 1 %}margin-left:4rem;{% endif %} {% if cover_picture %}margin-top: 35rem;{% endif %}">
+    {% for sidebar_segment in range(sidebar_segments) %} <!-- Checks the variable sidebar_segments (editable in views.py), and repeats this code for the number inputted -->
+      <div class="d-flex flex-column flex-shrink-0 top-{% if sidebar_segment == 1 %}50{% else %}0{% endif %}" style="position:fixed; width: 4rem; height: {% if sidebar_segments == 1 %}100{% else %}50{% endif %}%;"> <!-- sets the side navbar the if statement splitups the navabar into 2 if setted within view.py-->
+        <ul class="nav nav-flush flex-column mb-auto text-center"> <!-- creates a column that centers elements like text -->
+          <li class="nav-item"> <!-- creates a row with a list -->
+            <a href="{{ sidebar_links[sidebar_segment] }}" class="nav-link position-absolute top-50 start-0 translate-middle-y" data-bs-placement="right"> <!-- sets the  -->
+              {% if sidebar_segment == 0 %} <!--  -->
+                <div class="rounded-2 p-2 bg-light">
+                  {% block sidebar_icon1 %}
+                  {% endblock %} <!-- Tells flask that the block to add content in has ended -->
+                </div>
+              {% elif sidebar_segment == 1 %}
+                <div class="rounded-2 p-2 bg-light">
+                  {% block sidebar_icon2 %}
+                  {% endblock %} <!-- Tells flask that the block to add content in has ended -->
+                </div>
+              {% endif %}
+            </a>
+          </li ><!-- Ends the list item -->
+        </ul> <!-- Ends the unordered list -->
+      </div> <!-- Ends div -->
+    {% endfor %} <!-- Tells flask that the for loop ends here -->
+
+    <div style="{% if sidebar_segments >= 1 and not negate_sidebar %}margin-left:4rem;{% endif %} {% if cover_picture %}margin-top: 35rem;{% endif %}">
       {% block content %} <!-- Inserts content within the base html template with the same block name -->
       {% endblock %} <!-- Tells flask that the block to add content in has ended -->
     </div>

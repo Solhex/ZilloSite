@@ -45,6 +45,7 @@ def error_404():
         'cover_picture': False,                                     # adds the cover_picture as a key and False as it's value to the dictionary, this means the cover photo will not appear within the html page
         'current_page': 0,                                          # adds the current_page as a key and 0 as it's value to the dictionary, this is only used to keep track of what navbar item to highlight keep it zero if it doesnt comply with certain nav item see the other views to find the schema, this variable's exact number is not needed but if not in use set to 0
         'footer' : True,                                            # adds the footer as a key and True as it's value to the dictionary, this means the footer will appear on the html page 
+        'negate_sidebar' : False,                                   # adds the negate sidebar as a key and True as it's value to the dictionary
         'sidebar_segments':0                                        # adds the sidebar_segments as a key and 0 as it's value to the dictionary, this will divvy up the side navbar into 0, 1 or 2 segments above 2 segments will just segment twice
         }                                                           # closes the dictionary
 
@@ -64,6 +65,7 @@ def home():
         'cover_picture': True,                                      # adds the cover_picture as a key and False as it's value to the dictionary, this means the cover photo will appear within the html page, make sure to add the appropriate blocks to add the title and image link within the html pages
         'current_page': 1,                                          # adds the current_page as a key and 0 as it's value to the dictionary
         'footer' : True,                                            # adds the footer as a key and True as it's value to the dictionary
+        'negate_sidebar' : False,                                   # adds the negate sidebar as a key and True as it's value to the dictionary
         'sidebar_segments':1 #maximum 2                             # adds the sidebar_segments as a key and 2 as it's value to the dictionary
         }                                                           # closes the dictionary
     sidebar_links = [                                               # creates a list called sidebar_links
@@ -71,7 +73,7 @@ def home():
     ]                                                               # closes the list
 
     subscribeForm()                # executes the subscribeForm function
-    
+
     dbarticles = Article.query.order_by(desc(Article.id)).limit(3).all()            # uses a query filter to get items from the Articles database and sorts them by decending id value, and limits the query to 3 rows
 
     return render_template(                                         # returns render_template, this function means it'll render a html file for the user to see when this function is called
@@ -79,6 +81,7 @@ def home():
         cover_picture=page_settings['cover_picture'],               # creates a variable called cover_picture with the value within page_settings' cover_picture key, the passes it though to be used within the html file
         current_page_num=page_settings['current_page'],             # creates a variable called current_page_num with the value within page_settings' current_page key
         footer=page_settings['footer'],                             # creates a variable called footer with the value within page_settings' footer key
+        negate_sidebar=page_settings['negate_sidebar'],             # creates a variable called negate_sidebar with the value within page_settings' negate_sidebar key
         sidebar_links=sidebar_links,                                # creates a variable called sidebar_links with the list of sidebar_links
         sidebar_segments=page_settings['sidebar_segments'],         # creates a variable called sidebar_segments with the value within page_settings' sidebar_segments key
         articles=dbarticles                                         # creates a variable called articles that passes though dbarticles, the article query
@@ -90,6 +93,7 @@ def articles(pg):                                                   # creates a 
         'cover_picture': True,                                      # adds the cover_picture as a key and False as it's value to the dictionary
         'current_page': 2,                                          # adds the current_page as a key and 0 as it's value to the dictionary
         'footer' : True,                                            # adds the footer as a key and True as it's value to the dictionary
+        'negate_sidebar' : False,                                   # adds the negate sidebar as a key and True as it's value to the dictionary
         'sidebar_segments':1 #maximum 2                             # adds the sidebar_segments as a key and 2 as it's value to the dictionary
         }                                                           # closes the dictionary
     sidebar_links = [                                               # creates a list called sidebar_links
@@ -107,6 +111,7 @@ def articles(pg):                                                   # creates a 
         cover_picture=page_settings['cover_picture'],               # creates a variable called cover_picture with the value within page_settings' cover_picture key, the passes it though to be used within the html file
         current_page_num=page_settings['current_page'],             # creates a variable called current_page_num with the value within page_settings' current_page key
         footer=page_settings['footer'],                             # creates a variable called footer with the value within page_settings' footer key
+        negate_sidebar=page_settings['negate_sidebar'],             # creates a variable called negate_sidebar with the value within page_settings' negate_sidebar key
         sidebar_links=sidebar_links,                                # creates a variable called sidebar_links with the list of sidebar_links
         sidebar_segments=page_settings['sidebar_segments'],         # creates a variable called sidebar_segments with the value within page_settings' sidebar_segments key
         articles=dbarticles,                                        # creates a variable called articles with the value of dbarticles, the query made before
@@ -120,6 +125,7 @@ def articleView(articletitle):                                                  
         'cover_picture': True,                                      # adds the cover_picture as a key and False as it's value to the dictionary
         'current_page': 2,                                          # adds the current_page as a key and 0 as it's value to the dictionary
         'footer' : True,                                            # adds the footer as a key and True as it's value to the dictionary
+        'negate_sidebar' : False,                                   # adds the negate sidebar as a key and True as it's value to the dictionary
         'sidebar_segments':1 #maximum 2                             # adds the sidebar_segments as a key and 2 as it's value to the dictionary
         }                                                           # closes the dictionary
     sidebar_links = [                                               # creates a list called sidebar_links
@@ -144,6 +150,7 @@ def articleView(articletitle):                                                  
         cover_picture=page_settings['cover_picture'],               # creates a variable called cover_picture with the value within page_settings' cover_picture key, the passes it though to be used within the html file
         current_page_num=page_settings['current_page'],             # creates a variable called current_page_num with the value within page_settings' current_page key
         footer=page_settings['footer'],                             # creates a variable called footer with the value within page_settings' footer key
+        negate_sidebar=page_settings['negate_sidebar'],             # creates a variable called negate_sidebar with the value within page_settings' negate_sidebar key
         sidebar_links=sidebar_links,                                # creates a variable called sidebar_links with the list of sidebar_links
         sidebar_segments=page_settings['sidebar_segments'],         # creates a variable called sidebar_segments with the value within page_settings' sidebar_segments key
         max_article=max_article,                                    # creates a variable called articles with the value of dbarticles, the query made before
@@ -157,6 +164,7 @@ def eventsGridview(pg):                                                         
         'cover_picture': True,
         'current_page': 3,
         'footer' : True,
+        'negate_sidebar' : False,
         'sidebar_segments':2 #maximum 2
         }
     sidebar_links = [
@@ -175,6 +183,7 @@ def eventsGridview(pg):                                                         
         cover_picture=page_settings['cover_picture'],               # creates a variable called cover_picture with the value within page_settings' cover_picture key, the passes it though to be used within the html file
         current_page_num=page_settings['current_page'],             # creates a variable called current_page_num with the value within page_settings' current_page key
         footer=page_settings['footer'],                             # creates a variable called footer with the value within page_settings' footer key
+        negate_sidebar=page_settings['negate_sidebar'],             # creates a variable called negate_sidebar with the value within page_settings' negate_sidebar key
         sidebar_links=sidebar_links,                                # creates a variable called sidebar_links with the list of sidebar_links
         sidebar_segments=page_settings['sidebar_segments'],         # creates a variable called sidebar_segments with the value within page_settings' sidebar_segments key
         events=dbevents,                                            # creates a variable called events with the value of dbevents
@@ -188,6 +197,7 @@ def eventsMapview():
         'cover_picture': False,
         'current_page': 3,
         'footer' : False,                                           # adds the footer as a key and False as it's value to the dictionary, this means the footer will not appear on the html page 
+        'negate_sidebar' : True,
         'sidebar_segments':2 #maximum 2
         }
     sidebar_links = [
@@ -200,6 +210,7 @@ def eventsMapview():
         cover_picture=page_settings['cover_picture'], 
         current_page_num=page_settings['current_page'], 
         footer=page_settings['footer'],
+        negate_sidebar=page_settings['negate_sidebar'],             # creates a variable called negate_sidebar with the value within page_settings' negate_sidebar key
         sidebar_links=sidebar_links, 
         sidebar_segments=page_settings['sidebar_segments']
         )
@@ -210,6 +221,7 @@ def eventView(eventtitle):                                                      
         'cover_picture': True,
         'current_page': 3,
         'footer' : True,
+        'negate_sidebar' : False,
         'sidebar_segments':2 #maximum 2
         }
     sidebar_links = [
@@ -262,6 +274,7 @@ def eventView(eventtitle):                                                      
         cover_picture=page_settings['cover_picture'],               # creates a variable called cover_picture with the value within page_settings' cover_picture key, the passes it though to be used within the html file
         current_page_num=page_settings['current_page'],             # creates a variable called current_page_num with the value within page_settings' current_page key
         footer=page_settings['footer'],                             # creates a variable called footer with the value within page_settings' footer key
+        negate_sidebar=page_settings['negate_sidebar'],             # creates a variable called negate_sidebar with the value within page_settings' negate_sidebar key
         sidebar_links=sidebar_links,                                # creates a variable called sidebar_links with the list of sidebar_links
         sidebar_segments=page_settings['sidebar_segments'],         # creates a variable called sidebar_segments with the value within page_settings' sidebar_segments key
         max_event=max_event,                                        # creates a variable called articles with the value of dbarticles, the query made before
@@ -276,6 +289,7 @@ def volunteerGridview(pg):                                                      
         'cover_picture': True,
         'current_page': 4,
         'footer' : True,
+        'negate_sidebar' : False,
         'sidebar_segments':2 #maximum 2
         }
     sidebar_links = [
@@ -294,6 +308,7 @@ def volunteerGridview(pg):                                                      
         cover_picture=page_settings['cover_picture'], 
         current_page_num=page_settings['current_page'], 
         footer=page_settings['footer'],
+        negate_sidebar=page_settings['negate_sidebar'],             # creates a variable called negate_sidebar with the value within page_settings' negate_sidebar key
         sidebar_links=sidebar_links, 
         sidebar_segments=page_settings['sidebar_segments'],
         volunteers=dbvolunteers,                                    # creates a variable called events with the value of dbevents
@@ -307,6 +322,7 @@ def volunteerMapview():
         'cover_picture': False,
         'current_page': 4,
         'footer' : False,
+        'negate_sidebar' : True,
         'sidebar_segments':2 #maximum 2
         }
     sidebar_links = [
@@ -321,6 +337,7 @@ def volunteerMapview():
         cover_picture=page_settings['cover_picture'], 
         current_page_num=page_settings['current_page'], 
         footer=page_settings['footer'],
+        negate_sidebar=page_settings['negate_sidebar'],             # creates a variable called negate_sidebar with the value within page_settings' negate_sidebar key
         sidebar_links=sidebar_links, 
         sidebar_segments=page_settings['sidebar_segments']
     )
@@ -348,6 +365,7 @@ def aboutus():
         'cover_picture': True,
         'current_page': 6,
         'footer' : True,
+        'negate_sidebar' : False,
         'sidebar_segments':1 #maximum 2
         }
     sidebar_links = [
@@ -362,6 +380,7 @@ def aboutus():
         cover_picture=page_settings['cover_picture'], 
         current_page_num=page_settings['current_page'], 
         footer=page_settings['footer'],
+        negate_sidebar=page_settings['negate_sidebar'],             # creates a variable called negate_sidebar with the value within page_settings' negate_sidebar key
         sidebar_links=sidebar_links, 
         sidebar_segments=page_settings['sidebar_segments']
         )
@@ -372,6 +391,7 @@ def articleManager():
         'cover_picture': False,
         'current_page': 0,
         'footer' : True,
+        'negate_sidebar' : False,
         'sidebar_segments':2 #maximum 2
         }
     sidebar_links = [
@@ -780,6 +800,7 @@ def articleManager():
         cover_picture=page_settings['cover_picture'], 
         current_page_num=page_settings['current_page'], 
         footer=page_settings['footer'],
+        negate_sidebar=page_settings['negate_sidebar'],             # creates a variable called negate_sidebar with the value within page_settings' negate_sidebar key
         sidebar_links=sidebar_links, 
         sidebar_segments=page_settings['sidebar_segments']
         )
@@ -790,6 +811,7 @@ def articleDatabaseViewer():
         'cover_picture': False,
         'current_page': 0,
         'footer' : True,
+        'negate_sidebar' : False,
         'sidebar_segments':2 #maximum 2
         }
     sidebar_links = [
@@ -811,6 +833,7 @@ def articleDatabaseViewer():
         cover_picture=page_settings['cover_picture'], 
         current_page_num=page_settings['current_page'], 
         footer=page_settings['footer'],
+        negate_sidebar=page_settings['negate_sidebar'],             # creates a variable called negate_sidebar with the value within page_settings' negate_sidebar key
         sidebar_links=sidebar_links, 
         sidebar_segments=page_settings['sidebar_segments'],
         subscribers=dbsubscribers,                                              # creates a variable called subscribers with the value of dbsubscribers
