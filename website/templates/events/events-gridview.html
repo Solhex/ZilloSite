@@ -34,12 +34,12 @@
     {% for event in events[ event_page * 5 - 5: event_page * 5 - 1 ] %} <!-- creates a for loop for increments of 5 within the events database query passed though by view.py -->
       <div class="row mb-5 g-3 w-100"> <div class="row mb-5 g-3 w-100"> <!-- g-3 sets the margin next to other elements to 1rem, w-100 sets the width to 100% -->
         <div class="col-lg text-center"> <!-- col-lg changes the column size to 100% width when sized down from 992px -->
-          <a class="nav-link" href="/events/event-view/{{ event.name.replace(' ','-').replace('?','%3F') }}">
+          <a class="nav-link" href="/events/event-view/{{ event.id }}-{{ event.name.replace(' ','-').replace('?','%3F') }}">
             <div class="gridview-image-container mx-auto rounded" style="background-image: url(../../static/assets/event_covers/{{ event.id }}.webp); width:70%;"></div> <!-- inserts the event image which corrosponds to the event id + .webp, and also rounded slightly rounds the image to be more appealing -->
           </a>
         </div>
         <div class="col-lg">
-          <a class="nav-link" href="/events/event-view/{{ event.name.replace(' ','-').replace('?','%3F') }}">
+          <a class="nav-link" href="/events/event-view/{{ event.id }}-{{ event.name.replace(' ','-').replace('?','%3F') }}">
             <div class="mx-auto" style="width:80%"> <!-- mx-auto sets the left and right margin to equally take up any remaining x space -->
               <div class="row mb-4 fs-5 lead">
                 <div class="col-lg-9"> <!-- effectivly resizes the div to 80% of the viewport and makes it a column -->

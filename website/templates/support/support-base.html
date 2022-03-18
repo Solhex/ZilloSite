@@ -6,7 +6,7 @@
 
     <meta charset="utf-8" /> <!-- Tells the browser what charset it is in -->
     <meta name="viewport" content="width=device-width, initial-scale=1" /> <!-- Tells the browser what size should the site be viewed in -->
-    <meta name="description" content="A Personal Portfolio for whatever alias I'm using."> <!--Gives the description to the search engine to dislpay-->
+    <meta name="description" content="Here at Zillo we impower younger audiances to explore and report insteresting events and happenings around the Wirral Peninsula, Join us and help out empowering the community for younger people to enjoy."> <!--Gives the description to the search engine to dislpay-->
     <meta name="author" content="Cassis Texic / 30164968"> <!--Just a label to say who made the site-->
     <meta name="keywords" content="zillo, zillowirral, wirral, help, youth, test, test site"> <!--Keywords to help the website be found-->
     
@@ -55,13 +55,13 @@
           <div><svg width="32" height="32" fill="var(--2-clr)"><use xlink:href="#list"></svg></div> <!-- Just adds a svg with the height and width of 32 and the colour as 2-clr from variables.css image -->
         </button>
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup"> <!-- collapse class tells any div to hide its content, practically also chaning the height to 0% -->
-          <div class="navbar-nav mx-auto"> <!-- mx-auto sets the margin x area to auto with css -->
-            <a {% if current_page_num == 1 %}class="nav-link h5 m-2 active" aria-current="page"{% else %}class="nav-link h5 m-2"{% endif %} href="/">Home</a> <!-- a tag means when clicking the items within it it will redirect you to whats within the href tag -->
-            <a {% if current_page_num == 2 %}class="nav-link h5 m-2 active" aria-current="page"{% else %}class="nav-link h5 m-2"{% endif %} href="/articles/articles/1">Articles</a> <!-- anything within the curly brackets with percent signs will be executed as python code by flask here it is an if statement -->
-            <a {% if current_page_num == 3 %}class="nav-link h5 m-2 active" aria-current="page"{% else %}class="nav-link h5 m-2"{% endif %} href="/events/events-gridview/1">Events</a> <!-- nav-link mostly acts as a decorator, the class h5 makes any text akin to the h5 element, m-2 increases the margin around the div / element -->
-            <a {% if current_page_num == 4 %}class="nav-link h5 m-2 active" aria-current="page"{% else %}class="nav-link h5 m-2"{% endif %} href="/volunteer/volunteer-gridview/1">Volunteer</a> <!-- as a if statement was used, flask requires a endif in curlybrackets and percent signs area to close off the code affected by the statement -->
-            <a {% if current_page_num == 5 %}class="nav-link h5 m-2 active" aria-current="page"{% else %}class="nav-link h5 m-2"{% endif %} href="/support/support-home">Support</a>
-            <a {% if current_page_num == 6 %}class="nav-link h5 m-2 active" aria-current="page"{% else %}class="nav-link h5 m-2"{% endif %} href="/aboutus">About Us</a>
+          <div class="navbar-nav"> <!-- navbar-nav simpily slightly modifies the styles of the text within but also designates what div will be used by the javascript later -->
+            <a class="nav-link h5 m-2 {% if current_page_num == 1 %}active" aria-current="page"{% else %}"{% endif %} href="/">Home</a> <!-- a tag means when clicking the items within it it will redirect you to whats within the href tag -->
+            <a class="nav-link h5 m-2 {% if current_page_num == 2 %}active" aria-current="page"{% else %}"{% endif %} href="/articles/articles/1">Articles</a> <!-- anything within the curly brackets with percent signs will be executed as python code by flask here it is an if statement -->
+            <a class="nav-link h5 m-2 {% if current_page_num == 3 %}active" aria-current="page"{% else %}"{% endif %} href="/events/events-gridview/1">Events</a> <!-- nav-link mostly acts as a decorator, the class h5 makes any text akin to the h5 element, m-2 increases the margin around the div / element -->
+            <a class="nav-link h5 m-2 {% if current_page_num == 4 %}active" aria-current="page"{% else %}"{% endif %} href="/volunteer/volunteer-gridview/1">Volunteer</a> <!-- as a if statement was used, flask requires a endif in curlybrackets and percent signs area to close off the code affected by the statement -->
+            <a class="nav-link h5 m-2 {% if current_page_num == 5 %}active" aria-current="page"{% else %}"{% endif %} href="/support/support-home">Support</a>
+            <a class="nav-link h5 m-2 {% if current_page_num == 6 %}active" aria-current="page"{% else %}"{% endif %} href="/aboutus">About Us</a>
           </div>
         </div>
       </div>
@@ -86,8 +86,8 @@
     {% endwith %} <!-- ends with loop -->
 
     {% if cover_picture %} <!-- checks if the variable passed to this page via flask within views.py is true and if so execute / include the code below -->
-      <div class="position-relative" style="margin-left:4rem;"> <!-- position-relative class applies the display:relative; style to this class, the margin style is used to accommodate fot the width of the sidebar-->
-        <div class="position-absolute top-0 start-0 w-100"> <!-- position-absolute class sets the div's position to absolute so I can use pixel persice measurements to organize the div, here i use the classes top-0 and start-0 to set the y and x measurements to 0 with bootstrap, and w-100 sets the width to 100% -->
+    <div class="position-relative"> <!-- position-relative class applies the display:relative; style to this class, the margin style is used to accommodate fot the width of the sidebar and will only appear if the sidebar var is set above 1 -->
+      <div class="position-absolute top-0 start-0 w-100"> <!-- position-absolute class sets the div's position to absolute so I can use pixel persice measurements to organize the div, here i use the classes top-0 and start-0 to set the y and x measurements to 0 with bootstrap, and w-100 sets the width to 100% -->
           {% block cover_picture %} <!-- Tells flask that the block to add content in has ended -->
           {% endblock %} <!-- Tells flask that the block to add content in has ended -->
         </div>
@@ -100,9 +100,11 @@
     <div class="navbar d-flex flex-column flex-shrink-0 h-100" style="position: fixed; width: 4rem;">
       <div class="container-fluid my-auto mx-auto" style="padding-bottom: 10rem;">
         <button class="btn" style="box-shadow: none; padding: 0;" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
-          <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-three-dots" viewBox="0 0 16 16">
-            <path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"/>
-          </svg>
+          <div class="rounded-2 p-2" style="background-color: white;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-three-dots" viewBox="0 0 16 16">
+              <path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"/>
+            </svg>
+          </div>
         </button>
         <div class="offcanvas offcanvas-start" style="width:15rem;" id="offcanvasNavbar">
           <div class="offcanvas-body">

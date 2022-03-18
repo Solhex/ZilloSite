@@ -134,9 +134,14 @@ def articleView(articletitle):                                                  
 
     subscribeForm()                # executes the subscribeForm function
 
-    articletitle = articletitle.replace('-',' ')
+    articlesplit = articletitle.split('-')
 
-    dbarticle = Article.query.filter_by(title=articletitle).first() # uses a query filter to the article from the Articles database, this query will be used to show article items / to pass though a query of the article to the html page
+    articleid = articlesplit[0]
+    articletitle = ' '.join(articlesplit[1:])
+
+    articletitle = articletitle.replace('?',r'%3F')
+
+    dbarticle = Article.query.filter_by(id=articleid, title=articletitle).first() # uses a query filter to the article from the Articles database, this query will be used to show article items / to pass though a query of the article to the html page
 
     if not dbarticle:                                               # this is used to check if the article doesnt exists
         abort(404)                                                  # this is used to raise a 404 if the article doesnt exist
@@ -231,9 +236,15 @@ def eventView(eventtitle):                                                      
 
     subscribeForm()                # executes the subscribeForm function
 
-    eventtitle = eventtitle.replace('-',' ').replace('?',r'%3F')
 
-    dbevent = Event.query.filter_by(name=eventtitle).first()        # uses a query filter to the article from the Event database, this query will be used to show event items / to pass though a query of the event to the html page
+    eventsplit = eventtitle.split('-')
+
+    eventid = eventsplit[0]
+    eventtitle = ' '.join(eventsplit[1:])
+
+    eventtitle = eventtitle.replace('?',r'%3F')
+
+    dbevent = Event.query.filter_by(id=eventid, name=eventtitle).first()        # uses a query filter to the article from the Event database, this query will be used to show event items / to pass though a query of the event to the html page
 
     if not dbevent:                                                 # this is used to check if the article doesnt exists
         abort(404)                                                  # this is used to raise a 404 if the article doesnt exist
