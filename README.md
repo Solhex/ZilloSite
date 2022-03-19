@@ -1,5 +1,7 @@
-# Notification
+# Notice
 You can find the raw source code for the site, without any content added within at https://github.com/Solhex/ZilloSite
+
+Also when running and lines 369 and 787 are not removed the db-manager page can be accessed at: http://127.0.0.1:5000/hidden/db-manager
 
 # Before running the post production website
 Before running the code within a post production enviroment please do the following:
