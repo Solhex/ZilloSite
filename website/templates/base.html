@@ -50,11 +50,11 @@
             <img src="/static/assets/ZilloLogo.webp" alt="Zillo logo" width="110" height="60"> <!-- inserts the zillologo -->
           </a> <!-- Ends the a tag -->
         </div>
-        <button class="navbar-toggler m-2 mx-3" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation"> <!-- data-bs-toggle and data-bs-target uses a javascript to change all collapse class divs to hide their content, aria declarations is used on interactive elements to be interactive with other aria declarations -->
+        <button class="navbar-toggler m-2 mx-3" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-options" aria-controls="navbar-options" aria-expanded="false" aria-label="Toggle navigation"> <!-- data-bs-toggle and data-bs-target uses a javascript to change all collapse class divs to hide their content, aria declarations is used on interactive elements to be interactive with other aria declarations -->
           <div><svg width="32" height="32" fill="var(--2-clr)"><use xlink:href="#list"></svg></div> <!-- Just adds a svg with the height and width of 32 and the colour as 2-clr from variables.css image -->
         </button>
-        <div class="collapse navbar-collapse" id="navbarNavAltMarkup"> <!-- collapse class tells any div to hide its content, practically also chaning the height to 0% -->
-          <div class="navbar-nav"> <!-- navbar-nav simpily slightly modifies the styles of the text within but also designates what div will be used by the javascript later -->
+        <div class="collapse navbar-collapse" id="navbar-options"> <!-- collapse class tells any div to hide its content, practically also chaning the height to 0% -->
+          <div class="navbar-nav text-center"> <!-- navbar-nav simpily slightly modifies the styles of the text within but also designates what div will be used by the javascript later -->
             <a class="nav-link h5 m-2 {% if current_page_num == 1 %}active" aria-current="page"{% else %}"{% endif %} href="/">Home</a> <!-- a tag means when clicking the items within it it will redirect you to whats within the href tag -->
             <a class="nav-link h5 m-2 {% if current_page_num == 2 %}active" aria-current="page"{% else %}"{% endif %} href="/articles/articles/1">Articles</a> <!-- anything within the curly brackets with percent signs will be executed as python code by flask here it is an if statement -->
             <a class="nav-link h5 m-2 {% if current_page_num == 3 %}active" aria-current="page"{% else %}"{% endif %} href="/events/events-gridview/1">Events</a> <!-- nav-link mostly acts as a decorator, the class h5 makes any text akin to the h5 element, m-2 increases the margin around the div / element -->
