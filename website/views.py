@@ -134,12 +134,12 @@ def articleView(articletitle):                                                  
 
     subscribeForm()                # executes the subscribeForm function
 
-    articlesplit = articletitle.split('-')
+    articlesplit = articletitle.split('-')                          # boxes up the string into a list with '-' indicating where to split it up
 
-    articleid = articlesplit[0]
-    articletitle = ' '.join(articlesplit[1:])
+    articleid = articlesplit[0]                                     # takes the first element of the list, which should be the id
+    articletitle = ' '.join(articlesplit[1:])                       # joins the list with a space without the first element
 
-    articletitle = articletitle.replace('?',r'%3F')
+    articletitle = articletitle.replace(r'%3F','?')                 # replaces each instance of '%3F' to '?'and stores it in articletitle
 
     dbarticle = Article.query.filter_by(id=articleid, title=articletitle).first() # uses a query filter to the article from the Articles database, this query will be used to show article items / to pass though a query of the article to the html page
 
@@ -237,12 +237,12 @@ def eventView(eventtitle):                                                      
     subscribeForm()                # executes the subscribeForm function
 
 
-    eventsplit = eventtitle.split('-')
+    eventsplit = eventtitle.split('-')                              # boxes up the string into a list with '-' indicating where to split it up
 
-    eventid = eventsplit[0]
-    eventtitle = ' '.join(eventsplit[1:])
+    eventid = eventsplit[0]                                         # takes the first element of the list, which should be the id
+    eventtitle = ' '.join(eventsplit[1:])                           # joins the list with a space without the first element
 
-    eventtitle = eventtitle.replace('?',r'%3F')
+    eventtitle = eventtitle.replace(r'%3F','?')                     # replaces each instance of '%3F' to '?'and stores it in eventtitle
 
     dbevent = Event.query.filter_by(id=eventid, name=eventtitle).first()        # uses a query filter to the article from the Event database, this query will be used to show event items / to pass though a query of the event to the html page
 
