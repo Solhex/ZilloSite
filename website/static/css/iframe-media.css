@@ -12,5 +12,12 @@
     }
 }
 
+@media only screen and (max-width: 576px) {
+    iframe {
+        width:250px;
+        height:150px;
+    }
+}
+
 /** these two media rules are solely used to resize iframes 
 to more propperly fit on to screens when down sized **/

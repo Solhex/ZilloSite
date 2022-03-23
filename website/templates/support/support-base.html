@@ -92,7 +92,7 @@
           {% endblock %} <!-- Tells flask that the block to add content in has ended -->
         </div>
         <div class="position-absolute start-50 translate-middle px-2 bg-light" style="top:16rem; border-radius:3px"> <!-- position-absolute class sets the position to absolute start-50 sets the x measurement to 50% of the viewport's size in pixels, translate-middle gets half of the div's size and takes it off of start-50 to make the div in the center px-2 sets the padding of the div to 1rem * .5 bg-light justs sets the background-color and text-color to a light theme -->
-          <h1 style="font-size:4vw;"><b>{% block cover_text %}{% endblock %}</b></h1> <!-- uses a h1 tag with the font-size style to change the font size to 4vw which resizes with the viewport, the <b></b> tags just make the text bold, if i used the fw-bold class here it would change the font to bootstraps perfered font which is ok but it didnt feel pronounced enough for me -->
+          <h1 class="cover-title"><b>{% block cover_text %}{% endblock %}</b></h1> <!-- uses a h1 tag with the font-size style to change the font size to 4vw which resizes with the viewport, the <b></b> tags just make the text bold, if i used the fw-bold class here it would change the font to bootstraps perfered font which is ok but it didnt feel pronounced enough for me -->
         </div>
       </div>
     {% endif %} <!-- ends the if statement -->

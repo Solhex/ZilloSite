@@ -29,9 +29,22 @@ style priority **/
     background-position: center;
 }
 
+.cover-title {
+    font-size: 4rem;
+}
+
 @media only screen and (max-width: 992px) {
     .gridview-image-container {
         height: 32.5vw;
+    }
+    .cover-title {
+        font-size: 3rem;
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    .cover-title {
+        font-size: 2rem;
     }
 }
 
