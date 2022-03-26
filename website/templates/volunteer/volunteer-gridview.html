@@ -32,11 +32,11 @@
     {% endif %} <!-- ends the if statement -->
 
     {% for volunteer in volunteers[ volunteer_page * 5 - 5: volunteer_page * 5 - 1 ] %}  <!-- creates a for loop for increments of 5 within the volunteers database query passed though by view.py -->
-      <div class="row mb-5 g-3 w-100"> <div class="row mb-5 g-3 w-100"> <!-- g-3 sets the margin next to other elements to 1rem, w-100 sets the width to 100% -->
-        <div class="col-lg text-center"> <!-- col-lg changes the column size to 100% width when sized down from 992px -->
+      <div class="row mb-5 g-3 w-100"> <!-- g-3 sets the margin next to other elements to 1rem, w-100 sets the width to 100% -->
+        <div class="col-xl text-center"> <!-- col-xl changes the column size to 100% width when sized down from 1200px -->
           <div class="gridview-image-container mx-auto rounded" style="background-image: url(../../static/assets/volunteer_covers/{{ volunteer.id }}.webp); width:70%;"></div> <!-- inserts the volunteer image which corrosponds to the volunteer id + .webp, and also rounded slightly rounds the image to be more appealing -->
         </div>
-        <div class="col-lg">
+        <div class="col-xl">
           <div class="mx-auto" style="width:80%"> <!-- mx-auto sets the left and right margin to equally take up any remaining x space -->
             <div class="row mb-4 fs-5 lead">
               <div class="col-lg-9"> <!-- effectivly resizes the div to 80% of the viewport and makes it a column, columns go up to 12 in bootstrap -->

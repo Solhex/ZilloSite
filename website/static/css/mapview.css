@@ -10,6 +10,7 @@ html, body, div, iframe {
     height: 97.9%; 
     border: none;
 }
+
 /** makes it so all tags have no margin, padding, heights are set to 97.9% and there are no borders **/
 
 iframe {
